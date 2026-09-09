@@ -17,6 +17,7 @@ Modifiers:
 - `selective source import` — permissively licensed source may be copied only after file-level audit and attribution.
 - `method-only` — ideas/methods may inform AIMAGE, but source/code/text should not be copied.
 - `provider capability` — the capability lives behind a provider adapter and does not become core semantics.
+- `deferred` — classification is recorded now, but implementation/evaluation is intentionally postponed until the core workflow proves the need.
 
 ## 2. External evidence set used for this classification
 
@@ -66,7 +67,7 @@ External evidence informs design but does not become AIMAGE authority.
 | C15 | Cost/latency telemetry | `ADAPT` | Provider usage/cost data; GenAI pipeline cost reporting | AIMAGE-owned telemetry interface, provider-specific collectors. |
 | C16 | Persistence store interface | `DESIGN` | Nori Postgres/Redis implementation | Do not inherit Nori's infrastructure by default. Define storage boundary first; choose implementation only after scale/usage needs exist. |
 | C17 | Configuration/profile serialization | `DESIGN` | General JSON/YAML patterns | AIMAGE-specific semantic contracts require native schemas; generic serializers can be dependencies later. |
-| C18 | Handoff/continuity integration | `ADOPT` — internal | Existing AIMAGE Continuity/Handoff | Already implemented as AIMAGE-owned infrastructure; engine only exposes state needed by these contracts. |
+| C18 | Handoff/continuity integration | `ADOPT` — existing internal | Existing AIMAGE Continuity/Handoff | Already implemented as AIMAGE-owned infrastructure; engine only exposes state needed by these contracts. |
 
 ## 4. Feature/Domain capability classification
 
@@ -89,13 +90,13 @@ External evidence informs design but does not become AIMAGE authority.
 | F15 | Minimal-delta repair strategy | `ADAPT` | Nori controlled edits; style-consistency smallest-edit principle; GenAI revision handling | AIMAGE repair policy should preserve successful parts and escalate only after evidence of failure. |
 | F16 | Automated visual review rubric | `ADAPT` | Nori critique dimensions; GenAI agent QA | Build AIMAGE review schema and modular rubrics; do not hard-code book-print QA into generic engine. |
 | F17 | Human review / approval | `ADAPT` | GenAI human art-direction gate; Nori accept/reject/edit loop | Keep human approval as authoritative subjective decision; integrate into AIMAGE approval state. |
-| F18 | Contact sheets / comparison boards | `ADAPT` / selective source import candidate | GenAI contact-sheet script; common art workflow | Likely reuse or reimplement small deterministic tooling after source audit. |
-| F19 | Deterministic finishing utilities | `ADAPT` / selective source import candidate | GenAI scripts for crop/pad, alpha, DPI, WebP, finishing QA | Import only generic useful MIT modules after file-level audit; otherwise implement equivalent small utilities. |
+| F18 | Contact sheets / comparison boards | `ADAPT` — selective source import candidate | GenAI contact-sheet script; common art workflow | Likely reuse or reimplement small deterministic tooling after source audit. |
+| F19 | Deterministic finishing utilities | `ADAPT` — selective source import candidate | GenAI scripts for crop/pad, alpha, DPI, WebP, finishing QA | Import only generic useful MIT modules after file-level audit; otherwise implement equivalent small utilities. |
 | F20 | Output-text / graphic-layout planning | `DESIGN` initially | Image APIs support text but no complete AIMAGE layout contract identified | Define semantic text/layout layer; later evaluate specialized layout libraries separately. |
 | F21 | Domain-specific QA | `DESIGN` on top of generic review contract | External pipelines show domain QA patterns | Each domain owns its checks; do not put character/book/product-specific checks in core. |
 | F22 | Character consistency escalation to datasets/training | `ADAPT` — optional/future | style-consistency ladder; diffusion training ecosystem | Preserve escalation concept but do not make training a default dependency. Evaluate only after lighter controls demonstrably fail. |
 | F23 | Domain extensions | `DESIGN` | No single external system covers AIMAGE's planned domains | Implement later as plugins/profiles against engine interfaces. |
-| F24 | Canvas/editor UI | `DEFER` within planning; later `ADAPT/DESIGN` review | Krita AI Diffusion and Nori show useful interaction models | Not needed to validate core workflow. Avoid premature GUI architecture. |
+| F24 | Canvas/editor UI | `ADAPT` — deferred | Krita AI Diffusion and Nori show useful interaction models | Reuse interaction concepts when UI work becomes necessary, but postpone UI-specific source/tool evaluation until the core workflow proves the need. |
 
 ## 5. What can be brought in now at planning level
 
