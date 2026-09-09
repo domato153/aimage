@@ -1,23 +1,36 @@
 # AIMAGE Architecture Boundaries
 
-Status: initial governing boundary for continuity adoption. This file defines responsibility separation, not the final Image Engine architecture.
+Status: initial governing boundary for continuity/handoff adoption. This file defines responsibility separation, not the final Image Engine architecture.
 
 ## 1. Three responsibility zones
 
 AIMAGE is intentionally separated into three zones:
 
-### A. Continuity Infrastructure
+### A. Continuity & Handoff Infrastructure
 
-Owns cross-context state transfer semantics:
+This is cross-context infrastructure, not image-production product logic.
 
-- canonical handoff location;
+#### Continuity owns state-transfer semantics
+
+- canonical continuity/packet location semantics;
 - authority/fresh-reconciliation rules;
-- dependency/staleness handling;
+- bounded dependency/staleness handling;
+- active situation state;
 - decision and negative-boundary preservation;
 - recoverability of decision-relevant artifacts;
-- cold-start acceptance and exactly-one-next-action semantics.
+- cold-start `ACCEPTED` / `STALE_REPLAN` and exactly-one-next-action semantics.
 
-Continuity must not define how image generation itself works.
+#### Handoff owns live transfer orchestration
+
+- deciding when a consequential handoff is warranted;
+- constructing/consuming the bounded handoff packet;
+- resolving the governing handoff method before packet use;
+- organizing objective, phase, current state, completed scope, blocker, cold-start route, hard prohibitions, exact next action, and stop/replan conditions;
+- deriving user-facing paste/share material from the canonical packet rather than independently rewriting it from memory.
+
+Handoff delegates state/freshness/acceptance semantics to continuity. Continuity does not need to own packet-writing procedure.
+
+Neither continuity nor handoff may define how image generation itself works.
 
 ### B. Image Engine Architecture / Core
 
@@ -52,40 +65,50 @@ These examples are current design directions, not frozen implementation requirem
 
 ## 2. Dependency direction
 
-Preferred dependency direction:
+Preferred product dependency direction:
 
 `features/domain capabilities -> engine interfaces`
 
-Continuity may transport state from both engine and feature layers, but it does not own their product semantics.
+Continuity/handoff may transport state from both engine and feature layers, but they do not own product semantics.
+
+Within cross-context infrastructure:
+
+`handoff -> continuity contract/profiles`
+
+Handoff uses continuity semantics. Continuity must not require the handoff skill merely to define state/freshness/acceptance semantics.
 
 The following are architectural smells requiring review:
 
 - engine core importing a concrete character/style/composition feature implementation;
 - continuity defining composition algorithms or model-specific prompt rules;
-- a feature redefining authority/continuity semantics for convenience;
+- handoff defining engine or feature behavior instead of transporting it;
+- handoff duplicating continuity freshness/acceptance semantics into a competing contract;
+- a feature redefining authority/continuity/handoff semantics for convenience;
 - an adapter silently becoming canonical job authority;
-- a Project bootstrap duplicating full engine or continuity rules and becoming a competing authority.
+- a Project bootstrap duplicating full engine, continuity, or handoff rules and becoming a competing authority.
 
 ## 3. Authority separation
 
 AIMAGE canonical repository authority owns long-lived rules and state definitions.
 
-A continuity packet transports a bounded snapshot needed for continuation.
+A continuity/handoff packet transports a bounded snapshot needed for continuation. It does not become project authority merely because it is canonical as a packet artifact.
 
-A GPT Project bootstrap points a receiver to canonical AIMAGE authority and startup procedure. It is intentionally thin and is not a second copy of the engine specification.
+A GPT Project bootstrap points a receiver to canonical AIMAGE authority and startup procedure. It is intentionally thin and is not a second copy of the engine, continuity, or handoff specification.
 
 External source repositories and external methods used to construct or audit AIMAGE are provenance/evidence only unless AIMAGE explicitly adopts a rule into its own canonical files.
 
 ## 4. Testable boundary invariants
 
-The continuity adoption is acceptable only if:
+The continuity/handoff adoption is acceptable only if:
 
 1. `governance/CONTINUITY.md` can be interpreted without reading `domato153/translation` at runtime.
-2. repository-work and image-job continuity are profiles over the same core rather than separate incompatible handoff systems.
-3. image-job continuity may carry `approved geometry`, `reference roles`, or `render spec` but does not define their production algorithms.
-4. the engine layer can in principle support a new image domain without importing a domain-specific implementation into the core.
-5. feature/domain documents may depend on engine interfaces, but a future engine specification must not depend on one current character, classroom scene, or model-specific prompt convention.
-6. the Project bootstrap remains a locator/startup contract rather than a mirrored canonical specification.
+2. `.agents/skills/handoff/SKILL.md` can be interpreted and executed without reading `domato153/translation` at runtime.
+3. handoff packet construction/consumption routes to AIMAGE continuity rather than redefining a second freshness/acceptance system.
+4. repository-work and image-job continuity are profiles over the same core rather than separate incompatible handoff systems.
+5. image-job continuity/handoff may carry `approved geometry`, `reference roles`, or `render spec` but does not define their production algorithms.
+6. the engine layer can in principle support a new image domain without importing a domain-specific implementation into the core.
+7. feature/domain documents may depend on engine interfaces, but a future engine specification must not depend on one current character, classroom scene, or model-specific prompt convention.
+8. the Project bootstrap remains a locator/startup contract rather than a mirrored canonical specification.
 
 ## 5. Change rule
 
