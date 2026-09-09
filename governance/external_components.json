@@ -1,10 +1,21 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "review_date": "2026-09-10",
   "implementation_branch": "aimage-stage/first-openai-vertical-slice",
   "installation_gate": {
-    "status": "PENDING_EXACT_RESOLUTION",
-    "rule": "No production/CI dependency installation from this registry until an exact transitive lock plus artifact-hash/security review is recorded. Source code may target these Gate-B-selected interfaces before that acquisition event."
+    "status": "EXACT_LOCKS_RECORDED_PENDING_INSTALL_TEST",
+    "rule": "Install only from the checked-in CPython 3.13 platform lock with --only-binary=:all: --require-hashes after a fresh resolver candidate matches the lock exactly. A new platform/interpreter/version requires a fresh Gate-B resolution."
+  },
+  "gate_b_evidence": {
+    "workflow_run_id": 34410634058,
+    "python": "3.13.15",
+    "pip": "26.2.1",
+    "linux_dependency_count": 25,
+    "windows_dependency_count": 26,
+    "osv_active_vulnerabilities": 0,
+    "evidence_document": "governance/evidence/GATE_B_DEPENDENCY_EVIDENCE_2026-09-10.md",
+    "linux_lock": "requirements-lock/linux-cp313.txt",
+    "windows_lock": "requirements-lock/windows-cp313.txt"
   },
   "components": [
     {
@@ -43,7 +54,9 @@
       "license": "MIT",
       "runtime_role": "sqlite_metadata_repository",
       "trusted_publishing": false,
-      "artifact_hash_status": "pending_exact_platform_lock",
+      "artifact_hash_status": "resolved_in_platform_locks",
+      "linux_cp313_x64_sha256": "651d6d8782e80679e6151707c7b490834d46ada526328895abf567f25e63d29c",
+      "windows_cp313_x64_sha256": "9876b09b9f1ce7398b0ffece585c0a911244c53191187341f6bcae640e133751",
       "replacement_boundary": "engine MetadataRepository interface"
     },
     {
@@ -54,7 +67,8 @@
       "distribution": "https://pypi.org/project/alembic/1.19.2/",
       "license": "MIT",
       "runtime_role": "relational_schema_migration",
-      "artifact_hash_status": "pending_exact_platform_lock",
+      "artifact_hash_status": "resolved_in_platform_locks",
+      "wheel_sha256": "32d553dcd577e6fe5c3c63e91468526d35e4dcecafe865d7db4e9b328fa93cb2",
       "replacement_boundary": "persistence/sqlite only; not semantic schema migration authority"
     },
     {
@@ -65,7 +79,8 @@
       "distribution": "https://pypi.org/project/pytest/9.1.1/",
       "license": "MIT",
       "runtime_role": "test_only",
-      "artifact_hash_status": "pending_exact_platform_lock"
+      "artifact_hash_status": "resolved_in_platform_locks",
+      "wheel_sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
     },
     {
       "component_id": "pytest-asyncio",
@@ -77,6 +92,18 @@
       "runtime_role": "async_test_only",
       "trusted_publishing": true,
       "wheel_sha256": "933ca923a23075a87fb7070c0ec272a6848489824d887c85c812670932835aa1"
+    },
+    {
+      "component_id": "github-actions-setup-python",
+      "name": "actions/setup-python",
+      "version": "v7.0.0",
+      "source_commit": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+      "acquisition_mode": "github_owned_ci_action_pinned_sha",
+      "upstream": "https://github.com/actions/setup-python",
+      "license": "MIT",
+      "runtime_role": "ci_python_provisioning_only",
+      "release_immutable": true,
+      "replacement_boundary": "GitHub Actions workflow only; no production runtime dependency"
     },
     {
       "component_id": "openai-sunburst-snapshot",
