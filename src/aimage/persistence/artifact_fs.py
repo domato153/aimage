@@ -7,7 +7,7 @@ from aimage.engine.interfaces.artifact_store import StoredArtifact
 
 
 class LocalArtifactStore:
-    """Content-addressed local blob store; media semantics stay in ArtifactRecord."""
+    """Content-addressed blob store; AIMAGE ArtifactRecord identity is separate."""
 
     def __init__(self, root: str | Path) -> None:
         self.root = Path(root)
@@ -25,17 +25,17 @@ class LocalArtifactStore:
             temporary.write_bytes(data)
             temporary.replace(path)
         return StoredArtifact(
-            artifact_id=f"sha256:{digest}",
+            storage_ref=f"sha256:{digest}",
             content_digest=f"sha256:{digest}",
             media_type=media_type,
             size_bytes=len(data),
         )
 
-    def get(self, artifact_id: str) -> bytes:
-        algorithm, separator, digest = artifact_id.partition(":")
+    def get(self, storage_ref: str) -> bytes:
+        algorithm, separator, digest = storage_ref.partition(":")
         if algorithm != "sha256" or not separator or len(digest) != 64:
-            raise KeyError(f"unsupported artifact id {artifact_id!r}")
+            raise KeyError(f"unsupported storage ref {storage_ref!r}")
         path = self._path_for_digest(digest)
         if not path.exists():
-            raise KeyError(artifact_id)
+            raise KeyError(storage_ref)
         return path.read_bytes()

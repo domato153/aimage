@@ -6,7 +6,7 @@ from typing import Protocol
 
 @dataclass(frozen=True)
 class StoredArtifact:
-    artifact_id: str
+    storage_ref: str
     content_digest: str
     media_type: str
     size_bytes: int
@@ -14,4 +14,4 @@ class StoredArtifact:
 
 class ArtifactStore(Protocol):
     def put(self, data: bytes, *, media_type: str) -> StoredArtifact: ...
-    def get(self, artifact_id: str) -> bytes: ...
+    def get(self, storage_ref: str) -> bytes: ...

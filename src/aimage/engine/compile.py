@@ -21,19 +21,24 @@ def _digest(value: object) -> str:
     return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
+def _semantic_payload(intent: VisualIntentState) -> dict[str, object]:
+    payload = intent.model_dump(mode="json")
+    for field in ("contract_type", "schema_version", "object_id", "created_from"):
+        payload.pop(field, None)
+    return payload
+
+
 def visual_intent_digest(intent: VisualIntentState) -> str:
-    """Digest only canonical Family-A semantic authority for currentness fencing."""
-    return _digest(intent.model_dump(mode="json"))
+    """Digest canonical Family-A semantic content, excluding record/provenance envelope."""
+    return _digest(_semantic_payload(intent))
 
 
 def compiled_semantic_input_digest(intent: VisualIntentState, spatial_profile: SpatialProfile | None) -> str:
-    """Digest the normalized semantic inputs that produced a RenderSpec."""
-    return _digest(
-        {
-            "visual_intent": intent.model_dump(mode="json"),
-            "spatial_profile": spatial_profile.model_dump(mode="json") if spatial_profile else None,
-        }
-    )
+    spatial_payload = spatial_profile.model_dump(mode="json") if spatial_profile else None
+    if spatial_payload:
+        for field in ("contract_type", "schema_version", "object_id", "created_from"):
+            spatial_payload.pop(field, None)
+    return _digest({"visual_intent": _semantic_payload(intent), "spatial_profile": spatial_payload})
 
 
 def compile_render_spec(
@@ -42,13 +47,6 @@ def compile_render_spec(
     *,
     output_contract: dict[str, object] | None = None,
 ) -> RenderSpec:
-    """Compile one semantic revision into an immutable provider-neutral RenderSpec.
-
-    Unresolved contradictory mandatory values fail closed before execution state exists.
-    Spatial relations are compiled with their frame *kind*, so provider lowering cannot
-    silently conflate viewer-deictic and screen-image coordinates.
-    """
-
     if spatial_profile and spatial_profile.semantic_revision != intent.semantic_revision:
         raise SemanticCompileError("spatial profile belongs to another semantic revision")
 
@@ -106,10 +104,6 @@ def compile_render_spec(
         for baseline in intent.baselines
         if baseline.status is BaselineStatus.ACTIVE
     )
-
-    input_refs = tuple(dict.fromkeys(binding.artifact_ref for binding in intent.reference_bindings))
-    creative_freedoms = tuple(item.semantic_path for item in active if item.strength is Strength.ADVISORY)
-
     return RenderSpec(
         render_spec_id=new_object_id(),
         job_id=intent.job_id,
@@ -122,7 +116,7 @@ def compile_render_spec(
         domain_profile_refs=intent.domain_profile_refs,
         intent_obligations=tuple(obligations),
         preservation_obligations=preservation,
-        creative_freedoms=creative_freedoms,
-        input_artifact_refs=input_refs,
+        creative_freedoms=tuple(item.semantic_path for item in active if item.strength is Strength.ADVISORY),
+        input_artifact_refs=tuple(dict.fromkeys(binding.artifact_ref for binding in intent.reference_bindings)),
         output_contract=normalized_output,
     )
