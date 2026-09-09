@@ -35,25 +35,40 @@ Determine whether the requested work is, for example, `review`, `design`, `imple
 - Do not merge, promote, delete, replace, demote, or broadly rewrite canonical/governing surfaces unless the current request authorizes that phase and fresh authority still permits the operation.
 - If the user requests one bounded stage, complete that stage rather than opportunistically continuing into the next.
 
-Repository-work handoffs additionally follow `governance/continuity/REPOSITORY_WORK.md`.
+Repository-work continuity additionally follows `governance/continuity/REPOSITORY_WORK.md`.
 
 ## 4. Continuity routing
 
-Use continuity only when state must survive a chat/thread/operator/tool/session boundary or stale/ambiguous state can materially change the next action.
+Continuity is the cross-context **state-preservation and receiver-reconciliation contract**. Use it when state must survive a chat/thread/operator/tool/session boundary or stale/ambiguous state can materially change the next action.
 
 - Common contract: `governance/CONTINUITY.md`
 - Repository development: `governance/continuity/REPOSITORY_WORK.md`
 - Image-production job: `governance/continuity/IMAGE_JOB.md`
 
-A continuity packet is continuity evidence, not project authority. A consequential receiver must fresh-reconcile before continuation and must not treat packet receipt as execution ownership.
+Continuity owns authority-vs-packet semantics, bounded dependencies, active situation state, decision/negative-boundary preservation, staleness, recoverability, and receiver `ACCEPTED` / `STALE_REPLAN` behavior.
 
-Do not create handoff ceremony for ordinary low-risk, single-context work.
+Do not create continuity ceremony for ordinary low-risk, single-context work.
 
-## 5. Architecture boundary
+## 5. Handoff routing
+
+Handoff is the **live transfer method** for constructing or consuming a consequential next-thread/next-operator/next-tool packet.
+
+For a consequential handoff, read `.agents/skills/handoff/SKILL.md` from current AIMAGE authority **before** constructing or consuming the packet.
+
+The handoff skill then routes to `governance/CONTINUITY.md` and the applicable continuity profile. Keep the responsibilities distinct:
+
+- handoff skill = when/how to transfer, packet construction, cold-start route, exact next action, practical receiver synthesis;
+- continuity = what state must survive, freshness/staleness semantics, dependency reconciliation, receiver acceptance.
+
+Do not bootstrap handoff semantics from a copy merely co-located with a packet, work branch, candidate, or old continuity ref. Resolve the current governing handoff skill first.
+
+A handoff packet is continuity evidence, not project authority. Packet receipt alone is not execution ownership.
+
+## 6. Architecture boundary
 
 Read `architecture/BOUNDARIES.md` before making or reviewing architecture that could blur responsibility between:
 
-1. continuity infrastructure;
+1. continuity/handoff infrastructure;
 2. Image Engine Architecture / Core;
 3. AIMAGE Features / Domain Capabilities.
 
@@ -61,9 +76,9 @@ Preserve the intended product dependency direction:
 
 `features/domain capabilities -> engine interfaces`
 
-Continuity may transport engine/feature state but must not become the owner of image-generation algorithms, prompt strategies, composition logic, or model-specific behavior.
+Continuity/handoff may transport engine/feature state but must not become the owner of image-generation algorithms, prompt strategies, composition logic, or model-specific behavior.
 
-## 6. Mutation safety
+## 7. Mutation safety
 
 Before a consequential repository mutation:
 
@@ -76,28 +91,32 @@ Before a consequential repository mutation:
 
 If fresh state contradicts the premise of the requested operation, reconcile the contradiction rather than forcing the stale plan.
 
-## 7. External sources and imported methods
+## 8. External sources and imported methods
 
-External repositories, papers, methods, and the historical `domato153/translation` source recorded in provenance are evidence/construction inputs only unless AIMAGE explicitly adopts their rules into an AIMAGE-owned governing file.
+External repositories, papers, methods, and the historical `domato153/translation` sources recorded in provenance are evidence/construction inputs only unless AIMAGE explicitly adopts their rules into an AIMAGE-owned governing file.
 
-Runtime AIMAGE work must not depend on `domato153/translation` merely to interpret continuity.
+Runtime AIMAGE continuity or handoff work must not depend on `domato153/translation` for interpretation or execution.
 
-Construction provenance for the current continuity adoption is recorded in `governance/continuity/SOURCE_PROVENANCE.md`.
+Construction provenance:
 
-## 8. Local instruction files
+- continuity adoption: `governance/continuity/SOURCE_PROVENANCE.md`
+- handoff adoption: `.agents/skills/handoff/references/SOURCE_PROVENANCE.md`
+
+## 9. Local instruction files
 
 A future directory may add its own `AGENTS.md` for subsystem-specific routing or constraints.
 
-A more specific `AGENTS.md` may specialize work inside its directory, but it must not silently override root authority, continuity, or architecture boundaries unless an AIMAGE governing surface explicitly delegates that authority.
+A more specific `AGENTS.md` may specialize work inside its directory, but it must not silently override root authority, continuity, handoff, or architecture boundaries unless an AIMAGE governing surface explicitly delegates that authority.
 
 Do not create directory-local `AGENTS.md` files before there is a real recurring subsystem need.
 
-## 9. Current canonical routes
+## 10. Current canonical routes
 
+- `.agents/skills/handoff/SKILL.md` — consequential handoff construction/consumption method
 - `governance/CONTINUITY.md` — cross-context continuity contract
 - `governance/continuity/REPOSITORY_WORK.md` — repository-work continuity profile
 - `governance/continuity/IMAGE_JOB.md` — image-job continuity profile
-- `architecture/BOUNDARIES.md` — continuity / engine / feature-domain responsibility boundary
+- `architecture/BOUNDARIES.md` — continuity/handoff / engine / feature-domain responsibility boundary
 - `bootstrap/PROJECT_SOURCE.md` — thin external GPT Project locator/bootstrap
 
 As the repository grows, add new routes here only when they are stable entry points. Keep detailed subsystem rules in their owning files rather than expanding this router into a second specification.
