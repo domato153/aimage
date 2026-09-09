@@ -67,7 +67,7 @@ Do not bootstrap handoff semantics from a copy merely co-located with a packet, 
 
 A handoff packet is continuity evidence, not project authority. Packet receipt alone is not execution ownership.
 
-## 6. Architecture boundary
+## 6. Architecture and product-plan routing
 
 Read `architecture/BOUNDARIES.md` before making or reviewing architecture that could blur responsibility between:
 
@@ -80,6 +80,14 @@ Preserve the intended product dependency direction:
 `features/domain capabilities -> engine interfaces`
 
 Continuity/handoff may transport engine/feature state but must not become the owner of image-generation algorithms, prompt strategies, composition logic, or model-specific behavior.
+
+For current Image Engine planning/design, also read:
+
+- `plans/WORKFLOW_TARGET.md` — intended end-to-end adaptive image-production workflow and product goals;
+- `plans/CAPABILITY_REUSE_MATRIX.md` — capability inventory and current `ADOPT / ADAPT / DESIGN` classification;
+- `plans/EXTERNAL_REUSE_PLAN.md` — acquisition modes, external candidate integration boundaries, licensing/provenance rules, and planned application.
+
+These planning files do not authorize implementation by themselves. Reconcile them with `governance/continuity/CURRENT.md` and the current user-authorized phase.
 
 ## 7. Mutation safety
 
@@ -105,6 +113,8 @@ Construction provenance:
 - continuity adoption: `governance/continuity/SOURCE_PROVENANCE.md`
 - handoff adoption: `.agents/skills/handoff/references/SOURCE_PROVENANCE.md`
 
+External image-production dependencies and method sources are governed by `plans/EXTERNAL_REUSE_PLAN.md` once that plan is accepted on current AIMAGE authority.
+
 ## 9. Local instruction files
 
 A future directory may add its own `AGENTS.md` for subsystem-specific routing or constraints.
@@ -121,6 +131,9 @@ Do not create directory-local `AGENTS.md` files before there is a real recurring
 - `governance/continuity/CURRENT.md` — current repository-work continuity state locator
 - `governance/continuity/IMAGE_JOB.md` — image-job continuity profile
 - `architecture/BOUNDARIES.md` — continuity/handoff / engine / feature-domain responsibility boundary
+- `plans/WORKFLOW_TARGET.md` — current end-to-end product workflow target
+- `plans/CAPABILITY_REUSE_MATRIX.md` — current capability reuse/design classification
+- `plans/EXTERNAL_REUSE_PLAN.md` — current external acquisition/integration plan
 - `bootstrap/PROJECT_SOURCE.md` — thin external GPT Project locator/bootstrap
 
 As the repository grows, add new routes here only when they are stable entry points. Keep detailed subsystem rules in their owning files rather than expanding this router into a second specification.
