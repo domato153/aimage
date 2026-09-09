@@ -64,7 +64,13 @@ class SQLiteMetadataRepository:
         if result.rowcount == 1:
             return
         existing = connection.execute(select(table).where(key_condition)).mappings().one()
-        mismatches = {name: (existing[name], value) for name, value in values.items() if existing[name] != value}
+        # created_at is repository observation metadata, not part of the immutable
+        # contract identity. Re-saving the exact same contract must therefore be idempotent.
+        mismatches = {
+            name: (existing[name], value)
+            for name, value in values.items()
+            if name != "created_at" and existing[name] != value
+        }
         if mismatches:
             raise ImmutableRecordConflictError(
                 f"immutable record {key_label!r} reused with different content: {sorted(mismatches)}"
