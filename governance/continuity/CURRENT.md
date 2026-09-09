@@ -1,238 +1,194 @@
 # AIMAGE Current Repository-Work Continuity
 
-Status: current repository-work continuity locator for the active planning/design/research slice. This file records decision-relevant current state; it does not replace `governance/CONTINUITY.md`, `governance/continuity/REPOSITORY_WORK.md`, root `AGENTS.md`, the handoff skill, or Image Engine specifications.
+Status: current repository-work continuity locator for the active implementation-planning preparation. This file records decision-relevant current state; it does not replace `governance/CONTINUITY.md`, `governance/continuity/REPOSITORY_WORK.md`, root `AGENTS.md`, the handoff skill, or Image Engine specifications.
 
-## 1. Authority snapshot
+## 1. Authority / locator status
 
 - Repository: `domato153/aimage`
 - Authoritative branch: `main`
-- Fresh accepted `main` used as the exact base for this bounded red-team candidate: `69e51bd3b250a20a9268a6c858a82b5862933297`
-- Bounded work branch: `aimage-stage/bounded-red-team-assurance`
+- Current factual `main` HEAD: **resolve fresh at receiver start**. Do not try to make this self-referential file encode its own eventual publication SHA.
+- Last reconciled accepted repository tree before this CURRENT repair: tree `f8c5c612eede55f0ea53de6d6ba61db0b5647e44`.
+- Canonical implementation-planning handoff packet:
+  - immutable commit: `ecfeef00d830d65e9235832adf05b1c21d2bfc16`
+  - path: `governance/continuity/handoffs/IMPLEMENTATION_PLANNING_NEXT_THREAD_2026-09-10.md`
 - Governing entrypoint: `AGENTS.md`
+- Handoff method: `.agents/skills/handoff/SKILL.md`
 - Continuity method: `governance/CONTINUITY.md`
 - Repository-work profile: `governance/continuity/REPOSITORY_WORK.md`
-- Handoff method: `.agents/skills/handoff/SKILL.md`
 - Architecture boundary: `architecture/BOUNDARIES.md`
 - Workflow target: `plans/WORKFLOW_TARGET.md`
 - Capability reuse classification: `plans/CAPABILITY_REUSE_MATRIX.md`
 - External acquisition/integration plan: `plans/EXTERNAL_REUSE_PLAN.md`
 - Base assurance plan: `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`
+- Bounded adversarial assurance: `plans/BOUNDED_RED_TEAM_ASSURANCE.md`
 - Semantic fusion plan: `plans/SEMANTIC_FUSION_PLAN.md`
 - Accepted semantic contracts: `plans/SEMANTIC_CONTRACTS.md`
-- Accepted semantic tabletop audit: `audits/SEMANTIC_CONTRACT_TABLETOP_2026-09-10.md`
-- Red-team assurance extension candidate: `plans/BOUNDED_RED_TEAM_ASSURANCE.md`
-- Current bounded red-team audit candidate: `audits/BOUNDED_PLAN_RED_TEAM_2026-09-10.md`
+- Accepted semantic tabletop evidence: `audits/SEMANTIC_CONTRACT_TABLETOP_2026-09-10.md`
+- Accepted bounded plan red-team evidence: `audits/BOUNDED_PLAN_RED_TEAM_2026-09-10.md`
+- Handoff cross-method review evidence: `audits/HANDOFF_CROSS_METHOD_AUDIT_2026-09-10.md`
 
-Fresh repository/platform state always governs current facts. Candidate files cannot authorize themselves. If this exact bounded planning set is adopted, the merge result becomes the new accepted factual base and the next receiver must fresh-reconcile it.
+Fresh repository/platform state always governs current facts. Historical construction SHAs inside immutable packets/audits are provenance, not aliases for current `main`.
 
 ## 2. Current phase and authorization
 
 Phase: **planning / design / research only**.
 
-No provider/core production implementation, dependency installation, external-source import, runtime package selection, provider-version pinning, or production execution is authorized by this state.
+The next bounded phase is **implementation planning**, not implementation.
 
-The previously accepted semantic-contract/tabletop slice remains valid. The current user-authorized bounded action was to red-team the plan from multiple angles, decide whether adversarial review belongs in the real assurance flow, and integrate it if appropriate.
+Authorized:
 
-That bounded action has now been executed to decision sufficiency on the candidate.
+- fresh reconciliation;
+- official/upstream research needed for runtime/dependency/provider selection;
+- bounded non-production reproduction/probing only when strictly needed for Gate B and allowed by current authority;
+- implementation architecture planning;
+- Gate-B due diligence;
+- concrete module/type/schema/test planning;
+- first thin OpenAI vertical-slice planning;
+- bounded red-team and independent plan audit;
+- continuity/planning updates needed to preserve the accepted result.
 
-## 3. Preserved accepted foundation
+Not authorized:
 
-Do not reopen without new evidence or explicit scope change:
+- production Image Engine/provider implementation;
+- dependency installation or lockfile mutation;
+- external source import/copy;
+- live provider integration as production work;
+- silently reopening accepted semantic architecture;
+- treating a finished implementation plan as self-authorization to code.
+
+## 3. Accepted foundation — do not redo without new evidence
+
+The following remain accepted unless fresh authority or implementation evidence exposes a concrete contradiction:
 
 - thin GPT Project bootstrap -> fresh root `AGENTS.md`;
 - AIMAGE-owned Continuity/Handoff with fresh reconciliation;
-- Continuity/Handoff separate from Image Engine product semantics;
-- dependency direction `features/domain capabilities -> engine interfaces`;
-- adaptive `plans/WORKFLOW_TARGET.md` with one-shot simplicity;
-- evidence-first external reuse and abstract-problem cross-domain search;
-- provider-native generation/editing performs actual image manipulation; AIMAGE does not build a custom image editor;
-- initial provider direction: OpenAI official SDK/API first, optional Diffusers, optional external ComfyUI;
-- existing Gate A-D assurance in `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`;
-- four-family provider-neutral semantic architecture in `plans/SEMANTIC_FUSION_PLAN.md`;
-- provider-neutral contracts in `plans/SEMANTIC_CONTRACTS.md`;
-- semantic tabletop verdict `PASS AFTER DESIGN REPAIR` with the four earlier repaired gaps: composite capability strategies, revision-bound/idempotent decisions, explicit artifact disposition, and tri-state validation.
+- Continuity/Handoff remains separate from Image Engine product semantics;
+- product dependency direction remains `features/domain capabilities -> engine interfaces`;
+- adaptive workflow preserves trivial one-shot simplicity;
+- provider/backend-native capabilities perform actual image generation/editing; AIMAGE does not build a custom image-edit renderer;
+- first hosted provider direction remains OpenAI official SDK/API;
+- Diffusers remains an optional local-provider direction;
+- ComfyUI remains an optional external backend/service direction;
+- broad external-reuse and cross-domain semantic search is closed at planning level unless a concrete measured gap reopens it;
+- mature external methods are generally reused as method/schema/reference patterns rather than forced runtime dependencies;
+- provider-neutral semantic architecture is four coherent contract families rather than custom generic frameworks;
+- `VisualIntentState` is the sole semantic SSoT;
+- `RenderSpec`, `RequirementSet`, `ResolutionResult`, `ExecutionPlan`, provider-native payloads/IDs/graphs, artifact/run records and validation reports are derived/evidence state;
+- semantic tabletop verdict is `PASS AFTER DESIGN REPAIR`;
+- bounded semantic-plan red-team verdict is `PASS AFTER ASSURANCE HARDENING`;
+- bounded Red-Team Challenge is a cross-cutting falsification step over Gate A-D, not Gate E and not a runtime subsystem;
+- final Gate-D integrated runtime V&V has **not** happened and no final system PASS is claimed.
 
-## 4. Semantic architecture remains accepted
+## 4. Fixed semantic / authority invariants
 
-The bounded red team did **not** find a new architecture-blocking contradiction requiring another semantic family or runtime framework.
+Implementation planning must preserve:
 
-The accepted ownership model remains:
+1. one semantic SSoT (`VisualIntentState`);
+2. exact semantic-revision traceability for derived objects;
+3. no silent loss/softening of mandatory intent or preservation obligations during compile, resolution, lowering, fallback, repair or provider replacement;
+4. approved baselines change only through explicit reopen/supersession;
+5. decisions are revision-bound and idempotent; stale/late decisions cannot overwrite newer state;
+6. rejected/superseded artifacts cannot resurrect through recency/resume;
+7. repair mutates only inside the authorized `MutationFrame` and regression-checks preserved dimensions;
+8. viewpoint-sensitive spatial relations use explicit/inherited reference frames; `viewer_deictic`, `subject_intrinsic`, `scene_world` and `screen_image` are not aliases;
+9. validation remains separate from enforcement/mutation and mandatory unevaluable checks remain `indeterminate` rather than pass;
+10. provider-native state never becomes semantic authority;
+11. domain packages depend on engine interfaces and cannot redefine core authority;
+12. historical plans/reports remain immutable evidence;
+13. composite execution may be legal but `ExecutionPlan` remains bounded, attempt-local and acyclic;
+14. trivial one-shot use must not inherit unnecessary planning/audit ceremony.
 
-`VisualIntentState -> Spatial/Domain profiles -> RenderSpec -> RequirementSet -> capability-strategy resolution -> ExecutionPlan -> provider/tool execution -> Artifact/Run -> ValidationReport -> accept OR MutationFrame -> re-resolution/edit -> revalidate`
+## 5. Accepted red-team hardening obligations
 
-Fixed authority rules remain:
+The implementation plan must explicitly cover all eight:
 
-- `VisualIntentState` is the semantic SSoT;
-- RenderSpec/ResolutionResult/ExecutionPlan are derived;
-- provider-native state never becomes semantic authority;
-- decisions are revision-bound/idempotent;
-- rejected artifacts cannot resurrect through recency/resume;
-- mandatory semantics cannot silently disappear in compile/resolution/lowering;
-- repair stays within its authorized MutationFrame and regression-checks preserved dimensions;
-- viewpoint-sensitive spatial relations require an explicit/inherited frame;
-- validation is tri-state and separate from enforcement;
-- domain content depends on engine interfaces rather than redefining core authority.
-
-## 5. Bounded red-team result
-
-Companion evidence: `audits/BOUNDED_PLAN_RED_TEAM_2026-09-10.md`.
-
-Verdict: **PASS AFTER ASSURANCE HARDENING**.
-
-The review intentionally combined lightweight top-down/bottom-up/control-action/tradeoff lenses based on NASA SFTA/FMEA, MIT STPA and the already accepted SEI ATAM approach. These are method/reference inputs only.
-
-The red team found that the accepted contracts can represent the attacked cases, but the assurance flow needed an explicit pre-adoption adversarial challenge rather than relying only on representative scenario coverage.
-
-### Material hardening obligations exposed
-
-1. **Fail-closed semantic compilation** — contradictory/incomplete mandatory semantics must not produce a legal executable RenderSpec/RequirementSet.
+1. **Fail-closed semantic compilation** — contradictory/incomplete mandatory semantics cannot produce a legal executable `RenderSpec`/`RequirementSet`.
 2. **Currentness fence** — old in-flight artifacts/reports/decisions cannot become current merely because they finish later than a newer semantic revision.
-3. **Conditional capability matching** — mandatory resolution must match exact target/model/version/applicability/limits/evidence, not only a capability name.
-4. **Validation-oracle challenge** — evaluator identity/provenance/correlation/calibration must be visible for material mandatory validation; provider self-report is not silently independent proof.
-5. **Bounded repair policy** — detect non-improvement/oscillation and stop/escalate under a bounded attempt/cost policy while retaining best-known good work.
-6. **Bounded composite execution** — ExecutionPlan remains attempt-local and acyclic; human waits, repair loops and resume belong to the generic lifecycle/orchestration layer.
-7. **Final-artifact regression validation** — preservation obligations apply after the complete composite strategy, not only individual steps.
-8. **Capability-drift race handling** — material capability changes after resolution require freshness check/re-resolution or bounded failure before execution.
+3. **Conditional capability matching** — mandatory resolution matches exact target/model/version/applicability/limits/evidence, not only a capability name.
+4. **Validation-oracle challenge** — evaluator identity/provenance/correlation/calibration and acceptable evidence class are visible where material.
+5. **Bounded repair** — non-improvement/oscillation detection, bounded attempt/cost or equivalent stop policy, best-known artifact retention, and escalation.
+6. **Bounded composite execution** — `ExecutionPlan` remains attempt-local/acyclic; human waits, durable resume and repair loops stay in generic lifecycle/orchestration.
+7. **Final-artifact regression validation** — preservation obligations are checked on the final externally visible composite result, not only intermediate steps.
+8. **Capability-drift race handling** — material capability changes after resolution trigger freshness/compatibility check, re-resolution or bounded failure before semantic degradation.
 
-These are mostly implementation-plan/test obligations, not reasons to add new semantic subsystems.
+## 6. Handoff / recoverability status
 
-## 6. Attacks explicitly checked
+Canonical packet publication is complete and immutable at `ecfeef00...` + the path in section 1.
 
-The bounded audit challenged at least:
+Decision-relevant state required for the next action is **DURABLE** in repository authority. No hidden chat-local, provider-session-only, cache-only, or machine-local artifact is required for continuation.
 
-- contradictory equally authoritative mandatory intent;
-- old rev-N render/validation finishing after rev-N+1 exists;
-- provider capability name matching while exact operating conditions do not;
-- generator/provider effectively grading its own output;
-- repair oscillation/cost growth;
-- composite strategy expanding into a second workflow engine;
-- late compositor/finishing step regressing locked geometry;
-- lock/baseline accumulation making the job unsatisfiable;
-- domain plugin attempting to become core authority;
-- provider capability changing after resolution but before execution;
-- schema migration dropping unknown mandatory semantics;
-- assurance ceremony destroying the trivial one-shot path.
+The packet's embedded construction snapshot is intentionally historical. Receiver currentness must come from fresh `main`, current governing methods, CURRENT, and bounded discovery for newer work touching the same implementation-planning/runtime/dependency/semantic/provider/red-team boundary.
 
-No new semantic ownership conflict remained after applying the hardening rules above.
+Cross-method audit result:
 
-## 7. Assurance-flow decision
+- I-PASS/SBAR structured-handoff coverage: PASS;
+- ReqIF-style cross-boundary semantic interchange: PASS without adopting ReqIF runtime/schema;
+- NASA requirements traceability: PASS, with a nonblocking recommendation for future dense prompt derivatives to run a lightweight semantic-equivalence check;
+- NASA configuration status accounting: stale CURRENT metadata was the one concrete defect and this update repairs it;
+- optimistic-concurrency/currentness analogy: existing fresh reconciliation + revision fencing is adequate;
+- full GSN assurance graph for handoff is rejected as unnecessary ceremony.
 
-The red-team method is appropriate and is now represented by `plans/BOUNDED_RED_TEAM_ASSURANCE.md` as a **cross-cutting extension** of the existing Gate A-D system.
+## 7. Exactly one next bounded action
 
-It does not create Gate E or a runtime subsystem.
+**Prepare and independently audit one concrete implementation plan only.**
 
-### Trigger
+The planning action must:
 
-Required:
+1. choose and justify implementation language/runtime;
+2. select the minimum concrete dependency set;
+3. execute Assurance Gate B for every actual dependency/provider integration using fresh official/upstream evidence;
+4. map repository/modules and concrete schemas/types directly to `plans/SEMANTIC_CONTRACTS.md` while preserving `features/domain -> engine interfaces` and keeping provider-native state below the semantic layer;
+5. define a thin end-to-end first OpenAI vertical slice covering one-shot, composition approval/baseline, viewer-relative placement, RenderSpec compile, capability resolution/lowering, execution/artifact/run linkage, validation, explicit provider failure/reroute/unsatisfied behavior and minimal-delta repair;
+6. define contract/integration tests for fixed semantic invariants, the four tabletop repairs and the eight red-team hardening obligations;
+7. define stop/go, rollback/fallback and provider/dependency replacement boundaries;
+8. run `plans/BOUNDED_RED_TEAM_ASSURANCE.md` against the completed implementation plan, repair material findings, then rerun only affected lenses;
+9. independently audit the final plan against fresh `main`, `architecture/BOUNDARIES.md`, external-reuse/assurance plans, semantic contracts and concurrent work;
+10. update planning/continuity authority only if the planning candidate passes and current user authority allows adoption.
 
-- before adopting a material architecture/semantic-contract change;
-- before authorizing implementation from an implementation plan;
-- before final integrated system `PASS`;
-- after a material provider/dependency/authority-boundary change invalidates prior assumptions.
+Do **not** begin production implementation in this slice.
 
-Not required for ordinary low-risk documentation edits, trivial image jobs, every provider call, or every repair attempt.
+## 8. Completion / acceptance criteria
 
-### Method
+Implementation planning is complete only when:
 
-Applicable reviews challenge six lenses:
+1. runtime/language selection has comparative justification;
+2. every selected concrete dependency/provider integration has Gate-B evidence with no blocking `UNRESOLVED` item;
+3. concrete module/type/schema ownership maps cleanly to accepted semantic contracts without a competing semantic owner;
+4. provider-native IDs/payloads remain execution/evidence state only;
+5. the first OpenAI vertical slice is genuinely thin and end-to-end and does not require optional Diffusers/ComfyUI to prove the core path;
+6. test inventory covers accepted semantic invariants, the prior tabletop repairs, and all eight red-team obligations;
+7. stop/go, rollback/fallback and replacement boundaries are explicit;
+8. implementation-plan red-team returns `PASS` or `PASS_AFTER_REPAIR`;
+9. fresh independent repository/architecture audit finds no conflicting newer work or boundary inversion;
+10. the result is preserved in repository planning/continuity state;
+11. production implementation has still not begun.
 
-1. top-event/authority failure;
-2. component/interface failure propagation;
-3. missing/duplicate/late/stale/out-of-order control actions;
-4. evidence/oracle failure;
-5. tradeoff/complexity failure;
-6. replacement/resume/in-flight race failure.
+Evidence-sufficiency exit condition: once concrete runtime/dependency/module/test/vertical-slice choices meet these criteria and the remaining uncertainties are explicit implementation-time empirical checks that do not change architecture, stop planning. Do not continue research for bibliography completeness.
 
-Findings are classified `BLOCKING`, `REPAIR_BEFORE_ADOPTION`, `DEFERRED_IMPLEMENTATION_RISK`, or `REJECTED_ATTACK`.
+## 9. Expected transition
 
-Run one bounded pass, repair material findings, then rerun only affected lenses once. Continue further only if a materially new failure class appears. The objective is decision sufficiency, not attack-count completeness.
-
-## 8. Anti-overengineering decision
-
-The red team explicitly rejected adding:
-
-- a fault-tree/FMEA/STPA runtime or general analysis engine;
-- formal hazard analysis for every image request;
-- a second semantic authority for adversarial state;
-- mandatory independent-human validation for every artifact;
-- another workflow engine inside ExecutionPlan;
-- arbitrary security/audit gates unrelated to demonstrated AIMAGE invariants.
-
-Preferred mitigation order is:
-
-1. prove an existing contract blocks the attack;
-2. add a contract/integration test;
-3. add a small invariant/failure rule;
-4. add bounded implementation policy;
-5. only then change architecture.
-
-## 9. Assurance status after red team
-
-### Gate A — semantic/capability coverage
-
-Previously **PASS** for the bounded semantic design. No new uncovered semantic family was found.
-
-### Gate B — concrete acquisition due diligence
-
-Still **not executed by design** for implementation dependencies. It remains mandatory in implementation planning.
-
-### Gate C — architecture scenarios
-
-Previously **PASS at design/tabletop level**. The red team adds adversarial falsification but does not replace Gate C.
-
-### Cross-cutting bounded Red-Team Challenge
-
-**PASS AFTER ASSURANCE HARDENING** for the currently accepted semantic architecture.
-
-### Gate D — final integrated V&V
-
-Still **design coverage only**. Retained red-team attacks must become concrete implementation tests/fault injections/combinatorial factors where applicable. Final system PASS is not claimed.
-
-## 10. Exactly one next bounded action after adoption
-
-**Prepare and independently audit the implementation plan only: choose the implementation language/runtime and minimum concrete packages, execute Assurance Gate B for every actual dependency/provider integration, map repository/modules and contract tests directly to the accepted semantic contracts, define the first thin OpenAI vertical slice, and run the bounded Red-Team Challenge against that implementation plan before any production implementation authorization.**
-
-The first implementation plan must cover one-shot, composition approval, viewer-relative placement, provider reroute/failure behavior and minimal-delta repair, plus the eight red-team hardening obligations in section 5.
-
-Do **not** begin production implementation during that planning slice.
-
-## 11. Completion / acceptance criteria for the next action
-
-The implementation-planning slice is complete only when:
-
-1. language/runtime choice is justified against semantic contracts, provider SDKs, optional local/backend needs, testing and maintainability;
-2. every selected dependency has exact acquisition mode, license/provenance, version-selection policy, coupling, fallback/replacement and AIMAGE-owned contract-test obligations under Gate B;
-3. no dependency is selected merely because an external method inspired the architecture;
-4. module boundaries preserve `features/domain -> engine interfaces` and provider-native state below the semantic layer;
-5. concrete schemas/types map one-to-one to `plans/SEMANTIC_CONTRACTS.md` without competing owners;
-6. contract tests cover all fixed semantic invariants and prior tabletop repairs;
-7. implementation-plan tests/policies explicitly cover fail-closed compilation, currentness fencing, exact capability applicability/evidence, evaluator provenance/calibration, bounded repair, bounded attempt-local ExecutionPlan, final-artifact regression and capability-drift races;
-8. the first OpenAI vertical slice is thin/end-to-end and does not prematurely require optional Diffusers/ComfyUI;
-9. exact implementation stop/go and rollback/fallback boundaries are explicit;
-10. the complete implementation plan passes ordinary Gate-B/C-relevant audit plus `plans/BOUNDED_RED_TEAM_ASSURANCE.md` with verdict `PASS` or `PASS_AFTER_REPAIR`;
-11. a fresh independent repository/architecture audit finds no conflicting newer work or boundary inversion;
-12. implementation remains unauthorized until that planning/audit slice is adopted and current user authority explicitly allows implementation.
-
-## 12. Expected transition
-
-If the next bounded planning slice passes, AIMAGE will have:
+If the next planning slice passes, AIMAGE will have:
 
 - fixed provider-neutral semantic architecture;
-- tabletop and adversarial design evidence;
-- concrete implementation/runtime/dependency plan with Gate-B evidence;
-- explicit red-team defenses/tests;
-- one bounded first OpenAI vertical-slice implementation target.
+- accepted tabletop + adversarial design evidence;
+- concrete runtime/language and minimum dependency plan;
+- Gate-B records for selected dependencies/provider integration;
+- concrete module/schema/test layout;
+- one bounded first OpenAI vertical-slice target;
+- explicit defenses/tests for the retained adversarial attack classes.
 
-Only then should production implementation begin under a separate authorized implementation slice.
+Production implementation begins only in a separate user-authorized implementation slice.
 
-## 13. Stop / replan conditions
+## 10. Stop / replan conditions
 
-Stop/replan if:
+Return `STALE_REPLAN` or stop/replan if:
 
-- fresh authority materially changes product/phase/reuse boundaries;
-- newer work touches the same implementation-planning/red-team surface and makes the next action non-unique;
-- implementation research shows a selected runtime/package cannot preserve semantic contracts;
-- Gate B exposes a license/security/maintenance/coupling problem requiring architecture change;
-- bounded red-team finds a `BLOCKING` failure that cannot be repaired within the implementation plan;
-- a provider capability required by the first vertical slice cannot be reproduced or safely approximated;
-- the user changes phase or explicitly authorizes a different next action.
+- fresh authority or a governing method materially changes so the implementation-planning action is no longer unique;
+- newer open PR/active work touches the same implementation-planning/runtime/dependency/provider/semantic/red-team boundary and changes ordering or ownership;
+- a selected runtime/package cannot preserve accepted semantic contracts without leakage or architecture inversion;
+- Gate B finds a material license/security/provenance/maintenance/replacement/coupling blocker;
+- a provider capability essential to the first vertical slice cannot be reproduced or safely represented and no legal explicit fallback exists;
+- bounded red-team finds an unrepaired `BLOCKING` issue;
+- the user changes phase or scope.
+
+Harmless movement in unrelated branches/docs does not invalidate the route.
