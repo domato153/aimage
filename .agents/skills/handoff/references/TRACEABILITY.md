@@ -1,6 +1,6 @@
 # AIMAGE Handoff Migration Traceability
 
-Purpose: prove that the generic maintenance-handoff behavior was deliberately retained, adapted, or excluded rather than copied mechanically from `domato153/translation`.
+Purpose: prove that the generic maintenance-handoff behavior was deliberately retained, adapted, or excluded rather than copied mechanically from `domato153/translation`, and record later external-method hardening without turning external sources into runtime authority.
 
 | ID | Source concept | Decision | AIMAGE owner / treatment |
 |---|---|---|---|
@@ -39,6 +39,23 @@ Purpose: prove that the generic maintenance-handoff behavior was deliberately re
 | H-033 | Promotion/proof-receipt/tx/work/draft branch machinery | DROP | translation-specific lifecycle; AIMAGE may independently adopt future equivalents |
 | H-034 | Image-job geometry/reference/render state | AIMAGE EXTENSION | detailed ownership remains `governance/continuity/IMAGE_JOB.md`; generic handoff only transports it |
 | H-035 | Engine/feature architecture state | AIMAGE EXTENSION | generic handoff can transport it but does not own architecture semantics |
+| H-036 | Dense handoff should expose most important operational state near the top | EXTERNAL HARDENING / ADAPT | `SKILL.md` §4.4 Operational Header; informed by Google SRE/NASA, not runtime-dependent on them |
+| H-037 | Transfer has a completion/success criterion, not only a next action | EXTERNAL HARDENING / ADAPT | `SKILL.md` §4.4/§6/§11; mandatory when finish condition is not self-evident |
+| H-038 | Timelines/urgency/commitments and ownership transferred when material | EXTERNAL HARDENING / ADAPT | conditional sections in `SKILL.md` §4.4 and packet template; no invented deadlines |
+| H-039 | Receiver synthesis/read-back strengthens acknowledgment before ownership | EXTERNAL HARDENING / RETAIN+STRENGTHEN | `SKILL.md` §6/§7; maps to existing `ACCEPTED` gate rather than importing clinical ceremony |
+| H-040 | Successor handoff states material delta from predecessor | EXTERNAL HARDENING / AIMAGE EXTENSION | `SKILL.md` §4.4/§8; improves supersession usability |
+| H-041 | Handoff context is filtered; durable project/application state remains in its owning system | EXTERNAL HARDENING / ADAPT | `SKILL.md` §4.5; informed by agent handoff input-filter/context separation |
+| H-042 | Research/review/design handoff needs evidence-sufficiency / exit condition | EXTERNAL HARDENING / AIMAGE EXTENSION | `SKILL.md` §9 + current method-hardened cross-domain packet |
+
+## External hardening evidence boundary
+
+The external-method audit is preserved at:
+
+- `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
+
+It records evidence from Google SRE, AHRQ TeamSTEPPS/I-PASS/SBAR, NASA mission-operations/human-factors handover work, and OpenAI Agents SDK handoff/context-filtering design.
+
+These sources are **audit/construction evidence only**. Their domain-specific fields, roles, mnemonics, synchronous-overlap practices, or SDK runtime behavior are not imported into AIMAGE unless explicitly represented in the AIMAGE-owned skill above.
 
 ## Dependency-closure result
 
@@ -50,4 +67,4 @@ The AIMAGE handoff method requires only:
 - one applicable AIMAGE continuity profile;
 - the live AIMAGE authority/artifacts needed by the concrete handoff.
 
-No runtime edge points to `domato153/translation`, its maintenance skill, its tests, its CI, its batch workflow, or its translation seam protocol.
+No runtime edge points to `domato153/translation`, its maintenance skill, its tests, its CI, its batch workflow, its translation seam protocol, or any external handoff source used during later audit/hardening.
