@@ -46,9 +46,10 @@ def compile_render_spec(
     if conflicts:
         raise SemanticCompileError(f"contradictory mandatory semantics: {conflicts}")
 
+    normalized_output = dict(output_contract or {"media_type": "image/png", "size": "1024x1024"})
     intent_dump = intent.model_dump(mode="json")
     spatial_dump = spatial_profile.model_dump(mode="json") if spatial_profile else None
-    source_digest = _digest({"intent": intent_dump, "spatial": spatial_dump})
+    source_digest = _digest({"intent": intent_dump, "spatial": spatial_dump, "output_contract": normalized_output})
     authority_digest = _digest([binding.model_dump(mode="json") for binding in intent.authority_bindings])
 
     obligations: list[SemanticObligation] = [
@@ -109,5 +110,5 @@ def compile_render_spec(
         preservation_obligations=preservation,
         creative_freedoms=creative_freedoms,
         input_artifact_refs=input_refs,
-        output_contract=dict(output_contract or {"media_type": "image/png", "size": "1024x1024"}),
+        output_contract=normalized_output,
     )

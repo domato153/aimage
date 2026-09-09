@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-09-10",
+  "implementation_branch": "aimage-stage/first-openai-vertical-slice",
+  "installation_gate": {
+    "status": "PENDING_EXACT_RESOLUTION",
+    "rule": "No production/CI dependency installation from this registry until an exact transitive lock plus artifact-hash/security review is recorded. Source code may target these Gate-B-selected interfaces before that acquisition event."
+  },
+  "components": [
+    {
+      "component_id": "python-openai",
+      "name": "openai",
+      "version": "3.11.0",
+      "acquisition_mode": "official_package_sdk",
+      "upstream": "https://github.com/openai/openai-python",
+      "distribution": "https://pypi.org/project/openai/3.11.0/",
+      "license": "Apache-2.0",
+      "runtime_role": "required_provider_adapter_transport",
+      "trusted_publishing": true,
+      "wheel_sha256": "2fc169442feafd535f4959605b42d47bc922216385a6d2473b0d47956691d9fd",
+      "source_commit": "41f0a2317759e8796ccfbde75536bd42e4aca7a2",
+      "replacement_boundary": "providers/openai only; engine contracts remain provider-neutral"
+    },
+    {
+      "component_id": "pydantic",
+      "name": "pydantic",
+      "version": "2.13.5",
+      "acquisition_mode": "official_package",
+      "distribution": "https://pypi.org/project/pydantic/2.13.5/",
+      "license": "MIT",
+      "runtime_role": "contract_representation_validation",
+      "trusted_publishing": true,
+      "wheel_sha256": "346a034f080da3755d8e9cb5e00e8b07de1d39e4f6e2c87d8ab7cafa0b269a73",
+      "source_commit": "001dea020e0809844e5b17666432c9135a976f46",
+      "replacement_boundary": "contract codec/validation; never semantic or migration authority"
+    },
+    {
+      "component_id": "sqlalchemy",
+      "name": "SQLAlchemy",
+      "version": "2.0.52",
+      "acquisition_mode": "official_package",
+      "distribution": "https://pypi.org/project/SQLAlchemy/2.0.52/",
+      "license": "MIT",
+      "runtime_role": "sqlite_metadata_repository",
+      "trusted_publishing": false,
+      "artifact_hash_status": "pending_exact_platform_lock",
+      "replacement_boundary": "engine MetadataRepository interface"
+    },
+    {
+      "component_id": "alembic",
+      "name": "alembic",
+      "version": "1.19.2",
+      "acquisition_mode": "official_package",
+      "distribution": "https://pypi.org/project/alembic/1.19.2/",
+      "license": "MIT",
+      "runtime_role": "relational_schema_migration",
+      "artifact_hash_status": "pending_exact_platform_lock",
+      "replacement_boundary": "persistence/sqlite only; not semantic schema migration authority"
+    },
+    {
+      "component_id": "pytest",
+      "name": "pytest",
+      "version": "9.1.1",
+      "acquisition_mode": "dev_package",
+      "distribution": "https://pypi.org/project/pytest/9.1.1/",
+      "license": "MIT",
+      "runtime_role": "test_only",
+      "artifact_hash_status": "pending_exact_platform_lock"
+    },
+    {
+      "component_id": "pytest-asyncio",
+      "name": "pytest-asyncio",
+      "version": "1.4.0",
+      "acquisition_mode": "dev_package",
+      "distribution": "https://pypi.org/project/pytest-asyncio/1.4.0/",
+      "license": "Apache-2.0",
+      "runtime_role": "async_test_only",
+      "trusted_publishing": true,
+      "wheel_sha256": "933ca923a23075a87fb7070c0ec272a6848489824d887c85c812670932835aa1"
+    },
+    {
+      "component_id": "openai-sunburst-snapshot",
+      "name": "GPT-Image-2.5 Sunburst snapshot",
+      "version": "gpt-image-2.5-sunburst-2026-09-08",
+      "acquisition_mode": "external_provider_capability",
+      "distribution": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst",
+      "license": "provider_service_terms",
+      "runtime_role": "first_hosted_image_target",
+      "evidence_class": "declared_official_documentation",
+      "reproduction_status": "pending_credentialed_generate_and_edit_smoke",
+      "replacement_boundary": "ProviderCapabilityDescriptor + OpenAIAdapter"
+    }
+  ]
+}
