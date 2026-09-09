@@ -4,11 +4,18 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - "src/**"
+      - "tests/**"
+      - "migrations/**"
+      - "pyproject.toml"
+      - "alembic.ini"
       - "requirements.txt"
       - "requirements-dev.txt"
       - "requirements-lock/**"
       - "tools/dependency_evidence.py"
       - "tools/openai_smoke.py"
+      - "governance/external_components.json"
+      - "governance/evidence/**"
       - ".github/workflows/gate-b-dependency-evidence.yml"
   workflow_dispatch:
 
