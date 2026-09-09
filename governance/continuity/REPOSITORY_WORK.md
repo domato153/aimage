@@ -22,6 +22,15 @@ Record only fields that materially affect continuation:
 - exactly one next action and rationale;
 - stop/replan condition.
 
+## Phase boundary
+
+The recorded/currently authorized phase is part of scope, not descriptive metadata.
+
+- `design`, `review`, or `evaluation` does not authorize repository mutation/implementation unless the current user instruction or an already-authoritative AIMAGE mechanism explicitly expands the phase.
+- Finding an obvious implementation while reviewing does not authorize crossing into implementation.
+- If a handoff's next action crosses the currently authorized phase, the receiver must not execute it merely because the packet says so; reconcile current user authorization and return `STALE_REPLAN` when the next action is no longer valid.
+- A stricter AIMAGE governing rule wins.
+
 ## Dependency and supersession scope
 
 A repository handoff should normally re-check:
@@ -52,10 +61,10 @@ Do not invent proof-receipt or promotion machinery merely because the source con
 A fresh receiver must be able to state, in plain language:
 
 - what repository state is current;
-- what phase it is in;
+- what phase is currently authorized;
 - what remains unresolved;
 - the one next repository action;
 - why that action is next;
-- what movement or contradiction would force re-planning.
+- what movement, contradiction, or phase-boundary conflict would force re-planning.
 
-Only after this survives fresh reconciliation should consequential repository mutation continue.
+Only after this survives fresh reconciliation should consequential repository mutation continue, and only when the current phase authorizes that mutation.
