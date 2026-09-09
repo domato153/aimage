@@ -2,7 +2,7 @@
 
 This Project source is intentionally thin.
 
-1. Treat the canonical AIMAGE GitHub repository as the long-lived authority. Do not duplicate the full engine, feature, or continuity specification into Project source.
+1. Treat the canonical AIMAGE GitHub repository as the long-lived authority. Its default authoritative branch is `main` unless current AIMAGE authority explicitly delegates another owner/ref for a bounded purpose. Do not duplicate the full engine, feature, or continuity specification into Project source.
 2. At the start of consequential AIMAGE work, fresh-read the current repository authority and live state needed for the requested task. At minimum, resolve the current governing continuity method before consuming a handoff.
 3. If a canonical handoff locator is provided, open it, then reconcile it against fresh AIMAGE authority/live state before consequential continuation. A handoff is continuity evidence, not authority.
 4. Follow `governance/CONTINUITY.md` and the applicable profile under `governance/continuity/`.
@@ -14,3 +14,4 @@ This Project source is intentionally thin.
 10. External repositories and methods recorded in provenance are read-only construction/audit sources unless AIMAGE explicitly adopts their rules into its own canonical files.
 
 Canonical repository: `domato153/aimage`
+Canonical authority branch: `main`
