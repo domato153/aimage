@@ -1,467 +1,563 @@
 # AIMAGE External Reuse and Integration Plan
 
-Status: planning/design. This document defines how externally existing capabilities may enter AIMAGE. It does not authorize implementation by itself.
+Status: planning/design after capability-first cross-domain reuse re-audit. This document defines what external capability AIMAGE intends to use, how it enters the architecture, what stays optional/reference-only, and what must remain replaceable. It does not authorize implementation.
 
 ## 1. Goal
 
-AIMAGE should not redesign solved problems merely to keep the repository self-contained. It should also not become an uncontrolled collage of third-party repositories.
+AIMAGE should neither redesign solved problems nor become an uncontrolled collage of third-party systems.
 
-The integration objective is:
+Integration rule:
 
-> reuse mature external capability at the narrowest stable boundary, preserve exact provenance and licensing, keep provider/domain semantics out of the core, and internalize only the AIMAGE semantics that must remain authoritative and replaceable.
+> reuse mature external capability at the narrowest stable boundary; preserve exact provenance/licensing; keep provider/domain-specific state out of canonical core semantics; and retain only AIMAGE semantics whose absence would remove real user-visible or cross-provider control.
+
+The accepted capability classifications live in `plans/CAPABILITY_REUSE_MATRIX.md`. Reuse/acquisition and final integration assurance follow `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`.
 
 ## 2. Acquisition modes
 
-Every external reuse decision must choose exactly one primary acquisition mode.
+Every external reuse decision selects one primary acquisition mode.
 
 ### A — Official package / SDK dependency
 
-Use when a maintained library is the intended public integration surface.
-
-Examples:
-
-- OpenAI official SDK;
-- Hugging Face Diffusers for optional local inference.
+Use when a maintained public package is the intended integration surface.
 
 Rules:
 
-- depend on a released package/version range appropriate to the implementation language;
-- record package, version, upstream repository, license identifier, and local adapter owner;
-- use only public documented APIs unless a specific exception is reviewed;
-- isolate the dependency behind an AIMAGE interface so replacement does not rewrite core state semantics;
-- tests must distinguish AIMAGE adapter behavior from upstream library correctness.
+- pin an appropriate released version/range during implementation;
+- record package/version/upstream/license/adapter owner;
+- use documented public APIs;
+- isolate behind an AIMAGE interface;
+- test AIMAGE adapter behavior independently of upstream correctness.
+
+Initial uses: OpenAI official SDK; optional Hugging Face Diffusers.
 
 ### B — External service / backend adapter
 
-Use when the external system is better treated as a separately installed/running service.
-
-Primary example: ComfyUI.
+Use when the external system should remain separately installed/running.
 
 Rules:
 
-- do not vendor or link external service source into AIMAGE core merely to simplify setup;
-- communicate through its documented external interface;
-- treat service availability/version/capabilities as provider state, not AIMAGE authority;
-- make the dependency optional unless the architecture explicitly promotes it to required infrastructure;
-- preserve a capability/fallback path when the backend is absent.
+- do not vendor service source into AIMAGE merely for convenience;
+- communicate through documented external interfaces;
+- treat version/capability/availability as provider state;
+- make optional unless architecture explicitly changes;
+- preserve explicit absence/fallback behavior.
 
-For GPL systems such as ComfyUI, this process boundary also avoids unnecessary source-copy coupling. It is not a substitute for legal review if distribution later bundles or modifies the external program.
+Initial use: ComfyUI.
 
 ### C — Selected permissive source import
 
-Use only for small, clearly useful source units under a compatible permissive license where direct reuse is cheaper and safer than reimplementation.
+Use only for a small exact source unit when direct reuse is demonstrably cheaper/safer than a normal dependency or small reimplementation.
 
-Rules before import:
+Before import:
 
-1. identify exact upstream repository and immutable commit/tag;
-2. verify license at repository and selected-file level;
-3. inspect transitive imports/dependencies for hidden coupling;
-4. prove the selected code is generic enough for AIMAGE;
-5. record original path and upstream identity;
-6. preserve required license/copyright notices;
-7. import only the bounded files/functions required;
-8. adapt them behind an AIMAGE-owned interface;
-9. add tests derived from AIMAGE requirements, not only upstream tests;
-10. document how future upstream changes are evaluated rather than automatically mirrored.
+1. exact repository + immutable ref;
+2. repository/file license check;
+3. transitive import/dependency review;
+4. generic-fit proof;
+5. exact selected paths;
+6. required notices/attribution;
+7. bounded AIMAGE owner/interface;
+8. AIMAGE-owned tests;
+9. update/replacement policy.
 
-Never copy a whole repository because one utility is useful.
+**No source import is required by the initial architecture.** Nori/GenAI utility code remains reference/method evidence by default; reopen C only if implementation proves a measured gap.
 
 ### D — Interoperability artifact / schema snapshot
 
-Use for externally defined workflow JSON, templates, schemas, or data formats when interoperability is the goal.
+Use when compatibility with an external format is itself valuable.
 
 Rules:
 
-- pin the upstream format version or commit;
-- record whether the file is copied, generated, or only referenced;
-- validate imported artifacts before use;
-- keep the external format at the adapter edge;
-- convert to/from AIMAGE-native contracts rather than making the external format canonical core state.
+- pin external format/ref;
+- validate on import;
+- keep format at adapter/interoperability edge;
+- convert to/from AIMAGE contracts;
+- never make the external format canonical job state.
 
-Primary example: selected MIT ComfyUI workflow templates/blueprints for the ComfyUI adapter.
+Possible uses: selected MIT ComfyUI workflows; future OpenUSD/OpenAssetIO interchange artifacts.
 
-### E — Clean-room method adaptation
+### E — Clean-room method/schema adaptation
 
-Use when the useful asset is a method/pattern, or when source licensing is incompatible with direct reuse.
+Use when the useful asset is a mature method, architectural pattern, data-model principle or incompatible-license idea rather than runtime code.
 
 Rules:
 
-- record the source as design evidence;
-- extract only the high-level behavior/problem-solving principle;
-- write an AIMAGE-native specification in AIMAGE terminology;
-- do not copy source code or distinctive source text;
-- validate the new implementation against AIMAGE-owned tests and requirements;
-- do not pretend clean-room adaptation is an upstream implementation.
+- cite external source as design evidence;
+- extract behavior/principle, not distinctive code/text;
+- specify result in AIMAGE terminology;
+- validate against AIMAGE requirements;
+- do not claim the result is the upstream implementation.
 
-Primary examples:
-
-- Krita AI Diffusion UX/control patterns under GPL-3.0;
-- style-consistency-ai methods under PolyForm Noncommercial 1.0.0.
+This is the dominant mode for the cross-domain standards/patterns below.
 
 ### F — Reference only
 
-Use when a source supports a design decision but provides nothing that should be integrated.
+Use when a source justifies or challenges design but supplies nothing that should be integrated.
 
-Reference-only material stays in research/provenance and never becomes a runtime dependency.
+Reference-only material is neither runtime authority nor source dependency.
 
-## 3. Provenance record for external dependencies/imports
+## 3. External component/provenance registry design
 
-Before implementation, define an AIMAGE external-component registry. Each accepted external component should eventually record at least:
+Before implementation installs/copies/bundles any concrete component, create a machine-readable AIMAGE external-component registry containing at least:
 
 - `component_id`;
 - `name`;
 - `upstream_url`;
-- `upstream_ref` / version;
-- immutable commit/digest when applicable;
+- `upstream_ref` or version;
+- immutable commit/digest where applicable;
 - acquisition mode;
-- SPDX-style license identifier or reviewed license label;
-- selected paths/artifacts if vendored;
-- AIMAGE owner/adapter;
-- runtime required vs optional;
+- SPDX-style license/review label;
+- selected paths/artifacts for copied material;
+- AIMAGE adapter/owner;
+- runtime required/optional/reference-only;
 - transitive dependency note;
+- currentness/security review date;
 - update policy;
 - replacement/fallback boundary;
-- validation status.
+- validation evidence identity.
 
-This follows the useful supply-chain principle behind SLSA `resolvedDependencies`: do not record only a floating repository name when the exact source identity can affect reproducibility or trust.
+Use SLSA resolved-dependency identity and SPDX component/license concepts as the external model references; do not invent a competing software-supply-chain ontology.
 
-Reference:
+Sources:
 - https://slsa.dev/spec/v1.2/
+- https://spdx.github.io/spdx-spec/
 
-For material open-source dependencies, OpenSSF Scorecard may be used as one input to maintenance/security review. A score is evidence, not automatic acceptance/rejection authority.
+Material OSS dependencies should also be reviewed proportionally under NIST SSDF/C-SCRM guidance and may use OpenSSF Scorecard as one security/maintenance signal.
 
-Reference:
+Sources:
+- https://csrc.nist.gov/pubs/sp/800/218/final
+- https://csrc.nist.gov/Projects/cyber-supply-chain-risk-management/publications
 - https://openssf.org/projects/scorecard/
 
-## 4. Candidate-specific acquisition decisions
+## 4. Concrete provider/tool acquisition decisions
 
-### 4.1 OpenAI image generation and official SDK
+### 4.1 OpenAI image provider
 
 Classification: **ADOPT as provider integration**.
 
-Evidence:
+Acquisition: mode A, official SDK/API.
 
-- OpenAI's image API supports generation and edits.
-- The Responses API supports conversational/multi-step image generation and high-fidelity multi-turn editing.
-- Image-reference workflows can accept one or more input images.
-- Masked editing exists, while mask adherence is guidance rather than exact geometric guarantee.
-- Current GPT Image workflows support provider-side high-fidelity input handling.
-- Official Python and Node SDKs are Apache-2.0.
+Current official model/API documentation confirms image generation/edit endpoints and image-input/editing capability; exact model choice remains a routing/configuration decision rather than a core semantic.
 
 Sources:
 - https://developers.openai.com/api/docs/guides/image-generation
+- https://developers.openai.com/api/docs/models/gpt-image-2
 - https://github.com/openai/openai-python
 - https://github.com/openai/openai-node
 
-#### How to bring it in
+Planned boundary:
 
-Do not copy OpenAI SDK code. Add the official SDK as a normal dependency when the implementation language is selected.
+`AIMAGE RenderSpec IR -> OpenAIProviderAdapter -> official SDK/API -> provider result -> AIMAGE Artifact/Run records`
 
-Create an AIMAGE adapter conceptually like:
+Adapter owns:
 
-`AIMAGE RenderSpec -> OpenAIProviderAdapter -> OpenAI SDK/API -> provider result -> AIMAGE ArtifactRecord/RunRecord`
+- request construction/lowering;
+- generate/edit mode;
+- role-bound image input mapping;
+- provider conversation/image/mask identifiers;
+- output settings;
+- raw error + normalized error;
+- usage/cost metadata;
+- capability report.
 
-The adapter should own:
+Adapter does not own:
 
-- request construction;
-- mapping AIMAGE role-bound image references to provider image inputs;
-- generate vs edit mode;
-- provider conversation/image IDs;
-- mask input when supported;
-- provider output settings;
-- raw error preservation and normalization;
-- usage/cost metadata extraction;
-- capability reporting.
-
-The adapter must **not** own:
-
-- AIMAGE approval semantics;
-- reference authority meaning;
+- approval/lock semantics;
+- reference-role authority;
 - job state transitions;
-- geometry locks;
-- repair-policy decisions.
+- geometry semantics;
+- repair policy.
 
-#### Planned application
+Replacement boundary: another provider adapter must be able to consume the same supported AIMAGE intent subset without changing canonical authority semantics.
 
-OpenAI should be the first cloud provider path because it directly supports the project's important reference/edit loop. Multi-turn provider state may accelerate repairs, but AIMAGE must also persist enough of its own state to reconstruct intent without trusting an opaque provider conversation as canonical authority.
-
-### 4.2 ComfyUI core/backend
+### 4.2 ComfyUI
 
 Classification: **ADAPT as optional external backend**.
 
-Evidence:
-
-- ComfyUI is a mature graph/node image-generation backend and API ecosystem.
-- ComfyUI core is GPL-3.0.
-- Official workflow templates/subgraph blueprints are maintained separately under MIT and include validation/schema tooling.
+Acquisition: mode B; mode D only for selected pinned MIT workflow-template artifacts.
 
 Sources:
 - https://github.com/Comfy-Org/ComfyUI
 - https://github.com/Comfy-Org/workflow_templates
 
-#### How to bring it in
+Planned boundary:
 
-Do not copy ComfyUI core into AIMAGE.
+`AIMAGE ExecutionPlan -> ComfyUIAdapter -> external ComfyUI service -> output artifacts`
 
-Support it as an optional separately installed backend:
+Adapter responsibilities:
 
-`AIMAGE ExecutionPlan -> ComfyUIAdapter -> external ComfyUI API/server -> output artifacts`
+- server/version/node/capability discovery;
+- select compatible adapter-owned workflow template;
+- inject provider-specific prompt/reference/control values;
+- submit/observe execution;
+- normalize outputs/errors;
+- never expose arbitrary node names as core semantics.
 
-The adapter should:
+GPL core source is not copied into AIMAGE. If distribution later bundles/modifies ComfyUI, perform a separate licensing decision.
 
-- discover server/version/node capability;
-- select a compatible workflow template/blueprint;
-- inject prompt/reference/control inputs;
-- submit workflow;
-- observe execution/output identity;
-- convert output back to AIMAGE artifacts;
-- expose backend failures without turning node names into core semantics.
-
-#### Workflow-template handling
-
-For a specific supported capability, AIMAGE may copy selected MIT workflow JSON/blueprints from `Comfy-Org/workflow_templates` using acquisition mode D.
-
-Each copied workflow must be pinned to an upstream commit, normalized into an AIMAGE-owned adapter directory, validated against the expected external schema, and accompanied by provenance/license metadata.
-
-Do not import the whole template repository.
-
-#### Planned application
-
-ComfyUI is the preferred optional graph backend for advanced/local composition controls where node ecosystems already solve model-specific wiring. It should not define AIMAGE's workflow graph or job-state schema.
+Replacement boundary: absence of ComfyUI must produce capability fallback/unsatisfied-plan behavior, not invalid AIMAGE state.
 
 ### 4.3 Hugging Face Diffusers
 
 Classification: **ADOPT as optional local provider library**.
 
-Evidence:
-
-- Diffusers is Apache-2.0.
-- It exposes many diffusion pipelines and adapters.
-- Official documentation supports IP-Adapter image guidance and combinations with ControlNet for structural control.
+Acquisition: mode A.
 
 Sources:
 - https://github.com/huggingface/diffusers
 - https://huggingface.co/docs/diffusers/using-diffusers/ip_adapter
 
-#### How to bring it in
+Planned boundary:
 
-Use a normal package dependency behind `DiffusersProviderAdapter`; do not vendor Diffusers source.
+`AIMAGE ExecutionPlan -> DiffusersProviderAdapter -> selected local pipeline -> output artifacts`
 
-The adapter should keep model/checkpoint selection separate from engine semantics and report capabilities such as:
+Adapter reports only actually available operations such as text/image generation, inpainting, reference conditioning and structural controls. Model/checkpoint/control-weight licenses are recorded separately from the Diffusers library license.
 
-- text-to-image;
-- image-to-image;
-- inpaint;
-- IP-Adapter/reference conditioning;
-- ControlNet depth/edge/pose/etc.;
-- locally available device/precision constraints.
+Replacement boundary: direct local execution is optional; ComfyUI or hosted providers can satisfy overlapping capabilities without changing job semantics.
 
-Model weights and adapters must have separate license/provenance records; the Diffusers library license does not license every checkpoint loaded through it.
+## 5. Cross-domain reuse decisions that shape AIMAGE without mandatory runtime dependencies
 
-#### Planned application
+### 5.1 Workflow/state/history/human approval
 
-Diffusers is useful for direct local execution, research, deterministic provider experiments, and structural-control paths without requiring ComfyUI. It remains optional because the main AIMAGE engine must also work with hosted providers.
+Classification: **ADAPT + small AIMAGE extension**.
 
-### 4.4 Nori
+Strongest sources:
 
-Classification: **ADAPT; permissive source candidate, no wholesale runtime dependency**.
+- W3C SCXML — state/transition/event/history semantics;
+- OMG BPMN — mature process/gate/user-task vocabulary;
+- Temporal — durable workflow/human approval/signal/timeout/idempotency implementation pattern.
 
-Evidence:
+Sources:
+- https://www.w3.org/TR/scxml/
+- https://www.omg.org/spec/BPMN/
+- https://docs.temporal.io/
 
-Nori is MIT and presents a close architectural analogue: persistent art projects, style/character bibles, plan→explore→critique→refine→finish, version history, and thin model adapters.
+Acquisition: E/F initially. Do **not** make Temporal or a BPMN engine mandatory infrastructure.
 
-Source:
-- https://github.com/aditya-ramesh/nori
+Apply as:
 
-#### What to reuse
+- AIMAGE lifecycle is expressed as explicit state + events/transitions, not a hand-coded pile of stage flags;
+- user approval is a state transition carrying decision metadata;
+- pause/resume/history and duplicate/late event behavior are explicit;
+- retries belong to execution failures, not subjective image failures;
+- future multi-user/server deployments may plug a durable workflow engine behind this boundary if measured needs justify it.
 
-Strong candidates for adaptation:
+AIMAGE residue: only image-job event/state payload semantics and visual decision boundaries.
 
-- separation between art-project state and model wrappers;
-- Style Bible / Character Bible decomposition;
-- explicit exploration and refine loops;
-- version/history concepts;
-- thin provider adapter principle;
-- evaluation-oriented architecture.
+### 5.2 Artifact identity/version/lineage
 
-#### What not to adopt by default
+Classification: **ADAPT + small AIMAGE extension**.
 
-- Nori's whole application/runtime stack;
-- Postgres/pgvector/Redis as assumed AIMAGE infrastructure;
-- Sora/video scope before still-image workflow is proven;
-- Nori-specific taste-model/product positioning;
-- any source module whose dependencies make it more expensive than an AIMAGE-native equivalent.
+Strongest sources:
 
-#### How to bring it in
+- W3C PROV for derivation concepts;
+- OpenAssetIO for host↔asset-manager resolution/publishing boundary, opaque entity references and traits;
+- content-addressed/digest identity and SLSA dependency/provenance principles;
+- C2PA only for optional exported-content provenance.
 
-Before implementation, perform a bounded source audit on the exact modules corresponding to project state, bibles, history, model adapters, and eval contracts.
+Sources:
+- https://www.w3.org/groups/wg/prov/publications/
+- https://docs.openassetio.org/OpenAssetIO/
+- https://slsa.dev/spec/v1.2/
+- https://c2pa.org/
 
-For each useful slice choose either:
+Acquisition:
 
-1. **selected MIT source import** with attribution if the implementation is generic and dependency-light; or
-2. **AIMAGE-native adaptation** if semantics are intertwined with Nori's stack.
+- W3C PROV/SLSA: E/F;
+- OpenAssetIO: optional A/D interoperability if a real DAM/MAM system is used;
+- C2PA: optional export interoperability, never internal authority.
 
-Default preference: adapt architecture and data-shape lessons first; copy code only where the file-level audit proves it is cleaner.
+Apply as:
 
-### 4.5 GenAI Illustration Pipeline
+- artifact content has stable identity/digest + media metadata;
+- derivation links identify source artifacts and generating activity/run;
+- asset-manager references remain optional external handles;
+- AIMAGE stores accepted/rejected/superseded/locked visual-role relationships as its small extension;
+- loss of an external manager must not destroy AIMAGE's local artifact identity/lineage.
 
-Classification: **ADAPT; selective MIT source import candidate**.
+### 5.3 Reference-role authority and partial locks
 
-Evidence:
+Classification: **ADAPT + small AIMAGE extension**.
 
-The project reports a production-proven still-image pipeline at ~1,523 delivered assets across three books, with brief extraction, art-direction audit, model routing, locked references, agent QA, human review, revisions, deterministic finishing and synthetic fixtures. The repository is MIT.
+External primitives:
 
-Source:
-- https://github.com/Kanishk688/genai-illustration-pipeline
+- OpenAssetIO trait/relationship patterns;
+- OpenUSD references/layers/non-destructive composition/override patterns;
+- workflow approval patterns from Temporal/BPMN.
 
-#### What to reuse
+Sources:
+- https://docs.openassetio.org/OpenAssetIO/entities_traits_and_specifications.html
+- https://openusd.org/dev/glossary.html
+- https://docs.temporal.io/
 
-High-value generic candidates:
+Acquisition: E/F; no OpenUSD/OpenAssetIO runtime requirement in core.
 
-- explicit shot/work-item records;
-- task-based model routing pattern;
-- style/hero reference stack concept;
-- agent QA before human review;
-- "change one thing, preserve the rest" revision discipline;
-- contact-sheet generation;
-- synthetic defective fixtures;
-- deterministic finishing utilities;
-- cost/first-pass-yield reporting.
+Apply as:
 
-#### What not to import as generic AIMAGE core
+- use typed role/relationship concepts rather than ad-hoc prompt labels;
+- approval records a state transition and dimension coverage;
+- override/reopen is explicit and non-destructive;
+- later execution receives preservation obligations rather than relying on wording such as "keep everything else".
 
-- manuscript/DOCX-specific extraction semantics;
-- book-layout assumptions;
-- print-only constraints such as fixed 300-DPI ownership in the core;
-- provider choices presented as universal ranking;
-- client/publishing workflow conventions.
+AIMAGE residue:
 
-#### How to bring it in
+- visual authority dimensions/roles;
+- precedence/conflict rules;
+- dimension-scoped lock and preservation meaning across provider changes.
 
-Perform file-level audit of small deterministic scripts first. Good candidates may be selectively imported or rewritten under AIMAGE-owned interfaces.
+### 5.4 Provider adapter/capability negotiation
 
-Probable first audit targets:
+Classification: **ADAPT + small AIMAGE extension**.
 
-- contact-sheet utility;
-- aspect pad/crop utility;
-- format/WebP utility;
-- alpha/background helpers if a domain requires them;
-- QA fixture architecture;
-- cost report data model.
+Strongest patterns:
 
-The orchestration and QA ideas should be adapted into AIMAGE contracts rather than copying a book-specific orchestrator.
+- LSP multi-tool/server protocol separation;
+- Vulkan explicit feature/extension support structures;
+- OpenAssetIO host/manager capabilities and policy queries.
 
-### 4.6 Krita AI Diffusion
+Sources:
+- https://microsoft.github.io/language-server-protocol/
+- https://registry.khronos.org/vulkan/
+- https://docs.openassetio.org/OpenAssetIO/classopenassetio_1_1v1_1_1manager_api_1_1_manager_interface.html
 
-Classification: **ADAPT method-only / reference-only for most of core**.
+Acquisition: E/F.
 
-Evidence:
+Apply as:
 
-Krita AI Diffusion demonstrates mature editing UX around regions, generation history, inpainting/outpainting, ControlNet, IP-Adapter and a separately running ComfyUI backend. It is GPL-3.0.
+- provider descriptor reports version + supported operation/features + limits/constraints;
+- execution planner asks for capabilities; it does not inspect provider type names throughout core;
+- optional capabilities are explicit;
+- unsupported requirements produce fallback/alternate plan/unsatisfied result;
+- capability reports are version-sensitive observations, not permanent truth.
 
-Source:
-- https://github.com/Acly/krita-ai-diffusion
+AIMAGE residue: only image-domain capability names and compatibility predicates.
 
-#### How to use it
+### 5.5 RenderSpec as a small intermediate representation
 
-Do not copy source into a permissive AIMAGE core under the current plan.
+Classification: **ADAPT + small AIMAGE extension**.
 
-Use it as design evidence for:
+Strongest patterns:
 
-- control-layer abstraction;
-- region-scoped prompting/editing;
-- history and job queue UX;
-- sketch/pose/depth/segmentation control selection;
-- keeping the editing UI separate from the generation backend.
+- LLVM IR — common representation separated from target code;
+- MLIR — dialect conversion/lowering, target legality and partial conversion;
+- JSON Schema — contract validation/versioning.
 
-If AIMAGE later intentionally becomes GPL-compatible, code-level reuse can be reconsidered separately.
+Sources:
+- https://llvm.org/docs/LangRef.html
+- https://mlir.llvm.org/docs/DialectConversion/
+- https://json-schema.org/specification
 
-### 4.7 style-consistency-ai
+Acquisition: E/F for compiler patterns; JSON Schema as the validation standard with a language-appropriate library later.
 
-Classification: **ADAPT method-only**.
+Apply as:
 
-Evidence:
+1. compile current approved authority into a typed/versioned `RenderSpec` IR;
+2. validate required invariants before provider selection;
+3. choose a provider capability target;
+4. lower only supported semantics into an `ExecutionPlan`/provider request;
+5. if required semantics cannot be legally lowered, reroute or report an unsatisfied plan rather than silently dropping them;
+6. preserve the original RenderSpec identity alongside the lowered request/run.
 
-The repository provides a useful consistency ladder: smallest edit first, corrective guidelines, reference atlas, closest reference, datasets, model routing, then training only when lighter methods fail. Its license is PolyForm Noncommercial 1.0.0.
+Do not import LLVM/MLIR libraries. Do not make OpenAI/ComfyUI/Diffusers request formats the canonical IR.
 
-Source:
-- https://github.com/GenielabsOpenSource/style-consistency-ai
+AIMAGE residue: the compact visual execution-intent vocabulary/invariants.
 
-#### How to use it
+### 5.6 Geometry/composition constraints
 
-Treat it as conceptual evidence only under the current general-purpose project plan.
+Classification: **ADAPT + small AIMAGE extension**.
 
-AIMAGE may independently implement the following generic ideas:
+Strongest sources:
 
-- prefer delta edits over full rerolls;
-- use representative atlases;
-- select the closest reference to the requested pose/context;
-- add corrective rules only for observed recurring failures;
-- route by task/capability;
-- escalate to datasets/training only after cheaper controls fail.
+- OpenUSD transforms/scene relationships/layering;
+- Cassowary constraint-solving method;
+- CSS Grid alignment/placement concepts.
 
-Do not copy its skill text, reference files, or source implementation unless the license situation is explicitly accepted.
+Sources:
+- https://openusd.org/
+- https://constraints.cs.washington.edu/solvers/cassowary-tr.html
+- https://www.w3.org/TR/css-grid-1/
 
-## 5. Integration architecture implied by external reuse
+Acquisition:
 
-External reuse should converge on the following shape:
+- OpenUSD: E/F initially, optional D/A interoperability later;
+- Cassowary: E now; exact mature solver package is a `DEFERRED_IMPLEMENTATION_CHECK` tied to implementation language;
+- CSS: E/F.
+
+Apply as:
+
+- normalize spatial intent into entities, coordinate spaces, transforms and relative constraints;
+- prefer solver-friendly relations for deterministic/algebraic facts;
+- keep qualitative visual semantics such as gaze, reading order and foreground ownership as explicit AIMAGE predicates layered above generic constraints;
+- adapters lower constraints into prompt language, structural-control artifacts, masks/poses/depth or other provider mechanisms;
+- an approved blocking artifact may override/instantiate the same spatial intent without making its provider format canonical.
+
+### 5.7 Persistence and schema evolution
+
+Classification: **ADAPT**.
+
+Strongest sources:
+
+- JSON Schema 2020-12;
+- Avro writer/reader schema-resolution ideas;
+- generic metadata-store + blob/artifact-store separation.
+
+Sources:
+- https://json-schema.org/specification
+- https://avro.apache.org/docs/1.11.2/specification/
+
+Acquisition: standard/method adaptation; actual database/blob implementation deferred to runtime requirements.
+
+Apply as:
+
+- JSON-family versioned contracts + JSON Schema validation are the planning default;
+- every persisted object carries schema/version identity;
+- evolution rules distinguish compatible read, explicit migration and unsupported version;
+- binary/image artifacts live behind artifact/blob storage, not embedded as persistence semantics;
+- no custom serializer/database is part of AIMAGE's semantic center.
+
+### 5.8 Text/graphic layout
+
+Classification: **ADAPT + small AIMAGE extension**.
+
+Strongest sources:
+
+- SVG 2 deterministic text/graphics layout;
+- CSS Grid 2D placement/alignment.
+
+Sources:
+- https://www.w3.org/TR/SVG2/text.html
+- https://www.w3.org/TR/css-grid-1/
+
+Acquisition: E initially; language/browser/render-library choice later.
+
+Apply as:
+
+- separate exact text content from its graphic region/layout;
+- when exact text correctness matters, prefer deterministic layout/composition over repeated whole-image generation;
+- provider-native text rendering is an optional capability when aesthetic integration is preferred and review permits it;
+- AIMAGE keeps only the intent that text exists, its content/region/role/editability, and chosen execution mode.
+
+### 5.9 Repair orchestration
+
+Classification: **ADAPT** for orchestration pattern + provider capabilities for editing.
+
+Generic method basis: diagnosis/analyze → plan → execute → verify, consistent with mature autonomic/control-loop patterns.
+
+Provider execution may supply:
+
+- targeted/delta edit;
+- masked/regional edit;
+- multi-turn edit;
+- structural correction;
+- reference-conditioned edit.
+
+AIMAGE flow:
+
+1. diagnose failed variable(s);
+2. identify successful/locked dimensions;
+3. form preservation/delta intent;
+4. choose cheapest capability that can satisfy it;
+5. execute through adapter;
+6. review requested change and regression;
+7. escalate/reroute only when needed.
+
+No custom AIMAGE image editor/repair renderer is planned.
+
+## 6. Prior image-production projects: final acquisition stance
+
+### Nori
+
+Use: E/F architecture evidence for persistent projects, style/character bibles, explore/refine/history, thin adapters.
+
+Initial source import: **none**.
+
+Reason: its useful architectural ideas are already captured in AIMAGE contracts; copying application/runtime modules would add stack coupling without a proven gap.
+
+### GenAI Illustration Pipeline
+
+Use: E/F evidence for work-item records, routing, QA/human review, minimal-change revisions, deterministic finishing and fixtures.
+
+Initial source import: **none**.
+
+Small deterministic utilities may later be reconsidered under mode C only if implementation shows reuse is cheaper than standard libraries/small native utilities.
+
+### Krita AI Diffusion
+
+Use: E/F only under current permissive-core direction due GPL-3.0; evidence for regions, history, structural controls, edit UX and separate backend architecture.
+
+### style-consistency-ai
+
+Use: E/F method-only under PolyForm Noncommercial constraints; independent implementation of generic ideas only.
+
+## 7. Integrated architecture implied by reuse
 
 ```text
-AIMAGE-owned Job / RenderSpec / Artifact / Approval / Review semantics
-                            |
-                  Provider Capability Boundary
-                            |
-      +---------------------+----------------------+
-      |                     |                      |
- OpenAI Adapter       ComfyUI Adapter      Diffusers Adapter
- official SDK         external service      optional package
-      |                     |                      |
- provider-native       workflow JSON         model pipelines
- refs/edits/masks      nodes/controls         ControlNet/IP-Adapter
-```
-
-Feature strategies sit above the capability boundary:
-
-```text
-Character/Style/Composition/Repair/QA strategies
+Feature/domain strategies
+(character/style/composition/review/repair/domain QA)
                     |
                     v
-          AIMAGE Engine interfaces
+Thin AIMAGE semantic center
+- visual authority roles
+- dimension locks/preservation intent
+- RenderSpec visual IR vocabulary
+- image capability taxonomy
+- visual spatial predicates
                     |
-                    v
-           provider adapters
+        +-----------+------------+
+        |                        |
+Generic reused mechanics     Optional interoperability
+state/events/history         OpenAssetIO / OpenUSD / C2PA
+provenance/identity
+schema/evolution
+constraints/layout
+IR validation/lowering pattern
+        |
+        v
+Provider capability / adapter boundary
+        |
+  +-----+---------+---------+
+  |               |         |
+OpenAI          ComfyUI   Diffusers
+SDK/API         service   optional pkg
 ```
 
-This ensures external provider innovations can be adopted without redefining the AIMAGE workflow.
+Generic mechanics must not become a second AIMAGE-specific framework merely because AIMAGE wraps them.
 
-## 6. External-source acceptance gate before implementation
+## 8. Implementation-ready meaning
 
-An `ADOPT` or code-level `ADAPT` candidate is implementation-ready only after all applicable items below are closed:
+A design-level reuse decision is considered **architecture-resolved** when:
 
-1. exact source/version identified;
-2. license identified and compatible with selected acquisition mode;
-3. upstream maintenance/activity reviewed proportionally;
-4. functional fit reproduced or independently supported;
-5. selected dependency/import boundary documented;
-6. transitive dependencies understood sufficiently for the integration risk;
-7. no source repository becomes accidental AIMAGE authority;
-8. no provider-specific state leaks into generic core contracts;
-9. fallback/replacement behavior defined where material;
-10. AIMAGE-owned tests identified;
-11. provenance/update policy recorded.
+- capability classification and semantic residue are fixed;
+- acquisition mode is fixed;
+- runtime/source coupling is fixed;
+- canonical-state owner is fixed;
+- replacement/fallback boundary is fixed;
+- licensing model is known at the required granularity;
+- implementation-language-dependent package selection is the only remaining deferred choice where applicable.
 
-For higher-impact dependencies, use OpenSSF Scorecard or equivalent supply-chain evidence as an input rather than inventing trust from popularity alone.
+A concrete component is **implementation-ready** only after Gate B in `plans/REUSE_AND_INTEGRATION_ASSURANCE.md` additionally closes exact version/ref, transitive/security/currentness checks and AIMAGE contract tests.
 
-## 7. Planned implementation order after design approval
+This distinction prevents premature package pinning before the runtime exists without leaving architecture unresolved.
 
-Implementation is not authorized by this document, but the expected order is:
+## 9. Planned implementation sequence after native semantic design is approved
 
-1. design the native AIMAGE contracts that external components must plug into;
-2. implement one thin OpenAI adapter as the first vertical slice;
-3. validate the complete minimal workflow on that adapter;
-4. add optional ComfyUI and/or Diffusers adapters without changing core semantics;
-5. selectively import/adapt deterministic MIT utilities that close measured gaps;
-6. implement method-only consistency/repair strategies independently;
-7. add heavier dataset/training support only when evidence shows it is needed.
+Implementation remains unauthorized in this slice. When authorized, the expected sequence is:
 
-This order uses external capability to accelerate proof of the workflow while keeping AIMAGE's semantic center provider-neutral.
+1. define the narrowed AIMAGE semantic contracts from `CAPABILITY_REUSE_MATRIX.md` using JSON Schema/versioning and the accepted generic patterns;
+2. implement generic state/artifact/IR/capability interfaces without a workflow-engine/database/provider dependency becoming canonical;
+3. implement one thin OpenAI vertical slice with provider-native generation/editing;
+4. run the minimal end-to-end scenarios and contract fixtures;
+5. add optional Diffusers and/or ComfyUI adapters and prove provider replacement/fallback without semantic changes;
+6. add deterministic text/layout and finishing utilities only where scenarios require them;
+7. add optional OpenAssetIO/OpenUSD/C2PA interoperability only for concrete use cases;
+8. reopen source-import candidates only for measured gaps;
+9. execute the full Gate C/D architecture + workflow audit before declaring the system complete.
+
+## 10. Assurance gate
+
+All external adoption/application decisions in this file are subject to `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`:
+
+- Gate A closes capability coverage and native-design burden of proof;
+- Gate B prevents incomplete/unsafe external acquisition;
+- Gate C performs scenario-based architecture tradeoff review;
+- Gate D performs full integrated workflow simulation, transition coverage, combinatorial interaction coverage and fault/regression injection.
