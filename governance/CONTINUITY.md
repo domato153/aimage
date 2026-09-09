@@ -10,18 +10,31 @@ A receiver with no chat memory must be able to recover the current relevant stat
 
 A handoff is not complete merely because it contains a detailed summary. It must remain usable when refs move, old files remain reachable, temporary artifacts disappear, or a prior explanation becomes stale.
 
-## 2. Authority precedence
+## 2. Authority, intent, and factual state
 
-For operational truth, use this precedence unless a stricter AIMAGE authority file says otherwise:
+Do not collapse user intent/authorization and observable factual state into one precedence list.
 
-1. explicit current user instruction;
-2. current AIMAGE canonical authority and live repository state;
-3. current governing AIMAGE method files resolved from their authoritative owner;
-4. accepted continuity packet reconciled against 1-3;
-5. derived chat/paste summaries;
-6. memory or historical material.
+For **current facts** about repository refs, files, artifacts, platform state, or other observable state:
 
-A continuity packet is evidence about prior state. It never authorizes itself and never outranks fresh authority.
+1. fresh direct observation from the current authoritative owner/live system;
+2. current AIMAGE canonical records that describe that state, when they remain consistent with the live owner;
+3. an accepted continuity packet reconciled against 1-2;
+4. derived chat/paste summaries;
+5. memory or historical material.
+
+For **intent, scope, decisions, and authority transitions**:
+
+1. explicit current user instruction/authorization, subject to external/platform constraints that the user cannot override;
+2. current AIMAGE canonical authority and any already-authoritative transition mechanism;
+3. an accepted continuity packet carrying still-binding prior decisions;
+4. derived chat/paste summaries;
+5. memory or historical material.
+
+A user instruction can change the requested goal, scope, or authorize a transition; it does not make an incorrect factual statement about current repository/platform state true. Conversely, a live ref does not by itself authorize changing a governing rule.
+
+A candidate, packet, work branch, generated summary, or modified governing file cannot authorize its own promotion to authority. A consequential authority change requires explicit current user authorization or an already-authoritative AIMAGE transition mechanism, followed by fresh-state reconciliation.
+
+A continuity packet is evidence about prior state. It never authorizes itself and never outranks fresh authority/live facts.
 
 ## 3. Governing-method owner resolution
 
@@ -120,15 +133,26 @@ Do not require a candidate ledger for a simple image job or isolated repository 
 
 Separate stable identity from temporary availability.
 
+Inventory any **decision-relevant or next-action-relevant** state that exists only in the outgoing chat/session/local environment. If none exists for a consequential transfer, record that compactly rather than implying hidden local continuity.
+
 Decision-relevant state that is not self-evidently durable must be classified as:
 
 - `DURABLE` — recoverable by the next receiver from a named immutable or authoritative location;
 - `REGENERATE` — not durable, but reproducible from named inputs and a bounded regeneration step without changing the intended state;
 - `UNRECOVERABLE` — cannot be trusted or recovered; dependent claims must be reopened.
 
-For decision-relevant derived artifacts, record enough provenance to know their source owner, invalidation trigger, and rebuild/reconciliation path. Incidental caches or views that cannot affect action, eligibility, authority, or safety do not need provenance ceremony.
+For a temporary/transport artifact whose identity matters, preserve as applicable:
 
-For image jobs, visual artifacts shown only in an outgoing chat are not automatically durable. If an approved blocking/reference/render is required for the next action, its recoverability must be explicit.
+- an immutable identity, content digest, or identity-equivalent locator;
+- its source/producer only as provenance, not authority;
+- known expiry/availability facts when they affect continuation;
+- a regeneration path bound to the same intended immutable state.
+
+For decision-relevant derived artifacts, record enough provenance to know their source owner, invalidation trigger, and rebuild/reconciliation path. A stale, unbound, or unrecoverable decision-relevant derived view is advisory only and must be re-derived/reconciled before it controls consequential continuation.
+
+Incidental caches or views that cannot affect action, eligibility, authority, or safety do not need provenance ceremony.
+
+For image jobs, visual artifacts shown only in an outgoing chat are not automatically durable. If an approved blocking/reference/render is required for the next action, its recoverability and approved role must be explicit.
 
 ## 10. Staleness and invalidation
 
@@ -157,9 +181,9 @@ Before consequential continuation:
 2. resolve the current governing AIMAGE continuity/shared-method owner;
 3. read the packet's authority/non-authority boundary;
 4. independently derive the minimum dependency and supersession-discovery scope from the proposed next action;
-5. fresh-read the reconciled dependencies and relevant authority;
+5. fresh-read the reconciled dependencies, live factual state, and relevant authority;
 6. reconcile competing states, preserved decisions/negative boundaries, and recoverability entries;
-7. verify identity of decision-relevant repository, image, or derived artifacts;
+7. verify identity/provenance of decision-relevant repository, image, transport, or derived artifacts;
 8. challenge the active situation model against fresh authority/evidence;
 9. synthesize the current objective, exactly one next action and rationale, expected transition, stop/replan condition, and critical preserved constraints;
 10. state why any still-reachable alternate state is not executable when ambiguity exists;
@@ -171,7 +195,7 @@ Receiving a packet, opening a new thread, or seeing a branch does not itself tra
 
 ## 12. User-facing receiver report
 
-When reporting practical status after reconciliation, give the plain-language conclusion first:
+Trigger this rule from the **communicative function** of the response, not from literal keywords. When reporting practical status, verdict, blocker, or next-action information after reconciliation, give the plain-language conclusion first:
 
 1. what is true now and whether work can advance;
 2. the material problem or uncertainty that remains;
@@ -197,11 +221,12 @@ A consequential AIMAGE handoff is complete when:
 - one canonical immutable locator exists;
 - the current governing method is resolved from the AIMAGE owner;
 - material dependencies are bounded and recoverable;
+- decision-relevant local/session state is inventoried or explicitly absent;
 - the active objective/phase and exactly one next action are preserved;
 - decision-critical rationale and negative boundaries survive compression;
 - ambiguous competing states are explicitly classified when needed;
 - stale state cannot silently authorize continuation;
-- decision-relevant derived/temporary artifacts have appropriate recoverability semantics;
-- a cold-start receiver can challenge and reconstruct the next action from fresh AIMAGE authority;
+- decision-relevant temporary/transport/derived artifacts have identity and recoverability semantics appropriate to their role;
+- a cold-start receiver can challenge and reconstruct the next action from fresh AIMAGE authority and live state;
 - chat/paste derivatives point back to the canonical packet;
 - runtime use of this contract requires no access to the construction-source repository `domato153/translation`.
