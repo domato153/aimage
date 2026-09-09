@@ -8,6 +8,7 @@ from aimage.contracts.common import ContractModel
 from aimage.contracts.execution import ArtifactRecord, RunRecord
 from aimage.engine.currentness import StaleStateError
 from .schema import artifacts, job_current, metadata, object_records, runs
+from .transactions import AIMAGE_BEGIN_IMMEDIATE
 
 
 class ImmutableRecordConflictError(RuntimeError):
@@ -50,8 +51,14 @@ class SQLiteMetadataRepository:
             self._insert_immutable(connection, runs, runs.c.run_id, record.run_id, values)
 
     def _begin_immediate(self):  # type: ignore[no-untyped-def]
-        connection = self.engine.connect()
-        connection.exec_driver_sql("BEGIN IMMEDIATE")
+        connection = self.engine.connect().execution_options(**{AIMAGE_BEGIN_IMMEDIATE: True})
+        try:
+            # Starting the SQLAlchemy transaction triggers the engine's begin event,
+            # which emits exactly one BEGIN IMMEDIATE for this connection.
+            connection.begin()
+        except Exception:
+            connection.close()
+            raise
         return connection
 
     def claim_or_assert_current(self, job_id: str, semantic_revision: int, intent_digest: str) -> None:
