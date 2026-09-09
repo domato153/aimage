@@ -87,9 +87,11 @@ For current Image Engine planning/design, also read:
 - `plans/CAPABILITY_REUSE_MATRIX.md` — capability inventory and current `ADOPT / ADAPT / DESIGN` classification;
 - `plans/EXTERNAL_REUSE_PLAN.md` — acquisition modes, external candidate integration boundaries, licensing/provenance rules, and planned application;
 - `plans/REUSE_AND_INTEGRATION_ASSURANCE.md` — omission-prevention, acquisition due diligence, architecture scenarios, and final integrated V&V gates;
+- `plans/BOUNDED_RED_TEAM_ASSURANCE.md` — cross-cutting adversarial challenge required at material architecture/implementation authorization boundaries without adding a fifth heavyweight gate;
 - `plans/SEMANTIC_FUSION_PLAN.md` — final provider-neutral semantic fusion plan that composes mature intent/baseline/resolution/spatial/validation patterns into AIMAGE's minimal image-domain contract layer;
 - `plans/SEMANTIC_CONTRACTS.md` — minimum provider-neutral objects, fields, ownership, invariants and failure behavior for the four semantic families;
-- `audits/SEMANTIC_CONTRACT_TABLETOP_2026-09-10.md` — design-only scenario audit showing how the contracts traverse the canonical workflow and which initial contract gaps were repaired.
+- `audits/SEMANTIC_CONTRACT_TABLETOP_2026-09-10.md` — design-only scenario audit showing how the contracts traverse the canonical workflow and which initial contract gaps were repaired;
+- `audits/BOUNDED_PLAN_RED_TEAM_2026-09-10.md` — bounded adversarial audit of the accepted semantic plan and the hardening obligations that must flow into implementation planning and Gate-D V&V.
 
 These planning files do not authorize implementation by themselves. Reconcile them with `governance/continuity/CURRENT.md` and the current user-authorized phase.
 
@@ -117,7 +119,7 @@ Construction provenance:
 - continuity adoption: `governance/continuity/SOURCE_PROVENANCE.md`
 - handoff adoption: `.agents/skills/handoff/references/SOURCE_PROVENANCE.md`
 
-External image-production dependencies and method sources are governed by `plans/EXTERNAL_REUSE_PLAN.md` once that plan is accepted on current AIMAGE authority. Provider-neutral method fusion is governed by `plans/SEMANTIC_FUSION_PLAN.md`; the resulting minimum semantic contracts are governed by `plans/SEMANTIC_CONTRACTS.md` once adopted.
+External image-production dependencies and method sources are governed by `plans/EXTERNAL_REUSE_PLAN.md` once that plan is accepted on current AIMAGE authority. Provider-neutral method fusion is governed by `plans/SEMANTIC_FUSION_PLAN.md`; the resulting minimum semantic contracts are governed by `plans/SEMANTIC_CONTRACTS.md` once adopted. Material plan/adoption challenges additionally use `plans/BOUNDED_RED_TEAM_ASSURANCE.md` where its trigger conditions apply.
 
 ## 9. Local instruction files
 
@@ -139,9 +141,11 @@ Do not create directory-local `AGENTS.md` files before there is a real recurring
 - `plans/CAPABILITY_REUSE_MATRIX.md` — current capability reuse/design classification
 - `plans/EXTERNAL_REUSE_PLAN.md` — current external acquisition/integration plan
 - `plans/REUSE_AND_INTEGRATION_ASSURANCE.md` — current reuse/integration assurance and final workflow V&V plan
+- `plans/BOUNDED_RED_TEAM_ASSURANCE.md` — current cross-cutting bounded adversarial assurance extension
 - `plans/SEMANTIC_FUSION_PLAN.md` — current final semantic fusion plan for provider-neutral image-production contracts
 - `plans/SEMANTIC_CONTRACTS.md` — current minimum provider-neutral semantic contract specification
 - `audits/SEMANTIC_CONTRACT_TABLETOP_2026-09-10.md` — semantic-contract design/tabletop audit evidence
+- `audits/BOUNDED_PLAN_RED_TEAM_2026-09-10.md` — current bounded plan red-team evidence
 - `bootstrap/PROJECT_SOURCE.md` — thin external GPT Project locator/bootstrap
 
 As the repository grows, add new routes here only when they are stable entry points. Keep detailed subsystem rules in their owning files rather than expanding this router into a second specification.
