@@ -43,7 +43,10 @@ Continuity is the cross-context **state-preservation and receiver-reconciliation
 
 - Common contract: `governance/CONTINUITY.md`
 - Repository development: `governance/continuity/REPOSITORY_WORK.md`
+- Current repository-work state: `governance/continuity/CURRENT.md`
 - Image-production job: `governance/continuity/IMAGE_JOB.md`
+
+When `governance/continuity/CURRENT.md` exists and the task concerns ongoing repository planning/development, treat it as the current continuity state locator, then reconcile its recorded literals against fresh repository authority before relying on them.
 
 Continuity owns authority-vs-packet semantics, bounded dependencies, active situation state, decision/negative-boundary preservation, staleness, recoverability, and receiver `ACCEPTED` / `STALE_REPLAN` behavior.
 
@@ -115,6 +118,7 @@ Do not create directory-local `AGENTS.md` files before there is a real recurring
 - `.agents/skills/handoff/SKILL.md` — consequential handoff construction/consumption method
 - `governance/CONTINUITY.md` — cross-context continuity contract
 - `governance/continuity/REPOSITORY_WORK.md` — repository-work continuity profile
+- `governance/continuity/CURRENT.md` — current repository-work continuity state locator
 - `governance/continuity/IMAGE_JOB.md` — image-job continuity profile
 - `architecture/BOUNDARIES.md` — continuity/handoff / engine / feature-domain responsibility boundary
 - `bootstrap/PROJECT_SOURCE.md` — thin external GPT Project locator/bootstrap
