@@ -2,11 +2,13 @@
 
 Status: initial independent audit of the AIMAGE continuity adoption candidate.
 
-Audited branch before this report was added: `aimage-stage/continuity-core-adoption`
+Audited branch: `aimage-stage/continuity-core-adoption`
 
-Audited content head: `da0d5ce0d7edb0ab725a0128a6423f24a308bc65`
+Semantic content head audited before this report: `da0d5ce0d7edb0ab725a0128a6423f24a308bc65`
 
 Base: `d7f84a0fbf85b29623c530e008f7244b463e7b5a`
+
+Post-audit repository navigation update: `8f4c0d6c3575787ce086d7f5667b96002f6f667d` changed only `README.md` to link the newly added AIMAGE surfaces; it did not change the continuity semantics audited below.
 
 ## 1. Verdict
 
@@ -191,7 +193,7 @@ Findings:
 - relative references from both continuity profiles to `../CONTINUITY.md` resolve in the candidate tree.
 - `TRACEABILITY.md` references `SOURCE_PROVENANCE.md`, the common continuity core, and `architecture/BOUNDARIES.md`; all targets exist in the candidate tree.
 - Project bootstrap references only AIMAGE-owned canonical paths.
-- no existing user content was overwritten; the base repository contained only the original two-line `README.md`.
+- the base repository contained only the original two-line `README.md`; continuity/architecture/audit/bootstrap surfaces were added at new paths, and the later README edit only retained the existing project heading while adding navigation to those new files.
 
 **Finding: PASS.**
 
