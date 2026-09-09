@@ -1,6 +1,6 @@
 # AIMAGE Handoff Skill
 
-Status: canonical AIMAGE method for consequential cross-thread, cross-operator, cross-tool, or cross-session handoff.
+Status: governing AIMAGE handoff method only when resolved from the current authoritative owner. A work-branch/candidate copy is a proposed method and cannot authorize itself.
 
 This skill owns **handoff construction and consumption**. It does not own project authority, repository state, image-generation algorithms, engine architecture, feature behavior, or the continuity state model itself.
 
