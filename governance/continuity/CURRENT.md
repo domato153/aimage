@@ -6,21 +6,22 @@ Status: current repository-work continuity locator for the active planning/desig
 
 - Repository: `domato153/aimage`
 - Authoritative branch: `main`
-- Accepted/base commit at the start of this planning slice: `3ed8f40509a65fecd831149f32acc71c56c2ffa3`
+- Accepted `main` immediately before this continuity update: `ec72e423b9eaae9bbf759c3f642839feff46ab0c`
 - Current governing entrypoint: `AGENTS.md`
 - Continuity method: `governance/CONTINUITY.md`
 - Repository-work profile: `governance/continuity/REPOSITORY_WORK.md`
 - Handoff method: `.agents/skills/handoff/SKILL.md`
+- Active next-thread handoff packet candidate: `handoffs/2026-09-10_REUSE_MATRIX_REAUDIT_NEXT_THREAD.md`
 
 Fresh repository state always governs current factual state if these literals later move.
 
 ## 2. Current phase and scope
 
-Phase: **planning / design only**.
+Phase: **planning / design / research only**.
 
-Current work is defining the AIMAGE image-production workflow, classifying capabilities by external reuse potential, and fixing the integration boundary for reusable external systems before native Image Engine architecture is designed.
+The next work is **not** native Engine/Core contract design yet. The immediate planning task is to re-audit the current `ADOPT / ADAPT / DESIGN` matrix with a wider external evidence set so AIMAGE does not redesign mature solutions that already exist in adjacent creative-tool, VFX/DCC, asset/provenance, workflow, or provider ecosystems.
 
-No Image Engine implementation, external-code adoption, package installation, provider integration, or runtime dependency change is authorized merely by these plans.
+No Image Engine implementation, provider integration, package installation, external-code import, or runtime dependency change is authorized by this continuity state.
 
 ## 3. Completed foundation
 
@@ -33,21 +34,12 @@ The following foundation is accepted and should not be reopened without new evid
 - runtime Continuity/Handoff interpretation has no dependency on `domato153/translation`; that repository is construction provenance/audit evidence only;
 - Continuity/Handoff infrastructure remains separate from Image Engine Architecture/Core and AIMAGE Features/Domain Capabilities;
 - the intended product dependency direction remains `features/domain capabilities -> engine interfaces`;
+- `plans/WORKFLOW_TARGET.md`, `plans/CAPABILITY_REUSE_MATRIX.md`, and `plans/EXTERNAL_REUSE_PLAN.md` were adopted on `main` in the prior planning slice;
 - external reuse decisions follow an evidence-first `ADOPT / ADAPT / DESIGN` policy rather than assuming every mechanism should be invented locally.
 
-## 4. Current planning outputs
+## 4. Current workflow baseline
 
-When the following files are present on authoritative `main`, they form the current accepted planning baseline for the next architecture slice:
-
-- `plans/WORKFLOW_TARGET.md` — full adaptive workflow target;
-- `plans/CAPABILITY_REUSE_MATRIX.md` — engine/feature capability inventory and reuse classification;
-- `plans/EXTERNAL_REUSE_PLAN.md` — acquisition modes and candidate-specific integration plan.
-
-A work-branch copy of these files remains a proposal until it is adopted by current AIMAGE authority.
-
-## 5. Workflow target now defined
-
-The planned product workflow is an adaptive production loop rather than a prompt library:
+The accepted product target remains an adaptive production loop rather than a prompt library:
 
 1. intent/brief capture;
 2. authority/profile/reference resolution;
@@ -65,108 +57,124 @@ The planned product workflow is an adaptive production loop rather than a prompt
 14. deterministic finalization/export;
 15. continuity/handoff across context boundaries when required.
 
-The workflow is adaptive: low-risk one-shot requests do not need every stage.
+The workflow remains adaptive: low-risk one-shot requests do not need every stage.
 
-## 6. External reuse decisions
+## 5. Why the previous next action was superseded
 
-Current planning conclusions:
+The prior `CURRENT.md` said the next action was to design native AIMAGE Engine/Core contracts. Subsequent user discussion changed that planning decision before implementation began.
 
-### Direct adoption / optional runtime integration
+The new concern is that the current reuse research was too concentrated on generative-image projects and may have classified too many mature cross-industry concepts as AIMAGE-native `DESIGN`.
 
-- **OpenAI official SDK/API** — `ADOPT` as the first cloud image-provider adapter. Provider-native multi-reference, editing, multi-turn state, masks and image IDs stay behind the adapter.
-- **Hugging Face Diffusers** — `ADOPT` as an optional local-provider library. Model/checkpoint licenses remain separately tracked.
-- **ComfyUI** — `ADAPT` as an optional separately installed backend accessed through an AIMAGE adapter. Do not copy GPL core into AIMAGE core.
+Therefore native contract design is **deferred until a widened reuse re-audit closes**.
 
-### Permissive selective reuse candidates
+## 6. New evidence directions to verify
 
-- **Nori (MIT)** — adapt project/bible/history/thin-adapter architecture; copy only bounded dependency-light modules after exact source audit.
-- **GenAI Illustration Pipeline (MIT)** — adapt model-routing, QA/revision, fixtures and deterministic-finishing patterns; selectively import small generic utilities only after file-level audit.
-- **ComfyUI workflow templates/blueprints (MIT)** — selected workflow artifacts may be snapshotted for the ComfyUI adapter with exact upstream provenance and validation; do not import the entire template repository.
+The next planning slice must freshly investigate mature adjacent systems/patterns where relevant, including at least:
 
-### Method-only / clean-room sources
+- **InvokeAI** for creative project/canvas/workflow/reference/control/history/state patterns;
+- **OpenAssetIO or equivalent mature media asset-management interfaces** for artifact identity/reference/publishing/integration boundaries;
+- **W3C PROV** for entity/activity/agent/derivation provenance concepts;
+- **OpenUSD and established VFX/DCC scene/composition models** for camera/transform/relationship/override/composition semantics that may reduce custom geometry design;
+- **Temporal or equivalent durable-workflow patterns** for long-running state, pause/resume, human approval, retry, and history semantics;
+- mature plugin/provider capability-negotiation patterns;
+- provider-native targeted editing, especially current GPT Image/OpenAI image edit capabilities.
 
-- **Krita AI Diffusion (GPL-3.0)** — design evidence for control layers, region edits, history/job UX and external-backend separation; no source copying under the current permissive-core direction.
-- **style-consistency-ai (PolyForm Noncommercial 1.0.0)** — conceptual evidence for smallest-edit-first, atlas/closest-reference selection, corrective guidelines and escalation; independently reimplement concepts unless licensing changes.
+These are research targets, not predetermined adoption decisions.
 
-## 7. External acquisition policy
+## 7. Repair semantics decision
 
-External reuse must use an explicit acquisition mode:
+A material clarification is now preserved:
 
-- official package/SDK dependency;
-- external service/backend adapter;
-- selected permissive source import;
-- interoperability artifact/schema snapshot;
-- clean-room method adaptation;
-- reference only.
+**AIMAGE should not build a custom partial-image repair/editing engine when providers already expose suitable edit capabilities.**
 
-Before code-level `ADOPT`/`ADAPT`, record exact source/version, immutable identity where applicable, license, selected paths, runtime/optional status, AIMAGE owner/adapter, transitive dependency implications, update policy, replacement boundary and AIMAGE-owned validation.
+Provider/backend capabilities may execute:
 
-Do not use floating upstream `main` as sufficient provenance for copied or decision-critical material.
+- targeted/delta image edits;
+- masked/regional edits;
+- multi-turn controlled edits;
+- structural-control corrections;
+- reference-conditioned edits.
 
-## 8. Native AIMAGE design gaps that remain
+AIMAGE's provider-neutral responsibility is the higher-level **repair planning/orchestration**:
 
-External research did **not** provide a complete reusable solution for the following core semantics, so these remain native design work:
+1. identify the failed variable(s);
+2. identify successful/locked elements that must be preserved;
+3. choose the cheapest suitable repair path/provider capability;
+4. express the requested delta/preservation intent;
+5. execute through the selected adapter;
+6. re-review whether the repair succeeded without unacceptable regression.
 
-1. provider-neutral image-job state model;
-2. explicit reference-role authority contract;
-3. approval and lock semantics;
-4. provider-neutral Render Spec;
-5. provider capability descriptor and adapter contract;
-6. provider-neutral geometry/composition semantic contract;
-7. artifact identity/version/provenance model;
-8. generic review/repair schemas;
-9. persistence boundary;
-10. exact interface separation between engine and feature/domain strategies.
+This means current repair-related `DESIGN`/`ADAPT` labels must be reassessed so provider execution capability is not reimplemented inside AIMAGE.
 
-External sources may inform these designs but do not own them.
+## 8. Current reuse hypothesis to challenge
+
+The working hypothesis is that several current native-design areas can shrink substantially after broader research:
+
+- job/workflow state -> mature durable-workflow and creative-tool patterns;
+- artifact identity/version/provenance -> media asset/provenance standards and patterns;
+- reference roles -> existing structure/style/control/reference separation plus only a thin AIMAGE authority extension;
+- approval/lock -> established review/history/lock patterns plus only AIMAGE-specific partial-dimension approval semantics;
+- provider adapter/capability model -> mature plugin/adapter/capability patterns;
+- geometry/composition -> established camera/scene/transform/relationship models plus a thin provider-neutral 2D semantic layer;
+- persistence -> mature existing storage/project-state mechanisms selected only after semantic boundaries are known;
+- repair -> provider-native edit execution plus AIMAGE orchestration/preservation semantics.
+
+This is a supported inference only. The re-audit must verify each reclassification rather than assuming it.
 
 ## 9. Preserved decisions and negative boundaries
 
-Preserve these boundaries:
+Preserve these boundaries during the re-audit:
 
+- Reuse mature external capability when it closes the requirement; design only the remainder.
 - Do not blindly copy an external repository or mechanically mirror its architecture.
 - Do not create a runtime dependency on a construction/reference source repository unless explicitly selected.
-- Do not let an external provider, workflow graph, or source repository become AIMAGE authority.
-- Do not make ComfyUI workflow JSON, OpenAI conversation state, Diffusers pipeline classes, or another provider representation the canonical AIMAGE job model.
-- Do not copy GPL or noncommercial source into a permissive AIMAGE core under the current plan without a separate licensing decision.
-- Do not infer that the library license covers model/checkpoint/content licenses.
-- Do not import book/manuscript/print-specific machinery into generic AIMAGE core merely because it comes from a useful production pipeline.
-- Do not start implementation before the native core contracts and reuse boundaries are reviewed/accepted.
+- Do not let external methods/providers become AIMAGE authority merely because they informed the design.
+- Do not make OpenAI conversation state, ComfyUI workflow JSON, Diffusers classes, InvokeAI project state, USD data, or another external representation the canonical AIMAGE job model merely for convenience.
+- Do not copy GPL/noncommercial source into a permissive AIMAGE core without a separate explicit licensing decision.
+- Do not infer that a library license covers model/checkpoint/content licenses.
+- Do not import domain-specific machinery into generic AIMAGE core merely because it coexists with a useful concept.
+- Do not build a custom image-edit/repair executor when a provider capability already performs the actual edit.
+- Conversely, do not collapse AIMAGE into one provider wrapper; keep only cross-provider semantics that materially preserve user intent, authority, approval, and repair decisions.
 - Keep Continuity/Handoff infrastructure outside Image Engine product semantics.
 - Keep Image Engine Architecture/Core separate from concrete Feature/Domain implementations.
+- Do not start implementation before the widened reuse re-audit is reviewed/accepted.
 
 ## 10. Current uncertainty
 
-The major external capability categories and acquisition paths are now classified, but code-level source audits have **not** yet been performed for selective MIT imports, and the native AIMAGE core contracts are not yet designed.
+Unresolved items now include:
 
-Unresolved items include:
-
-- exact implementation language/runtime for the first engine slice;
-- exact Nori modules, if any, worth source-level import rather than conceptual adaptation;
-- exact GenAI pipeline utility files worth source-level import;
-- exact ComfyUI workflow templates needed for first supported local workflows;
-- storage technology, which should follow the native persistence contract rather than be selected first;
-- the final provider capability vocabulary and Render Spec schema.
+- which current `DESIGN` classifications should become `ADOPT`, `ADAPT`, or `ADAPT + small AIMAGE extension`;
+- whether existing standards/patterns can materially reduce custom artifact, workflow, geometry, persistence, approval, and adapter semantics;
+- what exact semantic residue is genuinely unique to AIMAGE after external reuse is maximized;
+- exact acquisition mode, license/provenance, runtime coupling, and replacement boundary for newly considered candidates;
+- whether any external system is useful only as design evidence versus suitable code/service dependency;
+- the eventual implementation language/runtime, which remains intentionally unresolved until the semantic/reuse boundary is clearer.
 
 ## 11. Exactly one next bounded action
 
-**Design the native AIMAGE Engine/Core contracts that external providers and adapted feature strategies must plug into, beginning with the job state model, artifact/reference/approval semantics, Render Spec, provider capability/adapter boundary, and generic review/repair records; use the accepted external-reuse plan as a constraint and do not implement providers yet.**
+**Perform a fresh evidence-backed re-audit of `plans/CAPABILITY_REUSE_MATRIX.md` and `plans/EXTERNAL_REUSE_PLAN.md`, widening the search to mature creative-tool, VFX/DCC, asset/provenance, durable-workflow, plugin/capability, and provider-native editing systems; reclassify each materially affected capability so native AIMAGE `DESIGN` is minimized to only semantics not adequately supplied by mature external solutions.**
 
-If the workflow/reuse planning files have not yet been adopted on current `main`, the immediate action is instead to review/adopt that planning candidate before beginning native contract design.
+This one action includes updating the planning documents and this continuity state to reflect the accepted result. It does **not** authorize provider/core implementation.
 
 ## 12. Expected transition
 
-After the next bounded action, AIMAGE should have a provider-neutral architecture contract capable of accepting the already-classified external integrations without letting any provider define core semantics.
+If the re-audit succeeds, AIMAGE should have:
 
-Only after that architecture survives review should implementation planning begin.
+- a narrower, evidence-backed native `DESIGN` set;
+- explicit `ADOPT / ADAPT / DESIGN` changes and rationale;
+- acquisition/integration decisions for newly accepted external candidates;
+- a clean split between provider-native edit execution and AIMAGE repair planning/orchestration;
+- enough certainty to identify the genuinely remaining AIMAGE-native semantic contracts.
+
+Only then should the next continuity state advance to native Engine/Core semantic design, if any remains.
 
 ## 13. Stop / replan conditions
 
 Stop and replan if:
 
 - fresh AIMAGE authority materially changes the phase or product boundaries;
-- external evidence invalidates an adopted integration assumption;
-- a proposed native contract merely renames one provider's API instead of remaining provider-neutral;
-- licensing or distribution direction changes materially;
-- more than one incompatible core architecture remains viable and the choice affects downstream implementation;
-- the user changes the acquire/adapt/design policy.
+- a newer accepted reuse audit supersedes this action;
+- external evidence invalidates the current workflow/product boundary itself rather than merely shrinking native design;
+- licensing/distribution direction changes materially;
+- more than one incompatible high-level architecture remains viable and selecting one exceeds a bounded reuse re-audit;
+- the user changes the reuse-first policy or authorizes implementation instead.
