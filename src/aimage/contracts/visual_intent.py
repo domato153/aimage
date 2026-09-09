@@ -63,6 +63,7 @@ class BaselineRecord(BaseModel):
     approved_dimensions: tuple[str, ...]
     value_snapshot_ref: str
     approval_decision_id: str
+    reopen_decision_id: str | None = None
     status: BaselineStatus = BaselineStatus.ACTIVE
 
 
