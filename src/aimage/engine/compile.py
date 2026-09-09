@@ -21,6 +21,21 @@ def _digest(value: object) -> str:
     return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
 
 
+def visual_intent_digest(intent: VisualIntentState) -> str:
+    """Digest only canonical Family-A semantic authority for currentness fencing."""
+    return _digest(intent.model_dump(mode="json"))
+
+
+def compiled_semantic_input_digest(intent: VisualIntentState, spatial_profile: SpatialProfile | None) -> str:
+    """Digest the normalized semantic inputs that produced a RenderSpec."""
+    return _digest(
+        {
+            "visual_intent": intent.model_dump(mode="json"),
+            "spatial_profile": spatial_profile.model_dump(mode="json") if spatial_profile else None,
+        }
+    )
+
+
 def compile_render_spec(
     intent: VisualIntentState,
     spatial_profile: SpatialProfile | None = None,
@@ -30,7 +45,7 @@ def compile_render_spec(
     """Compile one semantic revision into an immutable provider-neutral RenderSpec.
 
     Unresolved contradictory mandatory values fail closed before execution state exists.
-    Spatial relations are compiled with their frame *kind*, so a provider lowering cannot
+    Spatial relations are compiled with their frame *kind*, so provider lowering cannot
     silently conflate viewer-deictic and screen-image coordinates.
     """
 
@@ -47,10 +62,9 @@ def compile_render_spec(
         raise SemanticCompileError(f"contradictory mandatory semantics: {conflicts}")
 
     normalized_output = dict(output_contract or {"media_type": "image/png", "size": "1024x1024"})
-    intent_dump = intent.model_dump(mode="json")
-    spatial_dump = spatial_profile.model_dump(mode="json") if spatial_profile else None
-    source_digest = _digest({"intent": intent_dump, "spatial": spatial_dump, "output_contract": normalized_output})
+    source_digest = compiled_semantic_input_digest(intent, spatial_profile)
     authority_digest = _digest([binding.model_dump(mode="json") for binding in intent.authority_bindings])
+    spatial_dump = spatial_profile.model_dump(mode="json") if spatial_profile else None
 
     obligations: list[SemanticObligation] = [
         SemanticObligation(

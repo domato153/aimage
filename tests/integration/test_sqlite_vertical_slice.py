@@ -9,7 +9,8 @@ from sqlalchemy import select, update
 from aimage.app.use_cases import ImageEngine
 from aimage.contracts.spatial import ReferenceFrame, ReferenceFrameKind, SpatialEntity, SpatialProfile, SpatialRelation
 from aimage.contracts.validation import ValidationOutcome, ValidationResult
-from aimage.contracts.visual_intent import IntentItem, VisualIntentState
+from aimage.contracts.visual_intent import DecisionKind, DecisionRecord, IntentItem, VisualIntentState
+from aimage.engine.compile import visual_intent_digest
 from aimage.engine.currentness import StaleStateError
 from aimage.persistence.artifact_fs import LocalArtifactStore
 from aimage.persistence.sqlite.repository import SQLiteMetadataRepository
@@ -109,6 +110,32 @@ async def test_first_vertical_slice_persists_artifact_run_and_validation(tmp_pat
         assert connection.execute(select(artifacts)).mappings().all()
 
 
+def test_composition_approval_atomically_advances_semantic_currentness(tmp_path) -> None:
+    db_engine = create_sqlite_engine(tmp_path / "approval.db")
+    repository = SQLiteMetadataRepository(db_engine, create_schema=True)
+    image_engine = ImageEngine(
+        artifact_store=LocalArtifactStore(tmp_path / "approval-artifacts"),
+        metadata_repository=repository,
+        openai_adapter=OpenAIAdapter(FakeClient()),
+    )
+    intent, _spatial = _intent_and_spatial()
+    decision = DecisionRecord(
+        decision_id="approve-composition",
+        kind=DecisionKind.APPROVE,
+        base_semantic_revision=1,
+        actor_authority_id="user",
+        subject_ref="candidate-layout",
+        scope_paths=("composition.subject_side",),
+        dimensions=("composition",),
+    )
+    approved = image_engine.approve_composition(intent, decision, value_snapshot_ref="snapshot:layout")
+    assert approved.semantic_revision == 2
+    with db_engine.connect() as connection:
+        current = connection.execute(select(job_current)).mappings().one()
+    assert current["semantic_revision"] == 2
+    assert current["intent_digest"] == visual_intent_digest(approved)
+
+
 def test_sqlite_currentness_compare_and_advance_is_fail_closed(tmp_path) -> None:
     db_engine = create_sqlite_engine(tmp_path / "current.db")
     repository = SQLiteMetadataRepository(db_engine, create_schema=True)
@@ -155,7 +182,6 @@ async def test_old_inflight_result_is_historical_not_current(tmp_path) -> None:
     with pytest.raises(StaleStateError):
         await image_engine.render(intent, spatial_profile=spatial)
 
-    # The late provider output remains immutable historical evidence, but never reaches current validation/acceptance.
     with db_engine.connect() as connection:
         assert len(connection.execute(select(runs)).mappings().all()) == 1
         assert len(connection.execute(select(artifacts)).mappings().all()) == 1
