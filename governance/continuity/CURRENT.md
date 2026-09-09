@@ -6,238 +6,246 @@ Status: current repository-work continuity locator for the active planning/desig
 
 - Repository: `domato153/aimage`
 - Authoritative branch: `main`
-- Accepted `main` used as the exact base for this cross-domain resolution candidate: `0de5237dc3d929edbf044314efe81983b6846f43`
-- Planning candidate branch: `aimage-stage/cross-domain-reuse-resolution-v2`
+- Fresh accepted `main` used as the exact base for this candidate: `61ba94bc6279fa12091baa05c30a2ce1dd4fc5d8`
+- Planning candidate branch: `aimage-stage/semantic-fusion-final-plan`
 - Current governing entrypoint: `AGENTS.md`
 - Continuity method: `governance/CONTINUITY.md`
 - Repository-work profile: `governance/continuity/REPOSITORY_WORK.md`
 - Handoff method: `.agents/skills/handoff/SKILL.md`
-- Handoff external-method audit: `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
-- Method-hardened handoff packet adopted on current authority: `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
-- Immutable packet construction locator: repository `domato153/aimage`, commit `c687ee6777cd5c302b8af7104d8e10e413e79bec`, path `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
 - Architecture boundary: `architecture/BOUNDARIES.md`
 - Workflow target: `plans/WORKFLOW_TARGET.md`
-- Capability classification candidate: `plans/CAPABILITY_REUSE_MATRIX.md`
-- External acquisition/integration design candidate: `plans/EXTERNAL_REUSE_PLAN.md`
-- Reuse/integration assurance candidate: `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`
+- Capability classification: `plans/CAPABILITY_REUSE_MATRIX.md`
+- External acquisition/integration plan: `plans/EXTERNAL_REUSE_PLAN.md`
+- Reuse/integration assurance: `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`
+- **Semantic fusion final-plan candidate:** `plans/SEMANTIC_FUSION_PLAN.md`
 
-Fresh repository/platform state always governs current factual state. After candidate adoption, the merge result becomes the new accepted factual base and the next receiver must fresh-reconcile it.
+Fresh repository/platform state always governs current factual state. A candidate copy cannot authorize itself; after adoption, the merge result becomes the new accepted factual base and the next receiver must fresh-reconcile it.
 
 ## 2. Current phase and scope
 
 Phase: **planning / design / research only**.
 
-The method-hardened handoff's bounded cross-domain reuse re-audit has been executed to decision sufficiency, the external acquisition/application design has been completed at planning level, and the candidate has passed the required independent pre-adoption audit against fresh `main` and `architecture/BOUNDARIES.md`.
-
 No Image Engine implementation, provider integration, package installation, external-code import, runtime dependency change, or production code adoption is authorized by this state.
+
+The prior cross-domain reuse/acquisition plan remains accepted. New bounded research has now challenged the six remaining semantic-residue areas against mature non-image fields and found stronger reusable primitives. Therefore the prior exact next action — “design six separate AIMAGE semantic areas” — is superseded by a narrower integrated semantic-fusion plan.
 
 ## 3. Completed foundation preserved
 
 Do not reopen without new evidence or explicit scope change:
 
 - thin GPT Project bootstrap -> current root `AGENTS.md`;
-- separate Continuity and Handoff routes;
-- AIMAGE-owned continuity/handoff with no runtime dependency on `domato153/translation`;
-- current method-hardened handoff behavior: bounded completion criteria, research evidence-sufficiency/exit condition, operational header for dense transfers, material predecessor delta, conditional time/ownership transfer, filtered durable-state separation, and receiver read-back before acceptance;
-- Continuity/Handoff separated from Image Engine/Core and Feature/Domain product semantics;
-- intended dependency direction `features/domain capabilities -> engine interfaces`;
-- accepted adaptive `plans/WORKFLOW_TARGET.md`;
-- provider-native targeted/delta/masked/multi-turn editing as execution capability rather than a reason for an AIMAGE repair renderer;
-- evidence-first `ADOPT / ADAPT / DESIGN` policy;
-- abstract-problem cross-domain search and external-composition rule before retaining native design.
+- AIMAGE-owned Continuity/Handoff with no runtime dependency on `domato153/translation`;
+- current method-hardened Handoff behavior and fresh reconciliation rules;
+- Continuity/Handoff separated from Image Engine/Core and Feature/Domain semantics;
+- dependency direction `features/domain capabilities -> engine interfaces`;
+- adaptive `plans/WORKFLOW_TARGET.md`;
+- evidence-first `ADOPT / ADAPT / DESIGN` and abstract-problem cross-domain search policy;
+- provider-native editing executes actual image edits where suitable; AIMAGE does not build a custom image-edit renderer;
+- accepted initial concrete provider plan: OpenAI official SDK/API, optional Hugging Face Diffusers, optional external ComfyUI backend;
+- no initial Nori/GenAI/Krita/style-consistency source copying;
+- external acquisition due diligence and final integrated assurance gates in `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`.
 
-## 4. Cross-domain reuse re-audit result
+## 4. New cross-domain residue re-audit result
 
-The prior matrix over-classified several generic engineering problems as AIMAGE-native design. `plans/CAPABILITY_REUSE_MATRIX.md` now records the abstract problem, searched fields, strongest candidates, new classification, acquisition/coupling boundary and exact semantic residue for every materially native/partial-native row.
+The remaining six semantic areas were re-searched using their abstract engineering problems rather than AIMAGE/image vocabulary.
 
-### Generic mechanics now explicitly reused/adapted
+New strong evidence families:
 
-- workflow/state/history/human gates -> SCXML/BPMN/Temporal patterns;
-- artifact identity/lineage -> W3C PROV/OpenAssetIO/content-addressed/SLSA concepts, optional C2PA export;
-- provider-neutral execution intent -> LLVM/MLIR IR/lowering patterns + JSON Schema;
-- provider capability discovery -> LSP/Vulkan/OpenAssetIO feature/capability patterns;
-- geometry/relative layout -> OpenUSD/Cassowary/CSS layout primitives;
-- persistence/serialization -> generic metadata/blob separation + JSON Schema/schema-evolution methods;
-- exact text/graphic layout -> SVG/CSS deterministic layout primitives;
-- repair orchestration -> diagnose/analyze -> plan -> provider execution -> verify/regression loop.
+- **IRTF RFC 9315 Intent-Based Networking** — declarative intent, normalized Single Source of Truth, fulfillment/translation, assurance against realized state, corrective action;
+- **NIST configuration baseline/change control** — reviewed/accepted baseline changed only through controlled change;
+- **formal frame conditions / JML `assignable`** — explicitly declare what may change; everything outside the mutable frame is preserved;
+- **OSGi Requirement-Capability/Resolver** — generic typed requirements/capabilities, namespaces for domain semantics, mandatory requirements must resolve or fail explicitly;
+- **QSR/QSTR + OGC RCC8** — mature qualitative spatial relation calculi, topology/orientation/distance and explicit reference-frame reasoning;
+- **W3C SHACL** — rule/shape separation from validated data and structured validation reports;
+- **OPA policy architecture** — decision logic separated from enforcement/execution.
 
-These are method/standard/interoperability inputs unless a later concrete acquisition decision explicitly makes one a runtime dependency.
+These are construction/design evidence unless separately adopted as a runtime dependency. The default acquisition mode is method/schema adaptation or reference (`E/F`), not code/framework import.
 
-### Reclassification result
+## 5. Semantic residue is now four contract families, not six frameworks
 
-Previously native or partially native items such as reference-role binding, approval/lock machinery, provider adapter/capability machinery, RenderSpec mechanics, persistence/serialization, geometry specification, blocking workflow and text-layout planning are now primarily `ADAPT` or `ADAPT + small AIMAGE extension`.
+`plans/SEMANTIC_FUSION_PLAN.md` refines the previous six-residue decomposition into four coherent families.
 
-The materially retained `DESIGN` surface is narrowed to:
+### A — Visual Intent & Authority
 
-- `F21` domain-specific QA semantic content;
-- `F23` domain-extension semantic content.
+Generic mechanics reused:
 
-Generic review/check/plugin machinery for those rows is still reused rather than invented.
+- intent/SSoT/assurance;
+- baseline/change control;
+- precedence/layering;
+- frame-condition preservation;
+- existing artifact identity/lineage adaptation.
 
-## 5. Exact AIMAGE semantic residue after external composition
+AIMAGE owns only image-specific authority vocabulary and meaning: e.g. `identity`, `style`, `composition`, `blocking`, text/layout authority, dimension-scoped approval, precedence/conflict meaning, preserve/mutable dimensions and explicit reopen semantics.
 
-The accepted planning direction retains only semantics that currently pass the existence-value test:
+**Canonical rule:** Visual Intent/Authority state is the semantic SSoT. Provider-native state, prompts, masks, RenderSpecs and ExecutionPlans are derived/execution artifacts only.
 
-1. **visual authority vocabulary** — which visual dimension a reference/profile/artifact governs and precedence/conflict meaning;
-2. **dimension-scoped approval/lock/preservation intent** — what was approved and what later execution must preserve or explicitly reopen;
-3. **visual execution-intent vocabulary** — the small provider-neutral fields/invariants inside a RenderSpec-style IR;
-4. **image capability taxonomy/compatibility predicates** — visual operations/constraints routing reasons about;
-5. **visual spatial predicates/reading hierarchy** — qualitative image-composition meaning layered over mature transform/constraint primitives;
-6. **domain-specific review/extension semantics**.
+### B — Requirement, Capability & Lowering
 
-If future external evidence closes any of these without loss of user-visible/cross-provider control, shrink the native layer further rather than preserving terminology for its own sake.
+Generic mechanics reused:
 
-## 6. External acquisition/application design result
+- OSGi-style Requirement-Capability resolution;
+- existing LSP/Vulkan/OpenAssetIO capability patterns;
+- LLVM/MLIR-style compilation/lowering/target legality;
+- JSON Schema validation/versioning.
 
-`plans/EXTERNAL_REUSE_PLAN.md` distinguishes concrete runtime acquisition from standards/method reuse and optional interoperability.
+AIMAGE owns only the image capability namespace and image execution-intent vocabulary.
 
-### Initial concrete runtime/provider integrations after later implementation authorization
+Derived object chain:
 
-- **OpenAI official SDK/API** — normal provider dependency behind `OpenAIProviderAdapter`;
-- **Hugging Face Diffusers** — optional local-provider package;
-- **ComfyUI** — optional separately installed service/backend; no GPL core source copied into AIMAGE.
+`VisualIntentState -> RenderSpec -> RequirementSet + ProviderCapabilityDescriptor -> ResolutionResult -> ExecutionPlan`
 
-### Standards/methods used without mandatory runtime coupling
+**Hard rule:** mandatory intent or preservation requirements may never be silently dropped. Unsupported mandatory semantics require reroute/fallback or an explicit unsatisfied-plan result.
 
-- SCXML/BPMN/Temporal workflow/gate patterns;
-- W3C PROV/SLSA provenance concepts;
-- LLVM/MLIR IR/lowering patterns;
-- LSP/Vulkan/OpenAssetIO capability/adapter patterns;
-- OpenUSD/Cassowary/CSS geometry/layout patterns;
-- JSON Schema/Avro schema-evolution patterns;
-- SVG/CSS deterministic text layout;
-- diagnose/plan/execute/verify repair patterns.
+### C — Spatial & Composition Semantics Profile
 
-### Optional interoperability only
+Generic mechanics reused:
 
-- OpenAssetIO when a real DAM/MAM system exists;
-- OpenUSD when a concrete DCC/VFX interchange use case exists;
-- C2PA for exported-content provenance;
-- selected pinned ComfyUI workflow-template artifacts at the adapter edge.
+- qualitative spatial reasoning;
+- explicit frame of reference;
+- OGC/RCC8 topology;
+- OpenUSD/Cassowary/CSS transform/constraint/layout patterns already accepted.
 
-### No initial source copying
+AIMAGE owns only the compact image-production profile: useful direction/distance/alignment predicates, viewer/deictic versus subject/intrinsic versus scene/world reference frame, camera/gaze/screen-placement/attention-order semantics that generic spatial calculi do not directly name.
 
-Nori, GenAI Illustration Pipeline, Krita AI Diffusion and style-consistency-ai remain method/architecture/UX evidence by default. Later source import requires a measured implementation gap and the acquisition due-diligence gate.
+**Hard rule:** viewpoint-sensitive directional relations must carry or inherit an explicit reference frame before execution.
 
-This removes the prior pre-commitment to likely source imports before their necessity is proven.
+### D — Validation & Domain Profile
 
-## 7. Omission prevention and external-component assurance
+Generic mechanics reused:
 
-`plans/REUSE_AND_INTEGRATION_ASSURANCE.md` defines a reusable four-gate assurance method grounded in external professional practice.
+- SHACL-style separate constraints + structured validation result;
+- OPA-style decision/enforcement separation;
+- existing plugin/profile and assurance machinery.
 
-### Gate A — capability coverage
+AIMAGE/domain packages own only actual visual/domain correctness meaning: character identity, approved composition preservation, exact text, product/logo correctness, storyboard continuity, domain severity/thresholds, etc.
 
-Requires requirement decomposition, abstract-problem search, reuse ladder, external composition, existence-value test and bidirectional requirement↔mechanism closure. A retained `DESIGN` without negative evidence fails.
+Validation returns a normalized report; it does not mutate the artifact or execute repair itself.
 
-### Gate B — external acquisition due diligence
+## 6. Final fusion/ownership model
 
-Before installing/copying/bundling any concrete component, close exact identity/version, functional fit, license/distribution, maintenance/security/supply-chain, transitive coupling, canonical-state boundary, migration/update policy, replacement/fallback and AIMAGE-owned contract tests.
+The four families form one loop:
 
-Method basis includes NIST SSDF/C-SCRM, SLSA, SPDX and OpenSSF Scorecard.
+`user intent/references -> A VisualIntent SSoT -> C spatial + D domain profiles -> compile RenderSpec -> B resolve/lower -> provider ExecutionPlan -> artifact/run -> D ValidationReport -> assurance against A baseline -> accept OR repair frame -> B select edit capability -> provider-native edit -> revalidate`
 
-### Gate C — architecture scenario audit
+`RenderSpec` is explicitly **demoted from authority to an immutable compiled view**. `ExecutionPlan` is provider-specific. This prevents an external/provider representation from becoming canonical state by convenience.
 
-Uses an ATAM-style scenario review to test provider replacement, missing capabilities, optional-backend loss, API drift, one-shot simplicity, long-running approval, minimal-delta repair, schema migration, dependency/license replacement and domain-extension boundaries.
+Approval/repair also collapse into this model:
 
-### Gate D — final integrated workflow V&V
+1. approval baselines selected visual dimensions in A;
+2. non-approved dimensions remain mutable;
+3. repair diagnostics identify failed dimensions in D;
+4. A produces a mutable/preserve frame;
+5. B chooses the cheapest legal provider capability;
+6. provider executes the actual edit;
+7. D checks both repair success and regression against preserved dimensions.
 
-Uses NASA-style requirement↔verification traceability plus explicit state-transition coverage, NIST combinatorial interaction coverage, canonical end-to-end scenario simulations and fault/regression injection.
+## 7. Acquisition/application boundary for newly added methods
 
-A passing component test suite alone cannot produce final system `PASS`.
+No new mandatory runtime framework is introduced by this re-audit.
 
-## 8. Workflow-target recheck
+- RFC 9315 -> `E/F`, intent/fulfillment/assurance architecture only;
+- NIST baseline -> `E/F`, approval/change-control semantics only;
+- JML frame conditions -> `E/F`, mutable/preserve specification principle only;
+- OSGi Resolver -> `E/F`, requirement/capability model only; **do not add OSGi runtime**;
+- QSR/QSTR -> `E/F`, relation/reference-frame ontology evidence;
+- OGC RCC8/GeoSPARQL -> `E/F`, useful topological vocabulary; **do not require RDF/GeoSPARQL storage/runtime**;
+- W3C SHACL -> `E/F`, validation/profile/report pattern; AIMAGE remains JSON-family by default;
+- OPA -> `E/F`, decision/enforcement separation; no runtime unless later measured need justifies it.
 
-`plans/WORKFLOW_TARGET.md` was independently rechecked against the reuse findings.
+Every eventual concrete implementation package remains subject to Assurance Gate B: exact version/ref, license, maintenance/security, coupling, replacement, fallback and AIMAGE-owned contract tests.
 
-No user/control boundary currently has sufficient evidence to justify deleting a logical function, so the file is intentionally unchanged.
+## 8. Native AIMAGE design surface after fusion
 
-Interpretation after reuse:
+AIMAGE should not claim ownership of generic intent engines, baseline engines, resolver algorithms, spatial-reasoning frameworks, policy engines or validation engines merely because it adapts their concepts.
 
-- W0-W13 are logical functions, not mandatory user-visible phases;
-- W6 composition approval remains a real user decision boundary;
-- W8 RenderSpec lock is primarily IR compilation/validation rather than a custom workflow-engine phase;
-- W9 capability resolution is internal target selection/lowering/routing rather than user ceremony;
-- W12 repair is a loop to the cheapest necessary prior operation, not a custom image-editor stage;
-- W14 remains correctly cross-cutting Continuity/Handoff infrastructure;
-- trivial one-shot requests bypass unnecessary production structure.
+The expected irreducible native surface is now mostly **image-production vocabulary/profile content**:
 
-This preserves the accepted workflow while removing the assumption that every numbered function requires bespoke infrastructure.
+- visual authority dimensions and image-specific precedence meaning;
+- image capability namespace/attributes;
+- compact image-production spatial predicates/reference-frame conventions not directly supplied by generic calculi;
+- image/domain validation rule vocabulary and thresholds;
+- mappings from those semantic terms to provider-neutral requirements and validation evidence.
 
-## 9. Research evidence sufficiency / exit condition
+This is an ontology/profile layer over reused generic mechanics, not a new general-purpose computer-science framework.
 
-The method-hardened handoff requires research to stop at decision sufficiency rather than bibliography size.
+## 9. Assurance remains accepted and is extended by fusion invariants
 
-That condition is satisfied at planning level because:
+`plans/REUSE_AND_INTEGRATION_ASSURANCE.md` remains the top-level verification/validation plan:
 
-1. every material native/partial-native matrix row is explicitly accounted for;
-2. each has an abstract-problem search across the strongest materially relevant mature domains;
-3. the resulting classifications no longer depend on lack of exact AIMAGE terminology;
-4. retained `DESIGN` is limited to domain semantic content with an explicit reason generic frameworks cannot supply that correctness meaning;
-5. acquisition mode, canonical-state boundary and fallback/replacement logic are fixed for accepted external classes;
-6. no known unresolved candidate **class** remains that is likely to change a material classification;
-7. equivalent implementations inside an already-covered class are implementation-time selection questions, not a reason for unbounded research.
+- Gate A capability coverage;
+- Gate B external acquisition due diligence;
+- Gate C ATAM-style architecture scenarios;
+- Gate D requirement-traceable integrated workflow simulation, state-transition coverage, combinatorial interaction coverage and fault/regression injection.
 
-## 10. Deliberately deferred implementation checks
+The semantic-fusion design must additionally prove:
 
-The following remain `DEFERRED_IMPLEMENTATION_CHECK`, not architecture gaps:
+1. one canonical semantic authority;
+2. no silent semantic loss during compile/lowering;
+3. baseline/approval cannot mutate without explicit reopen/change control;
+4. repair mutates only its authorized frame and regression-checks preserved dimensions;
+5. viewpoint-sensitive spatial relations resolve a reference frame;
+6. provider replacement does not change authority/approval/domain semantics;
+7. validation is separate from enforcement and does not mutate its subject;
+8. domain profiles cannot invert `features/domain -> engine interfaces`;
+9. RenderSpec/ExecutionPlan identify the semantic state/version from which they were derived;
+10. unsatisfied mandatory requirements fail/reroute explicitly;
+11. trivial one-shot use remains simple.
 
-- exact JSON Schema validation library;
-- exact Cassowary-compatible solver package if a solver is required;
-- exact database/blob-store implementation;
-- exact provider package versions/model aliases at implementation time;
-- exact ComfyUI workflow artifact per supported advanced capability.
+## 10. Workflow impact
 
-They are deferred because implementation language/runtime and concrete provider version are intentionally not yet selected. Semantic owner, acquisition mode, coupling, fallback and replacement boundaries are already fixed. Every concrete selection must still pass Assurance Gate B.
+`plans/WORKFLOW_TARGET.md` remains valid and does not require another stage explosion.
 
-## 11. Independent pre-adoption audit verdict
+The fusion only clarifies ownership:
 
-Verdict: **PASS** on the bounded planning candidate, subject only to the normal final fresh-head check at merge time.
+- W0-W1 -> A intent/authority + D domain profile;
+- W3-W5 -> C spatial semantics and derived blocking artifacts;
+- W6 -> A baseline/change-control event;
+- W8 -> compile immutable RenderSpec;
+- W9 -> B requirement/capability resolution and target lowering;
+- W10 -> provider ExecutionPlan;
+- W11 -> D ValidationReport;
+- W12 -> D diagnosis + A repair frame + B capability choice + provider-native edit;
+- W13 -> accepted artifact/finalization;
+- W14 -> existing Continuity/Handoff transports identities/state but does not own image semantics.
 
-Confirmed:
+No extra user-visible ceremony is introduced.
 
-- fresh `main` remained `0de5237dc3d929edbf044314efe81983b6846f43` during the audit;
-- candidate merge base is exactly that current `main`, with `behind=0`;
-- candidate changes only `governance/continuity/CURRENT.md`, `plans/CAPABILITY_REUSE_MATRIX.md`, `plans/EXTERNAL_REUSE_PLAN.md`, and new `plans/REUSE_AND_INTEGRATION_ASSURANCE.md`;
-- no implementation source, package/dependency manifest, provider runtime, workflow artifact or external source code was added;
-- current handoff hardening is preserved rather than overwritten;
-- `architecture/BOUNDARIES.md` remains compatible: external/provider representations stay below AIMAGE semantics, Continuity/Handoff remains outside image-production logic, and `features/domain capabilities -> engine interfaces` remains intact;
-- no open PR/work was found touching this exact reuse/design boundary;
-- Gate A coverage closes all materially prior `DESIGN`/partial-`DESIGN` claims and records the retained semantic residue;
-- design-level Gate B boundaries are fixed; exact versions/packages appropriately remain implementation-time checks rather than hidden architecture decisions;
-- `WORKFLOW_TARGET.md` was checked and intentionally left unchanged because no logical user/control boundary warranted deletion;
-- external assurance sources were checked from official/primary material where available, including NIST SSDF/combinatorial testing, SLSA/SPDX/OpenSSF, SEI ATAM, NASA V&V, W3C/OpenAssetIO/OpenUSD/LLVM-MLIR/JSON Schema families.
+## 11. Exactly one next bounded action after adoption
 
-No architecture-blocking contradiction was found.
+**Define the minimum provider-neutral schema/contracts for the four semantic families in `plans/SEMANTIC_FUSION_PLAN.md`, then execute a design-only tabletop simulation of the existing canonical Assurance scenarios against those contracts to prove the fusion invariants before any implementation planning.**
 
-## 12. Exactly one next bounded action after adoption
+This remains one bounded design action: contract definition and immediate design-level simulation are coupled because the schemas are not complete until representative workflows can traverse them without semantic loss or duplicated ownership.
 
-**Design the six narrowed AIMAGE semantic areas in section 5 as exact provider-neutral contracts/invariants, using the reused generic mechanics and the acquisition boundaries already fixed by the accepted planning set. Keep the phase planning/design/research only; do not begin provider/core implementation, install dependencies, import source code, or pin implementation-language packages during that design slice.**
+Do **not** select implementation language/runtime packages, install dependencies, write provider/core production code, import external source, or pin concrete library versions during this slice.
 
-The six areas may share one coherent contract family; do not create six independent frameworks merely because they are listed separately.
+## 12. Completion / acceptance criteria for the next action
 
-## 13. Completion / acceptance criteria for the next action
+The next slice is complete only when:
 
-The next semantic-design slice is complete only when:
+1. the four contract families have minimal objects/fields, owners and non-goals;
+2. the image-specific vocabulary is explicitly separated from borrowed generic mechanics;
+3. relationships among VisualIntentState, RenderSpec, RequirementSet, ProviderCapabilityDescriptor, ResolutionResult, ExecutionPlan, artifact/run records and ValidationReport are precise and non-duplicative;
+4. baseline/change-control and mutable/preserve frame semantics are explicit;
+5. reference-frame semantics for directional spatial predicates are explicit;
+6. lowering has explicit legality/unsatisfied behavior and cannot silently lose mandatory semantics;
+7. validation/decision remains separate from provider enforcement;
+8. the design-only simulations cover at least one-shot, composition approval, viewer-relative placement, cross-provider reroute, minimal-delta repair, capability absence, cross-context resume, rejected-artifact resurrection and provider/dependency replacement;
+9. all fusion invariants in section 9 pass or blocking contradictions are recorded;
+10. the design is independently audited against fresh `main`, `architecture/BOUNDARIES.md`, the reuse/acquisition plan and assurance plan before implementation authorization.
 
-1. each of the six residues has a precise purpose, owner and non-goal;
-2. their relationships/invariants are explicit and non-duplicative;
-3. generic mechanics remain delegated to the external patterns already selected rather than being reimplemented in AIMAGE terminology;
-4. provider-specific state cannot become canonical authority through the contracts;
-5. approval/lock/preservation and RenderSpec lowering have explicit semantic-loss/failure behavior;
-6. the contracts are sufficient to support at least the canonical Assurance Gate C/D scenarios at design level;
-7. `architecture/BOUNDARIES.md` is updated only if the resulting design truly changes an existing responsibility boundary;
-8. the design is independently audited before any implementation authorization.
+## 13. Expected transition
 
-## 14. Expected transition
+If the next slice passes, AIMAGE will have a complete provider-neutral semantic contract architecture plus simulated evidence that the contracts survive the intended workflow.
 
-After that next slice, AIMAGE should have a complete provider-neutral semantic contract design sitting on top of externally reused generic mechanics. Only then should a separate implementation plan choose concrete language/runtime packages and execute Assurance Gate B for each dependency before code integration.
+Only after that should a separate implementation-planning slice choose language/runtime and concrete libraries, run Assurance Gate B for each actual dependency, and prepare the first OpenAI vertical slice.
 
-## 15. Stop / replan conditions
+## 14. Stop / replan conditions
 
 Stop/replan if:
 
-- fresh authority materially changes the phase/product/reuse boundaries;
-- newer work touching the same semantic-design surface makes the next action non-unique;
-- semantic design reveals that one retained AIMAGE residue duplicates a mature external primitive after all;
-- a license/runtime/distribution constraint invalidates an accepted acquisition boundary;
+- fresh authority materially changes phase/product/reuse boundaries;
+- newer work touches the same semantic-fusion surface and makes the next action non-unique;
+- tabletop simulation shows two contract families duplicate ownership or cannot preserve user intent;
+- a retained AIMAGE semantic is shown to be fully replaced by a mature external primitive after all;
+- an accepted acquisition/license/distribution boundary becomes invalid;
 - the user changes phase or explicitly authorizes a different next action.
