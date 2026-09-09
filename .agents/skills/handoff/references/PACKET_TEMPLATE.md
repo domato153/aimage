@@ -4,6 +4,18 @@ Use this as a semantic checklist, not a form that must be filled mechanically.
 
 A packet is continuity evidence, not project authority.
 
+For a dense/high-consequence handoff, place a short **Operational Header** first. Compact handoffs may fold the same items into the normal sections.
+
+## Operational Header — when useful
+
+- Packet locator/status:
+- Immediate objective:
+- Phase / stop boundary:
+- Urgency/deadline/commitment, if material:
+- Exact next bounded action:
+- Completion/acceptance criterion:
+- Stop/replan trigger:
+
 ## Identity / locator
 
 - Repository:
@@ -11,6 +23,10 @@ A packet is continuity evidence, not project authority.
 - Path:
 - Exact commit/object identity:
 - Packet status:
+
+## Material delta from predecessor — when applicable
+
+If this packet supersedes a still-reachable predecessor, list only the changes that make the successor operationally different.
 
 ## Immediate objective
 
@@ -21,6 +37,14 @@ State the current bounded objective in practical terms.
 - Phase:
 - Authorized work:
 - Explicit stop boundary:
+
+## Urgency / time / commitments — when material
+
+- Deadline/time window:
+- External promise or expected response:
+- Does missing the timing change the next action?:
+
+Omit this section when timing has no decision value.
 
 ## Fresh authority snapshot
 
@@ -50,11 +74,27 @@ Record decisions, rationale, exclusions, rejected/superseded directions, or succ
 
 List only bounded dependencies needed for continuation. For local/temporary/derived artifacts, record the continuity classification/rebuild path when material.
 
+If durable state already exists in an AIMAGE-owned file/artifact/service, point to it rather than mirroring the full state into this packet. Transfer only the decision-relevant interpretation or delta.
+
+## Ownership / external party — when material
+
+If continuation is waiting on someone/something other than the receiver:
+
+- Owner/external party:
+- Pending action/event:
+- What event returns control to the receiver:
+
 ## Exact next bounded action
 
 One executable next action:
 
 Why this action is next:
+
+## Completion / acceptance criteria
+
+What proves the bounded action is finished?
+
+For research/review/design work, state an evidence-sufficiency or exit condition so the task cannot expand into indefinite investigation.
 
 ## Expected transition
 
@@ -80,4 +120,12 @@ Only material prohibitions that protect current authority, phase, preservation, 
 
 ## Receiver acceptance
 
-The receiver must resolve current `AGENTS.md`, `.agents/skills/handoff/SKILL.md`, `governance/CONTINUITY.md`, and the applicable continuity profile from current AIMAGE authority, reconcile fresh live state, then return `ACCEPTED` or `STALE_REPLAN` before consequential continuation.
+The receiver must resolve current `AGENTS.md`, `.agents/skills/handoff/SKILL.md`, `governance/CONTINUITY.md`, and the applicable continuity profile from current AIMAGE authority, reconcile fresh live state, then synthesize/read back:
+
+- objective;
+- one next action;
+- completion criterion;
+- stop/replan trigger;
+- any material deadline/ownership boundary.
+
+Only then return `ACCEPTED` or `STALE_REPLAN` before consequential continuation.
