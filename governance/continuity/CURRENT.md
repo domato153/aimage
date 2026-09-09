@@ -6,15 +6,16 @@ Status: current repository-work continuity locator for the active planning/desig
 
 - Repository: `domato153/aimage`
 - Authoritative branch: `main`
-- Accepted `main` immediately before this handoff-method hardening candidate: `877ce7dc7c48c1f0976a4ec926ece81872a1feb7`
+- Accepted `main` immediately before this handoff-method hardening candidate was constructed: `877ce7dc7c48c1f0976a4ec926ece81872a1feb7`
 - Current governing entrypoint: `AGENTS.md`
 - Continuity method: `governance/CONTINUITY.md`
 - Repository-work profile: `governance/continuity/REPOSITORY_WORK.md`
 - Handoff method: `.agents/skills/handoff/SKILL.md`
-- Handoff external-method audit candidate: `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
-- **ACTIVE method-hardened successor packet candidate:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
+- Handoff external-method audit: `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
+- **Method-hardened successor packet:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
 - **Immutable successor packet construction locator:** repository `domato153/aimage`, commit `c687ee6777cd5c302b8af7104d8e10e413e79bec`, path `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
-- **SUPERSEDED predecessor after successor adoption:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_NEXT_THREAD.md` at prior accepted `main` `877ce7dc7c48c1f0976a4ec926ece81872a1feb7`
+- On a non-authoritative work branch, the audit/skill/template/successor are proposals. **When this exact CURRENT and those changes are adopted by current AIMAGE authority, the method-hardened successor is ACTIVE continuity evidence subject to receiver reconciliation.**
+- **Predecessor after successor adoption:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_NEXT_THREAD.md` at prior accepted `main` `877ce7dc7c48c1f0976a4ec926ece81872a1feb7` becomes `SUPERSEDED`.
 
 Fresh repository/platform state always governs current factual state if these literals later move. A candidate copy cannot authorize itself.
 
@@ -48,7 +49,7 @@ After the prior cross-domain successor was adopted, the handoff method was re-au
 
 The previous AIMAGE handoff already correctly covered authority reconciliation, explicit acceptance before ownership, current situation/hypothesis, one next action, contingencies, selective compression, supersession and cold-start synthesis.
 
-The candidate hardening adds only generic gaps shown by the comparison:
+The hardening adds only generic gaps shown by the comparison:
 
 1. **Completion / acceptance criteria** for the bounded next action, especially research/review/design work.
 2. **Research evidence-sufficiency / saturation** so broad research has a finish condition and cannot expand indefinitely.
