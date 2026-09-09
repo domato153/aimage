@@ -14,7 +14,7 @@ jobs = Table(
     Column("accepted_artifact_id", String),
     Column("updated_at", String, nullable=False),
 )
-# Compatibility name inside the first slice; the physical table is the accepted-plan `jobs` table.
+# Transitional Python alias used by first-slice tests/callers; the physical table is `jobs`.
 job_current = jobs
 
 semantic_documents = Table(
@@ -28,6 +28,18 @@ semantic_documents = Table(
     Column("payload_json", Text, nullable=False),
     Column("created_at", String, nullable=False),
     UniqueConstraint("job_id", "semantic_revision", name="uq_semantic_documents_job_revision"),
+)
+
+semantic_support_documents = Table(
+    "semantic_support_documents",
+    metadata,
+    Column("object_id", String, primary_key=True),
+    Column("contract_type", String, nullable=False),
+    Column("job_id", String, nullable=False, index=True),
+    Column("semantic_revision", Integer, nullable=False),
+    Column("schema_version", String, nullable=False),
+    Column("payload_json", Text, nullable=False),
+    Column("created_at", String, nullable=False),
 )
 
 derived_documents = Table(
