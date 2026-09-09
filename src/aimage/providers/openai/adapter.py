@@ -8,11 +8,8 @@ from aimage.contracts.resolution import ProviderCapabilityDescriptor
 from aimage.engine.interfaces.provider import ProviderExecutionResult
 
 from .capability import MODEL_SNAPSHOT, build_capability_descriptor
+from .errors import OpenAIProviderError, normalize_openai_error
 from .lowering import OpenAIRenderRequest
-
-
-class OpenAIProviderError(RuntimeError):
-    pass
 
 
 def build_openai_client(*, timeout_seconds: float = 120.0):
@@ -57,7 +54,8 @@ class OpenAIAdapter:
                 )
             else:
                 if not input_images:
-                    raise OpenAIProviderError("edit execution requires input image bytes")
+                    evidence = normalize_openai_error(ValueError("missing edit image"))
+                    raise OpenAIProviderError("edit execution requires input image bytes", evidence)
                 files = tuple((f"input-{index}.png", data, "image/png") for index, data in enumerate(input_images))
                 image_arg: object = files[0] if len(files) == 1 else files
                 kwargs: dict[str, Any] = {
@@ -75,13 +73,14 @@ class OpenAIAdapter:
         except OpenAIProviderError:
             raise
         except Exception as exc:
-            request_id = getattr(exc, "request_id", None)
-            suffix = f" request_id={request_id}" if request_id else ""
-            raise OpenAIProviderError(f"OpenAI image execution failed.{suffix}") from exc
+            evidence = normalize_openai_error(exc)
+            suffix = f" request_id={evidence.request_id}" if evidence.request_id else ""
+            raise OpenAIProviderError(f"OpenAI image execution failed.{suffix}", evidence) from exc
 
         data = getattr(response, "data", None)
         if not data or not getattr(data[0], "b64_json", None):
-            raise OpenAIProviderError("OpenAI image response contained no base64 image")
+            evidence = normalize_openai_error(ValueError("missing b64 image"))
+            raise OpenAIProviderError("OpenAI image response contained no base64 image", evidence)
         image_bytes = base64.b64decode(data[0].b64_json, validate=True)
         request_id = getattr(response, "_request_id", None)
         usage_value = getattr(response, "usage", None)

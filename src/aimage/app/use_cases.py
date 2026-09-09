@@ -14,7 +14,7 @@ from aimage.engine.interfaces.artifact_store import ArtifactStore
 from aimage.engine.interfaces.metadata_repository import MetadataRepository
 from aimage.engine.requirements import derive_requirements
 from aimage.engine.resolve import resolve_requirements
-from aimage.engine.validation_service import aggregate_validation
+from aimage.engine.validation_service import aggregate_validation, require_final_preservation_evidence
 from aimage.providers.openai.adapter import OpenAIAdapter
 from aimage.providers.openai.lowering import lower_openai
 
@@ -130,6 +130,13 @@ class ImageEngine:
         # But stale evidence can never proceed into current validation/acceptance flow.
         self.metadata.assert_current(intent.job_id, intent.semantic_revision, render_spec.source_intent_digest)
 
+        preserve_paths = mutation_frame.preserve_paths if mutation_frame else ()
+        validation_results, mandatory_rule_ids = require_final_preservation_evidence(
+            render_spec,
+            validation_results,
+            mandatory_rule_ids,
+            extra_preserve_paths=preserve_paths,
+        )
         overall = aggregate_validation(validation_results, mandatory_rule_ids)
         report = ValidationReport(
             job_id=intent.job_id,
