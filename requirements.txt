@@ -1,0 +1,6 @@
+# Gate-B reviewed direct dependencies. This is not a resolved/hash lock.
+# Do not install for production until the separately recorded exact-lock/transitive review is complete.
+pydantic==2.13.5
+SQLAlchemy==2.0.52
+alembic==1.19.2
+openai==3.11.0

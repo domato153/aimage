@@ -1,0 +1,110 @@
+name: Gate B dependency evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "migrations/**"
+      - "pyproject.toml"
+      - "alembic.ini"
+      - "requirements.txt"
+      - "requirements-dev.txt"
+      - "requirements-lock/**"
+      - "tools/dependency_evidence.py"
+      - "tools/openai_smoke.py"
+      - "governance/external_components.json"
+      - "governance/evidence/**"
+      - ".github/workflows/gate-b-dependency-evidence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gate-b-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-cp313:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact event commit without checkout action
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout --detach FETCH_HEAD
+
+      - name: Provision CPython 3.13 from pinned GitHub-owned action
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Resolve and verify exact Linux dependency lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          python --version
+          python -m pip --version
+          python -m pip install --disable-pip-version-check --no-input --dry-run --ignore-installed --report gate-b-linux-cp313.json -r requirements-dev.txt
+          python tools/dependency_evidence.py gate-b-linux-cp313.json --platform-label linux-x64-cp313 --lock-output gate-b-linux-cp313.lock.txt
+          diff -u requirements-lock/linux-cp313.txt gate-b-linux-cp313.lock.txt
+
+      - name: Install exact reviewed Linux artifacts and run tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-input --only-binary=:all: --require-hashes -r requirements-lock/linux-cp313.txt
+          python -m pytest -q
+
+      - name: Credentialed Sunburst generation/edit smoke when secret exists
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          python tools/openai_smoke.py
+
+  windows-cp313:
+    runs-on: windows-2025
+    steps:
+      - name: Checkout exact event commit without checkout action
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          git init .
+          git remote add origin "https://github.com/$env:GITHUB_REPOSITORY.git"
+          git fetch --depth=1 origin $env:GITHUB_SHA
+          git checkout --detach FETCH_HEAD
+
+      - name: Provision CPython 3.13 from pinned GitHub-owned action
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Resolve and verify exact Windows dependency lock
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          python --version
+          python -m pip --version
+          python -m pip install --disable-pip-version-check --no-input --dry-run --ignore-installed --report gate-b-windows-cp313.json -r requirements-dev.txt
+          python tools/dependency_evidence.py gate-b-windows-cp313.json --platform-label windows-x64-cp313 --lock-output gate-b-windows-cp313.lock.txt
+          $expected = Get-Content requirements-lock/windows-cp313.txt
+          $actual = Get-Content gate-b-windows-cp313.lock.txt
+          $diff = Compare-Object $expected $actual -SyncWindow 0
+          if ($diff) {
+            $diff | Format-Table | Out-String | Write-Host
+            throw "checked-in Windows lock differs from fresh resolver evidence"
+          }
+
+      - name: Install exact reviewed Windows artifacts and run tests
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          python -m pip install --disable-pip-version-check --no-input --only-binary=:all: --require-hashes -r requirements-lock/windows-cp313.txt
+          python -m pytest -q
