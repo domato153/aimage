@@ -11,6 +11,22 @@ Disposition values:
 - `DROP` — source-repository-specific mechanism intentionally not adopted;
 - `PROFILE` — valid only in an AIMAGE specialization rather than the common core.
 
+## A0. Parent-skill dependencies that materially affect handoff semantics
+
+The source handoff contract is owned by a parent maintenance skill. Most of that skill is maintenance-specific and is not imported. The following parent-skill semantics materially affect continuity and therefore must be explicitly closed rather than left as hidden runtime dependencies.
+
+| ID | Source parent concept | Disposition | AIMAGE location | Verification |
+|---|---|---|---|---|
+| PS-001 | authority before memory / fresh authoritative state before claims | RETAIN | `../CONTINUITY.md` §§1-3,11 | stale-state cold start |
+| PS-002 | phase is part of scope; do not cross review/design into mutation without authorization | PROFILE | `REPOSITORY_WORK.md` Phase boundary | design-only handoff mutation negative test |
+| PS-003 | candidate-modified authority cannot self-authorize; transition needs trusted authorization | ADAPT | `../CONTINUITY.md` §2; `../../bootstrap/PROJECT_SOURCE.md` | self-authorizing-policy-change negative test |
+| PS-004 | procedure/ceremony is itself a risk and should be proportional | RETAIN | `../CONTINUITY.md` §§8-9,13 | low-risk no-handoff / incidental-cache tests |
+| PS-005 | distinguish confirmed/supported inference/unresolved when uncertainty matters | RETAIN | `../CONTINUITY.md` §6 | stale-hypothesis scenario |
+| PS-006 | practical user-facing conclusion before internal technical record | RETAIN | `../CONTINUITY.md` §12 | semantic-presentation tests |
+| PS-007 | handoff is live transfer; co-located stale method copy does not own semantics | RETAIN | `../CONTINUITY.md` §§3,11 | stale-method-shadow scenario |
+
+All other maintenance-skill behavior remains outside the AIMAGE continuity runtime unless separately adopted by AIMAGE authority.
+
 ## A. Primary continuity contract mapping
 
 | ID | Source concept | Disposition | AIMAGE location | Verification |
@@ -37,7 +53,7 @@ Disposition values:
 | CT-020 | source `candidate` terminology is not mandatory in generic continuity | DROP | explicit restraint in `../CONTINUITY.md` §8 | contamination search |
 | CT-021 | one next executable action; no receiver guessing between peers | RETAIN | `../CONTINUITY.md` §§6,11 | two-actions hard-fail scenario |
 | CT-022 | stable identity separated from temporary availability | RETAIN | `../CONTINUITY.md` §9 | expired-artifact scenario |
-| CT-023 | local/session state classified durable/regenerate/unrecoverable | RETAIN | `../CONTINUITY.md` §9 | missing-chat-artifact scenario |
+| CT-023 | local/session state classified durable/regenerate/unrecoverable | RETAIN | `../CONTINUITY.md` §§9,14 | missing-chat-artifact and hidden-local-state scenarios |
 | CT-024 | decision-relevant derived artifacts need source/invalidation/rebuild semantics | RETAIN | `../CONTINUITY.md` §9 | stale-derived-view scenario |
 | CT-025 | incidental caches do not require provenance ceremony | RETAIN | `../CONTINUITY.md` §§9,13 | harmless-cache scenario |
 | CT-026 | receiver acts as zero-chat reader and challenges packet | RETAIN | `../CONTINUITY.md` §11 | cold-start rehearsal |
@@ -47,6 +63,8 @@ Disposition values:
 | CT-030 | dense/high-risk transfer may use cold-reader rehearsal | ADAPT | `../CONTINUITY.md` §13 | proportional-assurance review |
 | CT-031 | permanent adversarial probes added only for recurring confirmed failure classes | RETAIN | `../CONTINUITY.md` §13 | ceremony review |
 | CT-032 | completion criteria require recoverable/current/one-action transfer | RETAIN | `../CONTINUITY.md` §14 | matrix closure + cold start |
+| CT-033 | decision-relevant temporary transport retains identity/provenance/expiry/regeneration semantics when applicable | ADAPT | `../CONTINUITY.md` §9 | transport-substitution/expiry scenario |
+| CT-034 | stale/unbound decision-relevant derived view is advisory until reconciled/rebuilt | RETAIN | `../CONTINUITY.md` §9 | stale-derived-view scenario |
 
 ## B. Source maintenance-specific mechanisms intentionally not imported
 
@@ -93,6 +111,7 @@ These are not claimed to come from the source continuity contract. They are AIMA
 This matrix is considered closed for the initial adoption only when:
 
 1. every decision-relevant source continuity concept is represented above or explicitly classified as source-specific and dropped;
-2. no AIMAGE governing continuity rule requires `domato153/translation` at runtime;
-3. every AIMAGE-specific extension has an AIMAGE owner rather than being falsely attributed to the source method;
-4. the audit scenarios exercise both omission and over-adoption failure modes.
+2. every material parent-skill dependency needed to interpret handoff semantics is internalized or explicitly classified rather than required at runtime;
+3. no AIMAGE governing continuity rule requires `domato153/translation` at runtime;
+4. every AIMAGE-specific extension has an AIMAGE owner rather than being falsely attributed to the source method;
+5. the audit scenarios exercise both omission and over-adoption failure modes.
