@@ -153,6 +153,44 @@ Treat a handoff as a filtered operational context, not as a dump of all prior co
 
 This preserves the useful property of agent handoff input filtering: the receiver gets the minimum context required for correct continuation while durable application/project state remains in its owning system.
 
+### 4.6 Publication closeout and status accounting
+
+Packet construction is not the final sender step for a consequential repository handoff. After the canonical packet is actually published/adopted and its immutable identity is known:
+
+1. fresh-read the live authority and the applicable current continuity/status locator;
+2. distinguish the packet's historical construction snapshot from current live state;
+3. reconcile any status that changed because publication/adoption happened, such as `candidate` becoming accepted, a work branch becoming historical, or a successor packet becoming the canonical transfer locator;
+4. repair stale current-status metadata when leaving it unchanged could make the receiver choose a different next action or return a false `STALE_REPLAN`;
+5. confirm that all decision-relevant state the packet claims as durable is actually reachable from its recorded owner/locator;
+6. only then derive or finalize user-facing paste/share material.
+
+Do not rewrite an immutable historical packet merely because `main` moved after publication. Its construction SHA is provenance. Currentness comes from fresh authority and current continuity state.
+
+Do not create a self-referential requirement that a mutable `CURRENT`-style file encode the commit SHA that will only exist after that file is committed. Prefer a fresh-read rule for live HEAD plus immutable identities for historical packets/evidence when self-encoding would become stale by construction.
+
+This closeout is status accounting, not a new authority transition mechanism. A handoff packet still cannot authorize its own adoption.
+
+### 4.7 Semantic-equivalence check for derived transfer material
+
+For a dense or consequential handoff, a shortened paste prompt, chat bootstrap, or other derived transfer form must be checked against the finalized canonical packet before delivery.
+
+The derivative does not need textual identity, but it must preserve every material control field whose loss or broadening could change receiver behavior. Check, when applicable:
+
+- canonical immutable locator and authority-first/fresh-reconciliation instruction;
+- immediate objective;
+- current phase and stop boundary;
+- exactly one next bounded action;
+- completion/acceptance criterion and evidence-sufficiency exit condition;
+- stop/replan conditions;
+- binding decisions, negative boundaries, and known rejected/superseded states needed to prevent reversal;
+- material urgency, deadline, ownership, or external-wait condition;
+- exceptional permissions or prohibitions that narrow the phase boundary, including bounded research/probing permissions when material;
+- recoverability/hidden-local-state facts when their omission could cause the receiver to assume an unavailable dependency exists.
+
+A derivative may omit detail already reachable from the canonical packet when it explicitly tells the receiver to open that packet before consequential action and the omission cannot change the next action, authorization boundary, completion judgment, or stale/replan verdict.
+
+If the derivative broadens permission, weakens a prohibition, drops a material condition, changes the finish criterion, or makes a different next action plausible, repair it before delivery. When unsure, prefer pointing back to the canonical packet rather than duplicating more state.
+
 ## 5. Compression rules
 
 A good handoff is a selective operational state transfer, not a transcript archive.
@@ -265,7 +303,7 @@ Do not turn these image-job fields into the generic handoff core. Their detailed
 
 ## 10. Derived user-facing paste/share material
 
-When the user wants a prompt to paste into a new thread, derive it from the canonical handoff packet after the packet is finalized.
+When the user wants a prompt to paste into a new thread, derive it from the canonical handoff packet after the packet is finalized and publication closeout has reconciled live status.
 
 The paste/share form should:
 
@@ -273,8 +311,11 @@ The paste/share form should:
 - include the canonical handoff locator;
 - preserve current objective, phase, negative boundaries, exact next action, finish condition, and stale/replan instruction;
 - preserve material urgency/deadline/ownership when applicable;
+- preserve exceptional permissions/prohibitions and recoverability facts when their omission could change receiver behavior;
 - tell the receiver to perform fresh reconciliation and practical read-back before action;
 - avoid duplicating large canonical specifications already reachable from `AGENTS.md`.
+
+For dense or consequential derivatives, run the semantic-equivalence check in section 4.7 before delivery.
 
 Do not independently rewrite the handoff from memory after the canonical packet is created.
 
@@ -298,6 +339,9 @@ Before treating a handoff as ready, verify:
 - material deadline/commitment/ownership facts are preserved when they can change ordering or responsibility;
 - stop/replan conditions are explicit;
 - packet context is filtered and durable state remains in its owning source rather than being redundantly mirrored;
+- after actual packet publication/adoption, live continuity/status accounting has been reconciled and no accepted state remains mislabeled as a candidate/current executable branch;
+- immutable packet provenance is not confused with live current-state aliases, and no self-referential current-SHA requirement becomes stale by construction;
+- any dense/consequential paste/share derivative passed the section 4.7 semantic-equivalence check;
 - a zero-chat receiver can recover the route without reading `domato153/translation`.
 
 For dense/high-risk transfers, perform a cold-reader or adversarial rehearsal. Do not make that ceremony mandatory for trivial handoffs.
