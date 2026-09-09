@@ -1,0 +1,1 @@
+"""OpenAI Image API adapter."""

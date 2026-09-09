@@ -18,7 +18,28 @@ def descriptor_is_fresh(descriptor: ProviderCapabilityDescriptor, now: datetime 
     return descriptor.valid_until is None or descriptor.valid_until >= now
 
 
+def _size_matches(requirement: CapabilityRequirement, capability: Capability) -> bool:
+    width = requirement.constraints.get("width")
+    height = requirement.constraints.get("height")
+    if width is None and height is None:
+        return True
+    if not isinstance(width, int) or not isinstance(height, int) or width <= 0 or height <= 0:
+        return False
+    limits = capability.limits
+    if width > int(limits.get("max_width", width)) or height > int(limits.get("max_height", height)):
+        return False
+    divisor = int(limits.get("dimension_divisible_by", 1))
+    if width % divisor or height % divisor:
+        return False
+    aspect = width / height
+    if aspect < float(limits.get("min_aspect", aspect)) or aspect > float(limits.get("max_aspect", aspect)):
+        return False
+    return True
+
+
 def _constraint_matches(key: str, expected: Any, descriptor: ProviderCapabilityDescriptor, capability: Capability) -> bool:
+    if key in {"width", "height"}:
+        return True  # evaluated jointly by _size_matches
     if key == "target_version_or_model":
         return descriptor.target_version_or_model == expected
     if key in capability.attributes:
@@ -40,6 +61,8 @@ def capability_satisfies(
     capability: Capability,
 ) -> bool:
     if capability.namespace != requirement.namespace or capability.name != requirement.action_or_capability:
+        return False
+    if not _size_matches(requirement, capability):
         return False
     return all(_constraint_matches(key, value, descriptor, capability) for key, value in requirement.constraints.items())
 

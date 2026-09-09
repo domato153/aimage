@@ -30,6 +30,8 @@ def compile_render_spec(
     """Compile one semantic revision into an immutable provider-neutral RenderSpec.
 
     Unresolved contradictory mandatory values fail closed before execution state exists.
+    Spatial relations are compiled with their frame *kind*, so a provider lowering cannot
+    silently conflate viewer-deictic and screen-image coordinates.
     """
 
     if spatial_profile and spatial_profile.semantic_revision != intent.semantic_revision:
@@ -49,7 +51,7 @@ def compile_render_spec(
     source_digest = _digest({"intent": intent_dump, "spatial": spatial_dump})
     authority_digest = _digest([binding.model_dump(mode="json") for binding in intent.authority_bindings])
 
-    obligations = tuple(
+    obligations: list[SemanticObligation] = [
         SemanticObligation(
             semantic_path=item.semantic_path,
             dimension=item.visual_dimension,
@@ -58,7 +60,27 @@ def compile_render_spec(
             source_intent_id=item.intent_id,
         )
         for item in active
-    )
+    ]
+    if spatial_profile:
+        frame_kinds = {frame.frame_id: frame.kind.value for frame in spatial_profile.frames}
+        for relation in spatial_profile.relations:
+            obligations.append(
+                SemanticObligation(
+                    semantic_path=f"spatial.{relation.relation_id}",
+                    dimension="composition",
+                    value_or_constraint={
+                        "predicate": relation.predicate,
+                        "subject_entity_id": relation.subject_entity_id,
+                        "object_entity_id": relation.object_entity_id,
+                        "reference_frame_id": relation.reference_frame_id,
+                        "reference_frame_kind": frame_kinds.get(relation.reference_frame_id),
+                        "tolerance": relation.tolerance,
+                    },
+                    strength=relation.strength,
+                    source_intent_id=relation.source_intent_id,
+                )
+            )
+
     preservation = tuple(
         PreservationObligation(
             baseline_id=baseline.baseline_id,
@@ -71,9 +93,7 @@ def compile_render_spec(
     )
 
     input_refs = tuple(dict.fromkeys(binding.artifact_ref for binding in intent.reference_bindings))
-    creative_freedoms = tuple(
-        item.semantic_path for item in active if item.strength is Strength.ADVISORY
-    )
+    creative_freedoms = tuple(item.semantic_path for item in active if item.strength is Strength.ADVISORY)
 
     return RenderSpec(
         render_spec_id=new_object_id(),
@@ -85,9 +105,9 @@ def compile_render_spec(
         authority_snapshot_ref=f"sha256:{authority_digest}",
         spatial_profile_snapshot_ref=f"sha256:{_digest(spatial_dump)}" if spatial_profile else None,
         domain_profile_refs=intent.domain_profile_refs,
-        intent_obligations=obligations,
+        intent_obligations=tuple(obligations),
         preservation_obligations=preservation,
         creative_freedoms=creative_freedoms,
         input_artifact_refs=input_refs,
-        output_contract=dict(output_contract or {"media_type": "image/png"}),
+        output_contract=dict(output_contract or {"media_type": "image/png", "size": "1024x1024"}),
     )
