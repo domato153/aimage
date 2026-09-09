@@ -1,28 +1,29 @@
 # AIMAGE Current Repository-Work Continuity
 
-Status: current repository-work continuity locator for the active planning/design/research slice. This file records decision-relevant current state; it does not replace `governance/CONTINUITY.md`, `governance/continuity/REPOSITORY_WORK.md`, root `AGENTS.md`, or Image Engine specifications.
+Status: current repository-work continuity locator for the active planning/design/research slice. This file records decision-relevant current state; it does not replace `governance/CONTINUITY.md`, `governance/continuity/REPOSITORY_WORK.md`, root `AGENTS.md`, the handoff skill, or Image Engine specifications.
 
 ## 1. Authority snapshot
 
 - Repository: `domato153/aimage`
 - Authoritative branch: `main`
-- Accepted `main` immediately before this successor-handoff update: `09edfa4a0b0760640c11280f721aaaa475a6fb52`
+- Accepted `main` immediately before this handoff-method hardening candidate was constructed: `877ce7dc7c48c1f0976a4ec926ece81872a1feb7`
 - Current governing entrypoint: `AGENTS.md`
 - Continuity method: `governance/CONTINUITY.md`
 - Repository-work profile: `governance/continuity/REPOSITORY_WORK.md`
 - Handoff method: `.agents/skills/handoff/SKILL.md`
-- **ACTIVE successor packet candidate:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_NEXT_THREAD.md`
-- **Immutable successor packet construction locator:** repository `domato153/aimage`, commit `dbd514b5adfbf149177fcfcf42f548f9bc99b51a`, path `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_NEXT_THREAD.md`
-- Handoff re-audit: `audits/NEXT_THREAD_HANDOFF_REAUDIT_2026-09-10.md`
-- **SUPERSEDED predecessor after successor adoption:** `handoffs/2026-09-10_REUSE_MATRIX_REAUDIT_NEXT_THREAD.md` at prior accepted state `09edfa4a0b0760640c11280f721aaaa475a6fb52`
+- Handoff external-method audit: `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
+- **Method-hardened successor packet:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
+- **Immutable successor packet construction locator:** repository `domato153/aimage`, commit `c687ee6777cd5c302b8af7104d8e10e413e79bec`, path `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_METHOD_HARDENED_NEXT_THREAD.md`
+- On a non-authoritative work branch, the audit/skill/template/successor are proposals. **When this exact CURRENT and those changes are adopted by current AIMAGE authority, the method-hardened successor is ACTIVE continuity evidence subject to receiver reconciliation.**
+- **Predecessor after successor adoption:** `handoffs/2026-09-10_CROSS_DOMAIN_REUSE_REAUDIT_NEXT_THREAD.md` at prior accepted `main` `877ce7dc7c48c1f0976a4ec926ece81872a1feb7` becomes `SUPERSEDED`.
 
-Fresh repository state always governs current factual state if these literals later move. The successor packet becomes operational continuity evidence only after current AIMAGE authority adopts the candidate and a receiver freshly reconciles it.
+Fresh repository/platform state always governs current factual state if these literals later move. A candidate copy cannot authorize itself.
 
 ## 2. Current phase and scope
 
 Phase: **planning / design / research only**.
 
-The immediate work is **not native Engine/Core contract design yet**. The next slice must first perform a capability-first **cross-domain reuse re-audit** so AIMAGE does not redesign mature solutions that already exist outside image generation.
+The immediate work remains a capability-first **cross-domain reuse re-audit** before native Engine/Core design.
 
 No Image Engine implementation, provider integration, package installation, external-code import, runtime dependency change, or production code adoption is authorized by this continuity state.
 
@@ -32,16 +33,35 @@ The following foundation is accepted and should not be reopened without new evid
 
 - thin GPT Project bootstrap -> current root `AGENTS.md`;
 - separate Continuity and Handoff routes;
-- AIMAGE-owned `governance/CONTINUITY.md` and `.agents/skills/handoff/SKILL.md` with no runtime dependency on `domato153/translation`;
+- AIMAGE-owned continuity/handoff with no runtime dependency on `domato153/translation`;
 - Continuity/Handoff separated from Image Engine/Core and Feature/Domain product semantics;
 - intended product dependency direction `features/domain capabilities -> engine interfaces`;
 - accepted `plans/WORKFLOW_TARGET.md`;
 - accepted initial `plans/CAPABILITY_REUSE_MATRIX.md`;
 - accepted initial `plans/EXTERNAL_REUSE_PLAN.md`;
 - evidence-first `ADOPT / ADAPT / DESIGN` policy;
-- decision that provider-native targeted/delta/masked/multi-turn editing should execute image repairs when suitable, while AIMAGE owns only repair planning/orchestration and preservation intent.
+- decision that provider-native targeted/delta/masked/multi-turn editing should execute image repairs when suitable, while AIMAGE owns only the higher-level repair planning/orchestration semantics that remain necessary;
+- decision that every remaining `DESIGN`/partial-`DESIGN` capability must be challenged using abstract-problem, cross-domain research before native design begins.
 
-## 4. Current workflow baseline
+## 4. Handoff external-method hardening
+
+After the prior cross-domain successor was adopted, the handoff method was re-audited against external high-reliability handoff practice from Google SRE, AHRQ TeamSTEPPS/I-PASS/SBAR, NASA mission-operations/human-factors work, and modern agent handoff/context-filtering patterns.
+
+The previous AIMAGE handoff already correctly covered authority reconciliation, explicit acceptance before ownership, current situation/hypothesis, one next action, contingencies, selective compression, supersession and cold-start synthesis.
+
+The hardening adds only generic gaps shown by the comparison:
+
+1. **Completion / acceptance criteria** for the bounded next action, especially research/review/design work.
+2. **Research evidence-sufficiency / saturation** so broad research has a finish condition and cannot expand indefinitely.
+3. Conditional **urgency / deadlines / commitments / external ownership** when they can change continuation.
+4. Explicit **material delta from predecessor** for a successor packet.
+5. A concise **Operational Header** for dense/high-consequence packets.
+6. Explicit **context filtering / durable-state separation**: packet carries operational interpretation/delta while AIMAGE-owned files remain durable state owners.
+7. Stronger receiver **synthesis/read-back** before `ACCEPTED`.
+
+The audit evidence remains non-authoritative construction/audit material. Runtime handoff must remain self-contained in AIMAGE-owned governing files.
+
+## 5. Current workflow baseline
 
 The accepted product target remains an adaptive production loop rather than a prompt library:
 
@@ -61,106 +81,90 @@ The accepted product target remains an adaptive production loop rather than a pr
 14. deterministic finalization/export;
 15. continuity/handoff across context boundaries when required.
 
-This workflow is still a target, not untouchable ceremony. The cross-domain re-audit may simplify a stage if evidence shows it can be collapsed, made optional, represented as state, or delegated without losing a real user decision boundary.
-
-## 5. Why the prior next action is superseded
-
-The earlier CURRENT moved from native Engine/Core design to a broader external-reuse re-audit. A second cold-reader audit found that even that handoff remained too candidate-driven: it named good systems such as InvokeAI/OpenUSD/Temporal but did not force the receiver to search the mature **non-image field corresponding to every remaining `DESIGN` problem**.
-
-That creates a risk of checking a shortlist, finding no exact AIMAGE equivalent, and prematurely returning to bespoke design.
-
-Therefore the prior reuse-re-audit packet is superseded by the cross-domain successor once adopted.
+This workflow remains a target, not untouchable ceremony. The cross-domain re-audit may simplify a stage if mature external capability proves it can be collapsed, made optional, represented as state, or delegated without losing a real user decision boundary.
 
 ## 6. Governing research rule
 
 For every materially `DESIGN` or partial-`DESIGN` capability:
 
 1. translate the AIMAGE term into its **abstract problem**;
-2. identify mature adjacent domains that solve that problem;
-3. search standards/specifications, maintained implementations, established industry patterns, and relevant technical/academic literature as appropriate;
+2. identify mature adjacent/non-image domains that solve that problem;
+3. search standards/specifications, primary documentation, mature implementations, established production patterns, and relevant technical/academic literature as appropriate;
 4. test direct `ADOPT`, `ADAPT`, method/schema reuse, interoperability, and **composition of multiple mature solutions**;
 5. retain `DESIGN` only for the smallest irreducible AIMAGE-specific semantic residue.
 
 A lack of software using AIMAGE's exact vocabulary is not evidence that the underlying problem is unsolved.
 
-A retained `DESIGN` has a burden of proof: record the abstract problem, fields searched, strongest candidates, why external adoption/adaptation/composition is insufficient, and the exact semantic residue AIMAGE must own.
+A retained `DESIGN` has a burden of proof: record the abstract problem, fields searched, strongest candidates, why external adoption/adaptation/composition is insufficient, and the exact residue AIMAGE must own.
 
 ## 7. Cross-domain discovery families
 
-The next slice should explicitly consider, where relevant:
+Where relevant, investigate mature solutions from:
 
-- **creative tools / VFX / DCC / CAD / game engines** — project state, scene graphs, transforms, layers, non-destructive overrides, review/lock patterns;
-- **UI layout and constraint solvers** — alignment, distance, relative placement, same-row/right-of/behind constraints;
-- **compiler IR / build systems / query planners / job specifications** — provider-neutral Render Spec, validation, lowering, capability-dependent execution plans;
-- **durable workflows / statecharts / BPMN / event sourcing** — long-running state, human gates, pause/resume, retry, history;
-- **DAM/MAM / OpenAssetIO / version control / content-addressed storage / build and supply-chain provenance** — artifact identity, versions, resolution, derivation, immutable snapshots;
-- **W3C PROV and C2PA where applicable** — internal derivation concepts versus optional exported-content provenance;
-- **plugin / driver / protocol / hardware capability negotiation** — provider capability descriptors, compatibility, fallback, optional features;
-- **policy / layered configuration / selective lock / creative-review systems** — visual-dimension authority, partial approval, overrides and lock/unlock behavior;
-- **schema evolution / versioned serialization / configuration overlays** — persistence and contract evolution without bespoke infrastructure;
-- **diagnosis/planning/executor and minimum-change/compensation patterns** — repair orchestration over existing provider execution;
-- **provider-native image editing** — GPT Image/OpenAI, ComfyUI, Diffusers and other backends as actual edit executors.
+- creative tools / VFX / DCC / CAD / game engines;
+- UI layout and constraint solvers;
+- compiler IR / build systems / query planners / job specifications;
+- durable workflows / statecharts / BPMN / event sourcing;
+- DAM/MAM / OpenAssetIO / version control / content-addressed storage / build and supply-chain provenance;
+- W3C PROV and C2PA where applicable;
+- plugin / driver / protocol / hardware capability negotiation;
+- policy / layered configuration / selective lock / creative-review systems;
+- schema evolution / versioned serialization / configuration overlays;
+- diagnosis/planning/executor and minimum-change/compensation patterns;
+- provider-native image editing.
 
-Named systems such as InvokeAI, OpenAssetIO, W3C PROV, OpenUSD, Temporal, OpenAI/GPT Image, ComfyUI, Diffusers, Nori, GenAI Illustration Pipeline, Krita AI Diffusion, and style-consistency-ai remain evidence targets, not predetermined adoption decisions.
+Named systems such as InvokeAI, OpenAssetIO, W3C PROV, OpenUSD, Temporal, OpenAI/GPT Image, ComfyUI, Diffusers, Nori, GenAI Illustration Pipeline, Krita AI Diffusion and style-consistency-ai remain evidence targets rather than predetermined decisions.
 
 ## 8. Repair semantics decision
 
 AIMAGE should not build a custom partial-image repair/editing engine when providers/tools already expose suitable edit capabilities.
 
-Provider/backend capability may execute:
+Provider/backend capability may execute targeted/delta edits, masks/regions, multi-turn edits, structural corrections and reference-conditioned edits.
 
-- targeted/delta edit;
-- masked/regional edit;
-- multi-turn controlled edit;
-- structural-control correction;
-- reference-conditioned edit.
-
-AIMAGE's provider-neutral responsibility is higher-level **repair planning/orchestration**:
+AIMAGE should retain only the provider-neutral higher-level responsibility that evidence shows necessary, such as:
 
 1. identify failed variable(s);
-2. identify successful/locked elements that must be preserved;
+2. identify successful/locked elements to preserve;
 3. choose the cheapest suitable repair path/provider capability;
-4. express delta and preservation intent;
+4. express delta/preservation intent;
 5. execute through the selected adapter;
-6. re-review for repair success and regression.
+6. re-review for success/regression.
 
-Even these orchestration semantics should reuse mature diagnosis/planning patterns where suitable rather than being designed ad hoc.
+Even this orchestration should reuse mature diagnosis/planning patterns where suitable.
 
 ## 9. AIMAGE-specific value test
 
-Do not keep a native semantic merely because it is provider-neutral.
-
-For every proposed AIMAGE-owned concept ask:
+For every proposed AIMAGE-owned semantic ask:
 
 > What user-visible or cross-provider control would be lost if AIMAGE used mature external primitives directly instead?
 
-If the answer is only naming, wrapper convenience, storage preference, or duplication, it should not survive as native core design.
+If the answer is only naming, wrapper convenience, storage preference or duplication, it should not survive as native core design.
 
-Possible genuine residues — still hypotheses to challenge — include cross-provider user-intent authority, partial-dimension approval/lock meaning, provider-neutral preservation intent, and capability-aware orchestration.
+Possible genuine residues — still hypotheses to challenge — include cross-provider user-intent authority, partial-dimension approval/lock meaning, provider-neutral preservation intent and capability-aware orchestration.
 
 ## 10. Preserved decisions and negative boundaries
 
 - Reuse mature external capability when it closes the requirement; design only the remainder.
 - Search by abstract problem, not exact AIMAGE terminology or only image-generation products.
+- External composition is valid; one upstream project need not solve the whole capability.
 - Do not blindly copy whole external repositories.
-- Reuse may be package dependency, service/backend adapter, selected permissive source import, interoperability snapshot, clean-room method adaptation, reference-only evidence, or composition of multiple mature pieces.
-- External providers/standards/tools remain evidence or dependencies behind AIMAGE boundaries, not AIMAGE authority.
-- Do not make OpenAI conversation state, ComfyUI workflow JSON, Diffusers classes, InvokeAI project state, USD data, or another external representation canonical AIMAGE job state merely for convenience.
+- Do not create unintended runtime/source-repository authority dependencies.
+- Do not make provider/tool representations canonical AIMAGE job state merely for convenience.
 - Do not copy GPL/noncommercial source into a permissive AIMAGE core without a separate explicit licensing decision.
 - Do not infer model/checkpoint/content licenses from library licenses.
-- Do not build a custom image-edit/repair executor where provider capability already performs the edit.
+- Do not build a custom image-edit/repair executor when provider/tool capability already performs the edit.
 - Conversely, do not collapse AIMAGE into a thin wrapper around one provider.
 - Keep Continuity/Handoff outside Image Engine product semantics.
 - Keep Image Engine/Core separate from concrete Feature/Domain implementations unless an accepted architecture revision changes that boundary.
 - Keep trivial one-shot generation simple.
-- Do not start implementation before the cross-domain reuse re-audit is accepted.
+- Do not start implementation before the cross-domain reuse re-audit is reviewed/accepted.
 
 ## 11. Current uncertainty
 
 Unresolved:
 
 - which existing `DESIGN` rows should become `ADOPT`, `ADAPT`, `ADAPT + small AIMAGE extension`, or remain `DESIGN`;
-- what non-image standards/patterns best close workflow, artifact, geometry, approval, adapter, RenderSpec, persistence, and repair semantics;
+- what non-image standards/patterns best close workflow, artifact, geometry, approval, adapter, RenderSpec, persistence and repair semantics;
 - whether the workflow target can be materially simplified after reuse;
 - exact AIMAGE semantic residue that remains after external composition;
 - acquisition mode, license/provenance, runtime coupling, maintenance/currentness, replacement/fallback for newly accepted candidates;
@@ -172,24 +176,40 @@ Unresolved:
 
 This is one bounded planning action and does **not** authorize provider/core implementation.
 
-## 13. Expected transition
+## 13. Completion / acceptance criteria for the next action
+
+The re-audit is complete when:
+
+1. every materially `DESIGN`/partial-`DESIGN` row is accounted for;
+2. each has an abstract problem and bounded cross-domain search surface;
+3. the strongest materially relevant standards/tools/patterns are recorded with enough current evidence to support the classification;
+4. each has a defensible resulting classification and acquisition boundary;
+5. every retained `DESIGN` satisfies the explicit negative-evidence burden of proof;
+6. no known unresolved candidate **class** remains that could plausibly change a material classification;
+7. `WORKFLOW_TARGET.md` has been checked for evidence-backed simplification whether or not it changes;
+8. the planning candidate is independently reviewed against fresh `main` and `architecture/BOUNDARIES.md`;
+9. the accepted result updates CURRENT with exactly one following action.
+
+Research stops at **decision sufficiency**, not exhaustive bibliography size. Equivalent candidate implementations do not all need to be surveyed once the classification/integration decision can no longer materially change.
+
+## 14. Expected transition
 
 After a successful re-audit, AIMAGE should have:
 
 - a materially narrower and defensible native `DESIGN` set;
 - explicit negative evidence for every retained `DESIGN`;
 - accepted cross-domain standards/tools/patterns and acquisition boundaries;
-- provider-native image editing cleanly separated from AIMAGE repair orchestration;
+- provider-native editing separated from AIMAGE repair orchestration;
 - any evidence-backed workflow simplification;
-- exactly one next action aimed only at the genuinely remaining AIMAGE-specific semantic layer, unless the audit shows a different architecture direction is warranted.
+- exactly one next action aimed only at genuinely remaining AIMAGE-specific semantics, unless the audit establishes a different architecture direction.
 
-## 14. Stop / replan conditions
+## 15. Stop / replan conditions
 
 Stop and replan if:
 
 - fresh AIMAGE authority materially changes the phase/product boundaries;
 - a newer accepted handoff/reuse audit supersedes this action;
-- the user changes the reuse-first policy or authorizes a different phase;
+- the user changes the reuse-first policy or authorizes another phase;
 - research shows the current product/workflow boundary itself is materially wrong rather than merely over-designed;
 - license/runtime/distribution constraints force a materially different high-level architecture;
-- multiple incompatible architectures remain and choosing among them exceeds this bounded cross-domain audit.
+- multiple incompatible high-level architectures remain and choosing among them exceeds this bounded cross-domain audit.

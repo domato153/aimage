@@ -1,13 +1,13 @@
 # AIMAGE Handoff Skill — Source Provenance
 
-Status: construction provenance only. None of the sources below are runtime AIMAGE authority.
+Status: construction/audit provenance only. None of the sources below are runtime AIMAGE authority.
 
-## Construction source repository
+## 1. Original construction source repository
 
 - repository: `domato153/translation`
 - construction-time authoritative commit: `638e702d81b014fb32209c8ac44e907a7fbafe87`
 
-## Generic maintenance-handoff sources reviewed read-only
+## 2. Generic maintenance-handoff sources reviewed read-only
 
 1. `.agents/skills/maintenance-regression-supervisor/SKILL.md`
    - blob: `e8c4cb3a3f40c5d75724c7d7fc7a128eb96c05a2`
@@ -41,15 +41,41 @@ Status: construction provenance only. None of the sources below are runtime AIMA
    - blob: `6a1e13a0b879ab398003630653d8e3c3759ac74c`
    - role: focused regression check for authoritative handoff-method owner resolution.
 
-## Explicitly reviewed but not adopted as generic handoff source
+## 3. Explicitly reviewed but not adopted as generic handoff source
 
 `40_seam_and_context_handoff.md`
 - blob: `50bbf342cf4b78d2b70ddb563bc73805c50477c7`
 - classification: translation-domain seam/context protocol.
 - reason for exclusion: it owns source/target batch boundaries, POV/referent/literary continuity, translation state-model routing, and manuscript-specific seam behavior. Those semantics are not a generic cross-thread maintenance handoff method and would contaminate AIMAGE if mechanically imported.
 
-## Independence rule
+## 4. Later external-method hardening evidence — not original construction provenance
+
+After the AIMAGE-native handoff skill had already been adopted, it was re-audited against mature handoff methods from other fields. The audit and exact adaptations are recorded at:
+
+- `audits/HANDOFF_EXTERNAL_METHOD_REAUDIT_2026-09-10.md`
+- `.agents/skills/handoff/references/TRACEABILITY.md` rows `H-036` through `H-042`
+
+External evidence families included:
+
+- Google SRE incident-management handoff / living state-document practice;
+- AHRQ TeamSTEPPS Handoff, I-PASS and SBAR;
+- NASA mission-operations / human-factors shift-handover research;
+- OpenAI Agents SDK handoff input/context filtering patterns.
+
+These sources did **not** replace the original AIMAGE method owner and were not adopted wholesale. They were used only to test the already-AIMAGE-owned method for generic omissions. The resulting AIMAGE-owned hardening was limited to:
+
+- completion/acceptance criteria;
+- bounded research/review exit conditions;
+- conditional urgency/deadline/commitment/ownership transfer;
+- material successor delta;
+- top-level Operational Header for dense handoffs;
+- explicit context filtering and durable-state separation;
+- stronger receiver synthesis/read-back before acceptance.
+
+Domain-specific patient/incident/mission fields, synchronous overlap requirements, mnemonics, or SDK runtime mechanisms were not imported as AIMAGE runtime requirements.
+
+## 5. Independence rule
 
 The AIMAGE runtime owner is `.agents/skills/handoff/SKILL.md` plus AIMAGE-owned continuity/governance files routed by root `AGENTS.md`.
 
-The `domato153/translation` repository is retained only as historical construction provenance and future comparative audit evidence. No AIMAGE receiver may be required to read it to produce, consume, validate, or continue a handoff.
+The `domato153/translation` repository and later external handoff sources are retained only as construction/audit evidence. No AIMAGE receiver may be required to read any of them to produce, consume, validate, or continue a handoff.

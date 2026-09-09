@@ -41,9 +41,10 @@ Keep these responsibilities separate.
 - when a handoff is warranted;
 - how a sender constructs a bounded transfer packet;
 - how a receiver starts from that packet;
-- packet organization, compression, and practical readability;
+- packet organization, compression, context filtering, and practical readability;
 - one canonical packet locator and derived user-facing paste/share material;
-- explicit transfer of the next bounded action and stop/replan conditions.
+- explicit transfer of the next bounded action, finish condition, and stop/replan conditions;
+- material urgency, deadlines, commitments, or ownership only when they can change continuation.
 
 ### Continuity owns
 
@@ -72,7 +73,8 @@ Fresh-read the minimum authoritative AIMAGE state whose movement could change:
 - next executable action;
 - safety or negative boundaries;
 - relevant refs/files/artifacts;
-- current blocker or unresolved hypothesis.
+- current blocker or unresolved hypothesis;
+- any deadline, external commitment, or ownership boundary that materially changes what must happen next.
 
 Do not freeze a handoff from chat memory alone.
 
@@ -102,6 +104,18 @@ Chat text or a copied prompt may be derived from this packet, but must not becom
 
 The packet should contain only information a cold receiver needs to recover the current work safely.
 
+For a dense or high-consequence handoff, place a short **Operational Header** near the top so a receiver can immediately recover the active control state without scanning the whole packet. The header should contain only the applicable items below:
+
+- packet locator/status;
+- immediate objective;
+- phase and explicit stop boundary;
+- urgency/deadline/commitment when material;
+- exact next bounded action;
+- completion/acceptance criterion for that action;
+- stop/replan trigger.
+
+The Operational Header is a summary inside the canonical packet, not a second authority source. Compact handoffs may integrate these items into the normal sections instead of adding a separate header.
+
 Required semantic sections:
 
 1. **Identity / locator** — exact packet identity and provenance.
@@ -113,12 +127,31 @@ Required semantic sections:
 7. **Preserved decisions and negative boundaries** — especially decisions whose rationale prevents reversal or overgeneralization.
 8. **Current dependencies / artifacts** — only decision-relevant dependencies; classify local/temporary state through the continuity contract.
 9. **Exact next bounded action** — one executable next action plus why it is next.
-10. **Expected transition** — what new state/evidence should result if the next action succeeds.
-11. **Stop / replan conditions** — what fresh contradiction or drift invalidates the recorded route.
-12. **Cold-start read route** — smallest ordered read set needed by a fresh receiver.
-13. **Hard prohibitions** — only material actions that would violate current phase, preservation, authority, or user decisions.
+10. **Completion / acceptance criteria** — what evidence or state proves the bounded action is finished. When completion is self-evident, this may be combined with the expected transition; for research/review/design work it must be explicit enough to prevent open-ended continuation.
+11. **Expected transition** — what new state/evidence should result if the next action succeeds.
+12. **Stop / replan conditions** — what fresh contradiction or drift invalidates the recorded route.
+13. **Cold-start read route** — smallest ordered read set needed by a fresh receiver.
+14. **Hard prohibitions** — only material actions that would violate current phase, preservation, authority, or user decisions.
+
+Conditional sections that become required when material:
+
+- **Urgency / time / commitments** — deadlines, expected response windows, promised follow-ups, external waits, or other timing facts that can change ordering or ownership. Absence of a deadline need not be stated for ordinary work, but a consequential time constraint must not be lost.
+- **Material delta from predecessor** — when this packet supersedes another still-reachable packet, state the small set of changes that make the successor operationally different. Do not restate the whole predecessor.
+- **Ownership / external party** — when an action is waiting on or assigned to someone other than the receiving operator, record who owns that dependency and what event returns control.
 
 Optional sections are allowed when they materially reduce ambiguity. Do not fill a template mechanically when a section has no decision value.
+
+### 4.5 Context filtering and durable-state separation
+
+Treat a handoff as a filtered operational context, not as a dump of all prior conversation or application state.
+
+- If durable state already exists in an AIMAGE-owned repository file, artifact, or authoritative service, point to that owner/identity and transfer only the decision-relevant interpretation or delta.
+- Keep routing/transfer metadata such as reason, priority, summary, or urgency separate from durable project state and dependencies.
+- Do not duplicate entire canonical specifications into the packet merely so the receiver can avoid opening the owner file.
+- Do not forward tool chatter, obsolete alternatives, or incidental history that does not affect the next action.
+- If filtering something out could change the next action, reverse a settled decision, hide a hazard, or make the receiver believe a dependency is complete when it is not, the omission is unsafe.
+
+This preserves the useful property of agent handoff input filtering: the receiver gets the minimum context required for correct continuation while durable application/project state remains in its owning system.
 
 ## 5. Compression rules
 
@@ -133,7 +166,9 @@ Preserve:
 - decisions plus rationale/negative boundary when that rationale prevents a bad reversal;
 - known hazardous/rejected/superseded states that a receiver could otherwise accidentally resurrect;
 - successful elements that a repair must preserve;
-- one exact next action and its expected transition.
+- one exact next action, its finish condition, and expected transition;
+- material time/ownership commitments when they affect continuation;
+- the material successor delta when a predecessor could still be mistaken for current.
 
 Do not copy:
 
@@ -143,7 +178,7 @@ Do not copy:
 - incidental caches or derived views that can be regenerated and do not affect the next action;
 - verbose explanations that are already owned by canonical AIMAGE files.
 
-If omission could cause a fresh receiver to choose a materially different next action, reverse a settled decision, cross a phase boundary, or resurrect rejected state, the omitted information is not harmless.
+If omission could cause a fresh receiver to choose a materially different next action, reverse a settled decision, cross a phase boundary, miss a commitment, or resurrect rejected state, the omitted information is not harmless.
 
 ## 6. Receiver workflow
 
@@ -154,12 +189,16 @@ A fresh receiver must not execute the packet immediately.
 3. Independently re-derive the minimum continuity dependency set needed for the recorded objective and next action.
 4. Fresh-read those live dependencies.
 5. Reconcile packet state against fresh authority and live facts.
-6. Check current phase, preserved decisions/negative boundaries, blockers, local/temporary artifact status, and supersession/rejection state.
+6. Check current phase, preserved decisions/negative boundaries, blockers, local/temporary artifact status, supersession/rejection state, and any material deadline/commitment/ownership boundary.
 7. Challenge the packet's exact next action: confirm that it is still unique and executable.
-8. Return the continuity verdict required by `governance/CONTINUITY.md`: `ACCEPTED` or `STALE_REPLAN`.
-9. Only after `ACCEPTED`, assume operational ownership and execute the next bounded action.
+8. Challenge its completion/acceptance criteria: confirm that the receiver can tell when the bounded action is done rather than silently widening the task.
+9. Synthesize/read back the practical control state: objective, one next action, finish condition, material contingency/stop trigger, and any material time/ownership constraint.
+10. Return the continuity verdict required by `governance/CONTINUITY.md`: `ACCEPTED` or `STALE_REPLAN`.
+11. Only after `ACCEPTED`, assume operational ownership and execute the next bounded action.
 
 Packet receipt alone is not transfer of execution authority.
+
+If a material ambiguity cannot be resolved from fresh authority or bounded evidence, do not guess merely to complete the handoff. Return `STALE_REPLAN` or surface the blocker according to current AIMAGE authority.
 
 ## 7. Receiver synthesis
 
@@ -170,7 +209,9 @@ Before continuing, the receiver should be able to state in ordinary language:
 - what remains uncertain or blocked;
 - what must be preserved or not crossed;
 - exactly one next action;
-- what would force a replan.
+- what proves that next action is complete;
+- what would force a replan;
+- any material deadline, external wait, or ownership boundary.
 
 When the user asks for practical status, give the plain-language synthesis first and technical refs/SHAs afterward. A raw-record-only request is an explicit exception.
 
@@ -181,11 +222,12 @@ A still-existing packet or branch is not proof that it remains current.
 If a newer packet replaces an older one, or live authority materially invalidates the old route:
 
 - mark or treat the old packet as superseded/historical according to current AIMAGE continuity semantics;
+- state the material delta in the successor when the predecessor remains plausibly reachable and the difference affects continuation;
 - do not select packets by filename words such as `CURRENT`, `FINAL`, or timestamp alone;
 - do not reuse an old successful action/proof merely because its branch or artifact still exists;
 - replan from fresh authority when the continuity contract requires it.
 
-Harmless time passage or unrelated repository movement does not by itself invalidate a handoff.
+Harmless time passage or unrelated repository movement does not by itself invalidate a handoff. A deadline or commitment does matter when missing it changes the valid next action.
 
 ## 9. AIMAGE-specific handoff considerations
 
@@ -199,7 +241,10 @@ Preserve, when material:
 - changed files/refs whose identity matters;
 - invariants and preserved behavior;
 - unresolved architecture or verification risk;
-- exact next bounded engineering action.
+- exact next bounded engineering action and its completion criterion;
+- deadline/external wait/owner only if it changes continuation.
+
+For a **research, review, or audit** handoff, also preserve an evidence-sufficiency / exit condition. A receiver must know when enough evidence has been gathered to close the bounded action; “research this topic” is not an adequate finish condition for consequential work.
 
 Do not import translation-specific promotion, proof-receipt, batch, manuscript, Coverage, or CI semantics unless AIMAGE independently adopts an equivalent mechanism.
 
@@ -214,7 +259,7 @@ Preserve, when material:
 - successful visual elements that repair must preserve;
 - rejected/superseded composition directions that must not be resurrected;
 - current render/review/repair target;
-- exact next image action.
+- exact next image action and what visual evidence counts as success.
 
 Do not turn these image-job fields into the generic handoff core. Their detailed state belongs to `governance/continuity/IMAGE_JOB.md` and future image-engine/domain owners.
 
@@ -226,8 +271,9 @@ The paste/share form should:
 
 - point the receiver to current AIMAGE authority first;
 - include the canonical handoff locator;
-- preserve current objective, phase, negative boundaries, exact next action, and stale/replan instruction;
-- tell the receiver to perform fresh reconciliation before action;
+- preserve current objective, phase, negative boundaries, exact next action, finish condition, and stale/replan instruction;
+- preserve material urgency/deadline/ownership when applicable;
+- tell the receiver to perform fresh reconciliation and practical read-back before action;
 - avoid duplicating large canonical specifications already reachable from `AGENTS.md`.
 
 Do not independently rewrite the handoff from memory after the canonical packet is created.
@@ -241,13 +287,18 @@ Before treating a handoff as ready, verify:
 - the canonical locator is unambiguous;
 - continuity dependencies are bounded rather than repository-wide by default;
 - current objective and phase are explicit;
+- dense/high-consequence packets expose a concise operational header or equivalent top-level control state;
 - completed scope is distinguishable from remaining work;
 - decision rationale/negative boundaries are preserved where material;
 - known rejected/superseded/hazardous states cannot be silently resurrected;
+- a successor identifies the material delta from any still-reachable predecessor when confusion could affect execution;
 - local/temporary artifacts are classified sufficiently for a cold receiver;
 - there is exactly one next executable action;
+- the action has a usable completion/acceptance criterion rather than an open-ended topic;
+- material deadline/commitment/ownership facts are preserved when they can change ordering or responsibility;
 - stop/replan conditions are explicit;
-- a zero-chat receiver could recover the route without reading `domato153/translation`.
+- packet context is filtered and durable state remains in its owning source rather than being redundantly mirrored;
+- a zero-chat receiver can recover the route without reading `domato153/translation`.
 
 For dense/high-risk transfers, perform a cold-reader or adversarial rehearsal. Do not make that ceremony mandatory for trivial handoffs.
 
@@ -255,4 +306,6 @@ For dense/high-risk transfers, perform a cold-reader or adversarial rehearsal. D
 
 Runtime AIMAGE handoff execution depends only on AIMAGE-owned authority routed from root `AGENTS.md`.
 
-`domato153/translation` is construction provenance and audit evidence only. A receiver must never need to read it to understand or execute an AIMAGE handoff.
+`domato153/translation` and external handoff methods are construction/audit evidence only. A receiver must never need to read them to understand or execute an AIMAGE handoff.
+
+External-method re-audits may be preserved under `audits/` for provenance and future review, but they do not outrank this current AIMAGE-owned skill.
